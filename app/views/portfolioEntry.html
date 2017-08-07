@@ -1,0 +1,17 @@
+<div>
+  <h1>Portfolio Data</h1>
+  <form ng-submit="portfolioEntry.submit()" ng-controller="PortfolioEntryCtrl" name="portfolioEntryForm">
+    <p>Geographical category: <input type="text" ng-model="portfolioEntry.entry.category" name="text" /></p>
+    <p>Asset Diversification Type: <input type="text" ng-model="portfolioEntry.entry.assetType" name="text" /></p>
+    <p>Asset Name: <input type="text" ng-model="portfolioEntry.entry.assetName" name="text" /></p>
+    <p>Amount: <input type="text" ng-model="portfolioEntry.entry.amount" name="text" /></p>
+    <input type="button" value="Submit" ng-click="portfolioEntry.submit()"/>
+    <br/>
+
+    <p>Debug:</p>
+    <p>Object: {{portfolioEntry.entry}}</p>
+
+    <p>Object: {{portfolioEntry.details}}</p>
+     <input type="button" value="Fetch" ng-click="portfolioEntry.fetchAssets()"/>
+  </form>
+</div>

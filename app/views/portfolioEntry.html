@@ -11,7 +11,7 @@
     <p>Debug:</p>
     <p>Object: {{portfolioEntry.entry}}</p>
 
-    <p>Object: {{portfolioEntry.details}}</p>
-     <input type="button" value="Fetch" ng-click="portfolioEntry.fetchAssets()"/>
+    <p>Object: {{portfolioEntry.data[0].amount}}</p>
+     <input type="button" value="Fetch" ng-click="portfolioEntry.getData()"/>
   </form>
 </div>

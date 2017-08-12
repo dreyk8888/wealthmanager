@@ -8,7 +8,7 @@
  * Controller of the wealthManagerApp
  */
 angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl', function (GetAssetData) {
+    .controller('PortfolioEntryCtrl', function ($http, GetAssetData) {
         this.entry = {
             assetType: "",
             assetName: "",

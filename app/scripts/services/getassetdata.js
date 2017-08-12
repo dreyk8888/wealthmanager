@@ -11,13 +11,12 @@ angular.module('wealthManagerApp')
     .service('GetAssetData', ['$http', function($http) {
     //can put additional code here
      this.getData = function(successHandler, failureHandler) {
-        $http.get('http://localhost:4000/assetentry')
+        $http.get('http://localhost:4000/assetentry/1234')
         .then(function(response){
             successHandler(response);    //data can't be used outside this function
-        }, function(response) {
-            failureHandler(response);
+        }, function(error) {
+            failureHandler(error);
         })
     }
 
-//        return $http.get('http://localhost:4000/assetentry');
 }]);

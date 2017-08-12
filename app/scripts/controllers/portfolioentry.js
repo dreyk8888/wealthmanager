@@ -9,9 +9,6 @@
  */
 angular.module('wealthManagerApp')
     .controller('PortfolioEntryCtrl', function (GetAssetData) {
-    //.controller('PortfolioEntryCtrl', function ($http) {
-        this.data;
-
         this.entry = {
             assetType: "",
             assetName: "",
@@ -20,39 +17,26 @@ angular.module('wealthManagerApp')
             datePurchased: ""
         };
 
+        var self = this;
+        self.data = "";
+
         this.submit = function() {
             console.log(this.entry);
             $http.post('http://localhost:4000/assetentry', JSON.stringify(this.entry));
         };
 
         function successHandler(res) {
-           this.data = res.data;
-
+            for (var i = 0; i < res.data.length; i++){
+                self.data = res.data[i].amount;
+            }
         }
 
         function failureHandler(res) {
-            this.data = res.data;
+            console.log ('Failed to retrive data!')
         }
 
         this.getData = function() {
             GetAssetData.getData(successHandler, failureHandler);
         }
-        console.log (this.data);
-
-/*
-        this.fetchAssets = function (){
-            $http.get("http://localhost:4000/assetentry")
-       //   .then(function(response){ this.details = response.data; });
-            .then(function(response){
-                console.log(response.data)
-                console.log(this.details)
-                this.details = response.data
-            });
-
-    };
-*/
-    //  $http.get("http://localhost:4000/assetentry" + this.search + "&tomatoes=true&plot=full")
-    //  .then(function(response){ this.details = response.data; });
-
 
   });

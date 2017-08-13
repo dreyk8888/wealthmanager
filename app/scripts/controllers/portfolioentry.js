@@ -34,8 +34,8 @@ angular.module('wealthManagerApp')
             currency: ""
         };
 
-        var self = this;
-        self.assets = [];
+        var self = this;        //save this to a different var so that we can access the data from http callback response
+        self.assets = [];       //store the loaded asset data
 
         this.submitAssets = function() {
             console.log(this.entry);
@@ -54,22 +54,38 @@ angular.module('wealthManagerApp')
 
         }
         this.deleteAsset = function(asset){
-            //code to delete an asset from the database
-             $http.delete('http://localhost:4000/assetentry', JSON.stringify(this.entry));
+
+            $http.delete('http://localhost:4000/assetentry/' + asset._id)
+            .then(function(response){
+                successHandler_DELETE(response, asset._id);    //data can't be used outside this function
+                return true;
+            }, function(error) {
+                failureHandler_DELETE(error);
+            })
         }
-        function successHandler(res) {
+
+        function successHandler_DELETE(res, id) {
+          console.log ("Deleting:" + id);
+        }
+
+        function failureHandler_DELETE(res) {
+            console.log ('Failed to delete data!')
+        }
+
+        function successHandler_GET(res) {
             for (var i = 0; i < res.data.length; i++){
                 self.assets[i] = res.data[i];
-                console.log (self.assets[i].assetName);
+                console.log (self.assets[i]);
             }
         }
 
-        function failureHandler(res) {
-            console.log ('Failed to retrive data!')
+        function failureHandler_GET(res) {
+            console.log ('Failed to retrieve data!')
         }
 
+        //load asset data for the view
         this.getData = function() {
-            GetAssetData.getData(successHandler, failureHandler);
+            GetAssetData.getData(successHandler_GET, failureHandler_GET);
         }
 
   });

@@ -7,6 +7,20 @@
  * # PortfolioentryCtrl
  * Controller of the wealthManagerApp
  */
+
+ /*todo 8/13/2017
+ - separate table by assetType
+foreach (assetType){
+    foreach (asset in assetType){
+        create a row of data
+    }
+}
+- figure out how to do inline edit/save/cancel
+- calculate the percentage of each assetType amount vs total assets
+- display total amount per assetType
+ */
+
+
 angular.module('wealthManagerApp')
     .controller('PortfolioEntryCtrl', function ($http, GetAssetData) {
         this.entry = {
@@ -16,11 +30,12 @@ angular.module('wealthManagerApp')
             unitCost: "",
             amount: "",
             category: "",
-            yearPurchased: ""
+            date_purchased: "",
+            currency: ""
         };
 
         var self = this;
-        self.data = "";
+        self.assets = [];
 
         this.submitAssets = function() {
             console.log(this.entry);
@@ -28,9 +43,24 @@ angular.module('wealthManagerApp')
             $http.post('http://localhost:4000/assetentry', JSON.stringify(this.entry));
         };
 
+        //trigger inline edit of an asset
+        this.editAsset = function(asset){
+            this.editing = this.assets.indexOf(asset);
+            this.newField = angular.copy(asset);
+        }
+
+        //cancel inline edit and restore previous value
+        this.cancelEdit = function(index){
+
+        }
+        this.deleteAsset = function(asset){
+            //code to delete an asset from the database
+             $http.delete('http://localhost:4000/assetentry', JSON.stringify(this.entry));
+        }
         function successHandler(res) {
             for (var i = 0; i < res.data.length; i++){
-                self.data = res.data[i].amount;
+                self.assets[i] = res.data[i];
+                console.log (self.assets[i].assetName);
             }
         }
 

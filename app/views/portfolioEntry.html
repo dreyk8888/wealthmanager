@@ -1,48 +1,59 @@
-<div>
+<div ng-controller="PortfolioEntryCtrl">
+
+  <div ng-init="portfolioEntry.getData()" name="loadPortfolio">
   <h1>Assets</h1>
-  <form ng-submit="portfolioEntry.submitAssets()" ng-controller="PortfolioEntryCtrl" name="portfolioAssets">
+
+  <p>
     <table>
+      <thead>
+        <th>Name/Ticker</th>
+        <th># of Units</th>
+        <th>Unit Cost</th>
+        <th>Date Purchased</th>
+        <th>Book Value</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </thead>
+      <tbody>
+        <div ng-repeat="asset in portfolioEntry.assets">
+        <tr>
+          <td>{{asset.assetName}}</td>
+          <td>{{asset.units}}</td>
+          <td>{{asset.unitCost}}</td>
+          <td>{{asset.date_purchased}}</td>
+          <td>{{asset.amount}}</td>
+          <td></td>
+          <td><button ng-click="editAsset(asset)" name="editAsset"><span class="glyphicon glyphicon-pencil"></span></button></td>
+          <td><button ng-click="deleteAsset(asset)" name="deleteAsset"><span class="glyphicon glyphicon-trash"></span></button></td>
+          <td><span class="glyphicon glyphicon-move"></span></td>
+        </tr>
+        </div>
+      <div ng-submit="portfolioEntry.submitAssets()" name="portfolioAssets">
       <tr>
-        <td></td>
-        <td>Name/Ticker</td>
-        <td># of Units</td>
-        <td>Book Value</td>
-        <td>Year Purchased</td>
-        <td>Amount</td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><input type="text" ng-model="portfolioEntry.entry.assetName" name="text" /></td>
+        <td><input type="text" ng-model="portfolioEntry.entry.assetName" name="text"/></td>
         <td><input type="text" ng-model="portfolioEntry.entry.units" name="text" /></td>
         <td><input type="text" ng-model="portfolioEntry.entry.unitCost" name="text" /></td>
-        <td><input type="text" ng-model="portfolioEntry.entry.yearPurchased" name="text" /></td>
-        <td>{{portfolio.entry.amount}}</td>
+        <td><input type="text" ng-model="portfolioEntry.entry.date_purchased" name="text" /></td>
+        <td>{{portfolioEntry.amount}}</td>
         <td></td>
         <td><span class="glyphicon glyphicon-trash"></span></td>
         <td><span class="glyphicon glyphicon-move"></span></td>
       </tr>
-    <p>Geographical category: <input type="text" ng-model="portfolioEntry.entry.category" name="text" /></p>
-    <p>Asset Diversification Type: <input type="text" ng-model="portfolioEntry.entry.assetType" name="text" /></p>
-    <input type="button" value="Submit" ng-click="portfolioEntry.submit()"/>
-    <br/>
-    </tr></table>
+      </div>
+      </tbody>
+    </table>
+    </p>
+
+    </div>
+
     <p>Debug:</p>
     <p>Object: {{portfolioEntry.entry}}</p>
 
     <p>Object: {{portfolioEntry.data}}</p>
-     <input type="button" value="Fetch" ng-click="portfolioEntry.getData()"/>
-  </form>
+     <!--<input type="button" value="Fetch" ng-click="portfolioEntry.getData()"/>-->
+     <p>Geographical category: <input type="text" ng-model="portfolioEntry.entry.category" name="text" /></p>
+    <p>Asset Diversification Type: <input type="text" ng-model="portfolioEntry.entry.assetType" name="text" /></p>
+    <!--<input type="button" value="Submit" ng-click="portfolioEntry.submitAssets()"/>-->
+    <br/>
 </div>

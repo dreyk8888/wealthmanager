@@ -22,6 +22,11 @@
 
     <!-- Add your site or application content here -->
     <div class="header">
+      <div class="page-header">
+       <div class="container">
+        <h1>Wealth Manager <small>Your tool to financial independence</small></h1>
+      </div>
+      </div>
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
@@ -32,16 +37,15 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-
-            <a class="navbar-brand" href="#/">wealthManager</a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
+              <li><a ng-href="#/"><span class="glyphicon glyphicon-menu-hamburger"></span></a></li>
               <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
+              <li><a ng-href="#/">Portfolio</a></li>
+              <li><a ng-href="#/">Retirement Calculator</a></li>
             </ul>
           </div>
         </div>
@@ -54,7 +58,10 @@
 
     <div class="footer">
       <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p><span class="glyphicon glyphicon-info-sign"></span><a ng-href="#/"> About</p>
+         <p><span class="glyphicon glyphicon-envelope"></span><a ng-href="#/"> Contact</p>
+        <p><span class="glyphicon glyphicon-comment"></span><a ng-href="#/"> Feedback</p>
+        <p><span class="glyphicon glyphicon-share-alt"></span><a ng-href="#/"> Share this tool</p>
       </div>
     </div>
 

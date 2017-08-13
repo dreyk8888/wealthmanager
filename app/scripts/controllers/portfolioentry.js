@@ -12,16 +12,19 @@ angular.module('wealthManagerApp')
         this.entry = {
             assetType: "",
             assetName: "",
+            units: "",
+            unitCost: "",
             amount: "",
             category: "",
-            datePurchased: ""
+            yearPurchased: ""
         };
 
         var self = this;
         self.data = "";
 
-        this.submit = function() {
+        this.submitAssets = function() {
             console.log(this.entry);
+            this.entry.amount = this.entry.units * this.unitCost;
             $http.post('http://localhost:4000/assetentry', JSON.stringify(this.entry));
         };
 

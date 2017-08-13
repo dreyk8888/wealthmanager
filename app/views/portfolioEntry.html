@@ -1,13 +1,44 @@
 <div>
-  <h1>Portfolio Data</h1>
-  <form ng-submit="portfolioEntry.submit()" ng-controller="PortfolioEntryCtrl" name="portfolioEntryForm">
+  <h1>Assets</h1>
+  <form ng-submit="portfolioEntry.submitAssets()" ng-controller="PortfolioEntryCtrl" name="portfolioAssets">
+    <table>
+      <tr>
+        <td></td>
+        <td>Name/Ticker</td>
+        <td># of Units</td>
+        <td>Book Value</td>
+        <td>Year Purchased</td>
+        <td>Amount</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td> </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><input type="text" ng-model="portfolioEntry.entry.assetName" name="text" /></td>
+        <td><input type="text" ng-model="portfolioEntry.entry.units" name="text" /></td>
+        <td><input type="text" ng-model="portfolioEntry.entry.unitCost" name="text" /></td>
+        <td><input type="text" ng-model="portfolioEntry.entry.yearPurchased" name="text" /></td>
+        <td>{{portfolio.entry.amount}}</td>
+        <td></td>
+        <td><span class="glyphicon glyphicon-trash"></span></td>
+        <td><span class="glyphicon glyphicon-move"></span></td>
+      </tr>
     <p>Geographical category: <input type="text" ng-model="portfolioEntry.entry.category" name="text" /></p>
     <p>Asset Diversification Type: <input type="text" ng-model="portfolioEntry.entry.assetType" name="text" /></p>
-    <p>Asset Name: <input type="text" ng-model="portfolioEntry.entry.assetName" name="text" /></p>
-    <p>Amount: <input type="text" ng-model="portfolioEntry.entry.amount" name="text" /></p>
     <input type="button" value="Submit" ng-click="portfolioEntry.submit()"/>
     <br/>
-
+    </tr></table>
     <p>Debug:</p>
     <p>Object: {{portfolioEntry.entry}}</p>
 

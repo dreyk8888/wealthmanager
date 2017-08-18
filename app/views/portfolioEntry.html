@@ -33,10 +33,11 @@
         <td><input type="text" ng-model="portfolioEntry.entry.units" name="text" /></td>
         <td><input type="text" ng-model="portfolioEntry.entry.unitCost" name="text" /></td>
         <td><input type="text" ng-model="portfolioEntry.entry.date_purchased" name="text" /></td>
-        <td>{{portfolioEntry.amount}}</td>
+        <td><input type="text" name="text" value="{{portfolioEntry.entry.amount}}"/></td>
         <td></td>
-        <td><span class="glyphicon glyphicon-trash"></span></td>
-        <td><span class="glyphicon glyphicon-move"></span></td>
+        <td><button class="button-inline-ok" ng-click="portfolioEntry.submitAssets()"/></button></td>
+        <td><button ng-click="portfolioEntry.resetEntry()"/><span class="glyphicon glyphicon-remove"></button></td>
+
       </tr>
       </div>
       </tbody>

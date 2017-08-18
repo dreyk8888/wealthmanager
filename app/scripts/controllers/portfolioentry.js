@@ -22,7 +22,7 @@ foreach (assetType){
 
 
 angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl', function ($http, GetAssetData) {
+    .controller('PortfolioEntryCtrl', function ($scope, $http, AssetDataAPI) {
         this.entry = {
             assetType: "",
             assetName: "",
@@ -35,12 +35,40 @@ angular.module('wealthManagerApp')
         };
 
         var self = this;        //save this to a different var so that we can access the data from http callback response
-        self.assets = [];       //store the loaded asset data
+        self.assets = [];       //local copy of asset data loaded from DB
+
+        //load asset data for the view
+        this.getData = function() {
+            AssetDataAPI.getData(successHandler_GET, failureHandler_GET);
+            console.log ("Data reloaded");
+        }
+
+        this.resetEntry = function(){
+            this.entry.assetType = "";
+            this.entry.assetName = "";
+            this.entry.units = "";
+            this.entry.unitCost = "";
+            this.entry.amount = "";
+            this.entry.category = "";
+            this.entry.date_purchased = "";
+            this.entry.currency = "";
+        }
 
         this.submitAssets = function() {
-            console.log(this.entry);
-            this.entry.amount = this.entry.units * this.unitCost;
-            $http.post('http://localhost:4000/assetentry', JSON.stringify(this.entry));
+            var temp = this.entry;
+            temp.units = Number(temp.units);
+            temp.unitCost = Number(temp.unitCost);
+            temp.amount = Number(temp.units * temp.unitCost);
+
+            //post to database
+            AssetDataAPI.postData (successHandler_POST, failureHandler_POST, temp);
+
+
+            //update page
+            this.assets.push(temp);
+
+            //clear out text field
+            //this.resetEntry();
         };
 
         //trigger inline edit of an asset
@@ -54,16 +82,19 @@ angular.module('wealthManagerApp')
 
         }
         this.deleteAsset = function(asset){
-
-            $http.delete('http://localhost:4000/assetentry/' + asset._id)
-            .then(function(response){
-                successHandler_DELETE(response, asset._id);    //data can't be used outside this function
-                return true;
-            }, function(error) {
-                failureHandler_DELETE(error);
-            })
+            AssetDataAPI.deleteData(successHandler_DELETE, failureHandler_DELETE, asset);
+            this.assets.splice(this.assets.indexOf(asset), 1); //remove item from local list of assets
+            console.log ('Assets list:' + this.assets);
         }
 
+        //api success/failure error handling
+        function successHandler_POST(res, data) {
+          console.log ("Posted" + data);
+        }
+
+        function failureHandler_POST(res) {
+            console.log ('Failed to post data!')
+        }
         function successHandler_DELETE(res, id) {
           console.log ("Deleting:" + id);
         }
@@ -75,7 +106,6 @@ angular.module('wealthManagerApp')
         function successHandler_GET(res) {
             for (var i = 0; i < res.data.length; i++){
                 self.assets[i] = res.data[i];
-                console.log (self.assets[i]);
             }
         }
 
@@ -83,9 +113,5 @@ angular.module('wealthManagerApp')
             console.log ('Failed to retrieve data!')
         }
 
-        //load asset data for the view
-        this.getData = function() {
-            GetAssetData.getData(successHandler_GET, failureHandler_GET);
-        }
 
   });

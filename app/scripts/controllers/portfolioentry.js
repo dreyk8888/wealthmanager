@@ -37,10 +37,20 @@ angular.module('wealthManagerApp')
         var self = this;        //save this to a different var so that we can access the data from http callback response
         self.assets = [];       //local copy of asset data loaded from DB
 
+        this.totalAssets = 0;
+        this.calculateTotalAssets = function(){
+            this.totalAssets = 0;
+            var total = 0;
+            for (var i = 0; i < this.assets.length; i++){
+                total = total + this.assets[i].amount;
+            }
+            this.totalAssets = total.toFixed(2);
+        }
+
         //load asset data for the view
         this.getData = function() {
             AssetDataAPI.getData(successHandler_GET, failureHandler_GET);
-            console.log ("Data reloaded");
+            this.calculateTotalAssets();
         }
 
         this.resetEntry = function(){
@@ -63,13 +73,13 @@ angular.module('wealthManagerApp')
             //post to database
             AssetDataAPI.postData (successHandler_POST, failureHandler_POST, temp);
 
-
-            //update page
             this.assets.push(temp);
-
-            //clear out text field
-            //this.resetEntry();
-        };
+            console.log (temp.assetName);
+            this.calculateTotalAssets();
+            return true;
+            //this runs too soon, causing the push before to have empty data
+           // this.resetEntry();  //clear out text field
+        }
 
         //trigger inline edit of an asset
         this.editAsset = function(asset){
@@ -84,6 +94,7 @@ angular.module('wealthManagerApp')
         this.deleteAsset = function(asset){
             AssetDataAPI.deleteData(successHandler_DELETE, failureHandler_DELETE, asset);
             this.assets.splice(this.assets.indexOf(asset), 1); //remove item from local list of assets
+            this.calculateTotalAssets();
             console.log ('Assets list:' + this.assets);
         }
 

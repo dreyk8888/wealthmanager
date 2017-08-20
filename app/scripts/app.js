@@ -9,4 +9,4 @@
  * Main module of the application.
  */
 angular
-  .module('wealthManagerApp', ['ui.router'], ['ui.grid']);
+  .module('wealthManagerApp', ['ui.router', 'ui.grid']);

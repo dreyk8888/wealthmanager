@@ -34,10 +34,28 @@ angular.module('wealthManagerApp')
             currency: ""
         };
 
+
         var self = this;        //save this to a different var so that we can access the data from http callback response
         self.assets = [];       //local copy of asset data loaded from DB
 
         this.totalAssets = 0;
+
+        $scope.columns = [
+            { name: 'Name/Ticker', field: 'assetName' },
+            { name: 'Units Held', field: 'units' },
+            { name: 'Unit Cost', field: 'unitCost'},
+            { name: 'Amount', field: 'amount'},
+            { name: 'Date Purchased', field: 'date_purchased'}
+        ];
+
+        $scope.gridOptions = {};
+        $scope.gridOptions.enableSorting = true;
+        $scope.gridOptions.columnDefs = $scope.columns;
+        $scope.gridOptions.data = 'myData'
+        $scope.gridOptions.onRegisterApi = function(gridApi) {
+                $scope.gridApi = gridApi;
+        };
+
         this.calculateTotalAssets = function(){
             this.totalAssets = 0;
             var total = 0;
@@ -96,6 +114,8 @@ angular.module('wealthManagerApp')
             this.assets.splice(this.assets.indexOf(asset), 1); //remove item from local list of assets
             this.calculateTotalAssets();
             console.log ('Assets list:' + this.assets);
+
+            console.log($scope.myData);
         }
 
         //api success/failure error handling
@@ -115,8 +135,10 @@ angular.module('wealthManagerApp')
         }
 
         function successHandler_GET(res) {
+            $scope.myData = [];
             for (var i = 0; i < res.data.length; i++){
                 self.assets[i] = res.data[i];
+                $scope.myData.push(res.data[i]);
             }
         }
 

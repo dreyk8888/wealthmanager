@@ -3,6 +3,7 @@
   <div ng-init="portfolioEntry.getData()" name="loadPortfolio">
   <h1>Assets</h1>
 
+
   <p>
     <table>
       <thead>
@@ -16,7 +17,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr ng-repeat="asset in portfolioEntry.assets" ng-hide="deleted">
+        <tr ng-repeat="asset in portfolioEntry.assets track by $index">
           <td>{{asset.assetName}}</td>
           <td>{{asset.units}}</td>
           <td>{{asset.unitCost}}</td>
@@ -24,10 +25,10 @@
           <td>{{asset.amount}}</td>
           <td></td>
           <td><button ng-click="portfolioEntry.editAsset(asset)" name="editAsset"><span class="glyphicon glyphicon-pencil"></span></button></td>
-          <td><button ng-click="deleted = portfolioEntry.deleteAsset(asset)" ng-init="deleted=false" name="deleteAsset"><span class="glyphicon glyphicon-trash"></span></button></td>
+          <td><button ng-click="portfolioEntry.deleteAsset(asset)" name="deleteAsset"><span class="glyphicon glyphicon-trash"></span></button></td>
           <td><span class="glyphicon glyphicon-move"></span></td>
         </tr>
-      <div ng-submit="portfolioEntry.submitAssets()" name="portfolioAssets">
+      <div ng-submit="portfolioEntry.submitAssets()" ng-hide="submitted">
       <tr>
         <td><input type="text" ng-model="portfolioEntry.entry.assetName" name="text"/></td>
         <td><input type="text" ng-model="portfolioEntry.entry.units" name="text" /></td>
@@ -35,7 +36,7 @@
         <td><input type="text" ng-model="portfolioEntry.entry.date_purchased" name="text" /></td>
         <td><input type="text" name="text" value="{{portfolioEntry.entry.amount}}"/></td>
         <td></td>
-        <td><button class="button-inline-ok" ng-click="portfolioEntry.submitAssets()"/></button></td>
+        <td><button class="button-inline-ok" ng-click="submitted = portfolioEntry.submitAssets()" ng-init="submitted=false"/></button></td>
         <td><button ng-click="portfolioEntry.resetEntry()"/><span class="glyphicon glyphicon-remove"></button></td>
 
       </tr>
@@ -46,13 +47,6 @@
 
     </div>
 
-    <p>Debug:</p>
-    <p>Object: {{portfolioEntry.entry}}</p>
-
-    <p>Object: {{portfolioEntry.data}}</p>
-    <!-- <input type="button" value="Fetch" ng-click="portfolioEntry.getData()"/>-->
-     <p>Geographical category: <input type="text" ng-model="portfolioEntry.entry.category" name="text" /></p>
-    <p>Asset Diversification Type: <input type="text" ng-model="portfolioEntry.entry.assetType" name="text" /></p>
-    <!--<input type="button" value="Submit" ng-click="portfolioEntry.submitAssets()"/>-->
+    <p>Total Assets: {{portfolioEntry.totalAssets}}</p>
     <br/>
 </div>

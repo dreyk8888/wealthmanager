@@ -40,8 +40,8 @@ angular.module('wealthManagerApp')
 
         var columnDefs = [
             { name: 'ID', field: '_id', width: '0%', visible: false },
-            { name: 'Asset Class', field: 'class', width: '20%'},
-            { name: 'Geographical Location', field: 'location', width: '20%'},
+            { name: 'Asset Class', field: 'class', width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' }, cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
+            { name: 'Geographical Location', field: 'location', width: '20%', grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'asc' }},
             { name: 'Name/Ticker', field: 'name', width: '20%' },
             { name: 'Units Held', field: 'units', type: 'number', width: '10%' },
             { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%'},
@@ -49,13 +49,16 @@ angular.module('wealthManagerApp')
             { name: 'Date Purchased (MM-DD-YYYY)', field: 'date_purchased', type: 'date', width: '10%', cellFilter: 'date:"MM-dd-yyyy"'}
         ];
 
-        $scope.gridOptions = {};
-        $scope.gridOptions.enableSorting = true;
-        $scope.gridOptions.columnDefs = columnDefs;
-        $scope.gridOptions.data = 'assetData'
-        $scope.gridOptions.onRegisterApi = function(gridApi) {
-            $scope.gridApi = gridApi;
-            gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+        $scope.gridOptions = {
+            enableSorting: true,
+            columnDefs: columnDefs,
+            enableFiltering: true,
+            treeRowHeaderAlwaysVisible: false,
+            data: 'assetData',
+            onRegisterApi: function(gridApi) {
+                $scope.gridApi = gridApi;
+                //gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+            }
         };
 
         $scope.calculateTotalAssets = function(){

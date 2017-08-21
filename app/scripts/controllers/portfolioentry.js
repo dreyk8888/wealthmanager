@@ -23,12 +23,12 @@ angular.module('wealthManagerApp')
     .controller('PortfolioEntryCtrl', function ($scope, $http, AssetDataAPI) {
 
         $scope.entry = {
-            assetType: "",
-            assetName: "",
+            class: "",
+            name: "",
             units: "",
             unitCost: "",
             amount: "",
-            category: "",
+            location: "",
             date_purchased: "",
             currency: ""
         };
@@ -40,11 +40,13 @@ angular.module('wealthManagerApp')
 
         var columnDefs = [
             { name: 'ID', field: '_id', width: '0%', visible: false },
-            { name: 'Name/Ticker', field: 'assetName', width: '30%' },
+            { name: 'Asset Class', field: 'class', width: '20%'},
+            { name: 'Geographical Location', field: 'location', width: '20%'},
+            { name: 'Name/Ticker', field: 'name', width: '20%' },
             { name: 'Units Held', field: 'units', type: 'number', width: '10%' },
             { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%'},
-            { name: 'Amount', field: 'amount', type: 'number', width: '20%', enableCellEdit: false},
-            { name: 'Date Purchased (MM-DD-YYYY)', field: 'date_purchased', type: 'date', width: '30%', cellFilter: 'date:"MM-dd-yyyy"'}
+            { name: 'Amount', field: 'amount', type: 'number', width: '10%', enableCellEdit: false},
+            { name: 'Date Purchased (MM-DD-YYYY)', field: 'date_purchased', type: 'date', width: '10%', cellFilter: 'date:"MM-dd-yyyy"'}
         ];
 
         $scope.gridOptions = {};
@@ -81,12 +83,12 @@ angular.module('wealthManagerApp')
         };
 */
          $scope.resetEntry = function(){
-            $scope.entry.assetType = "";
-            $scope.entry.assetName = "";
+            $scope.entry.class = "";
+            $scope.entry.name = "";
             $scope.entry.units = "";
             $scope.entry.unitCost = "";
             $scope.entry.amount = "";
-            $scope.entry.category = "";
+            $scope.entry.location = "";
             $scope.entry.date_purchased = "";
             $scope.entry.currency = "";
         }
@@ -101,7 +103,6 @@ angular.module('wealthManagerApp')
             AssetDataAPI.postData (successHandler_POST, failureHandler_POST, temp);
 
             $scope.assetData.push(temp);
-            console.log (temp.assetName);
             $scope.calculateTotalAssets();
             return true;
             //this runs too soon, causing the push before to have empty data

@@ -8,23 +8,25 @@
   <button ng-click="addNew = !addNew" value="Add New Entry"></button>
   <div ng-submit="submitAssets()" ng-hide="addNew">
     <table>
-    <thead>
+      <thead>
+        <th>Asset Class</th>
+        <th>Location</th>
 -        <th>Name/Ticker</th>
 -        <th># of Units</th>
 -        <th>Unit Cost</th>
 -        <th>Date Purchased</th>
--        <th>Book Value</th>
 -        <th></th>
 -        <th></th>
 -        <th></th>
 -      </thead>
 -      <tbody>
       <tr>
-        <td><input type="text" ng-model="entry.assetName" name="text"/></td>
+        <td><input type="text" ng-model="entry.class" name="text"/></td>
+        <td><input type="text" ng-model="entry.location" name="text"/></td>
+        <td><input type="text" ng-model="entry.name" name="text"/></td>
         <td><input type="text" ng-model="entry.units" name="text" /></td>
         <td><input type="text" ng-model="entry.unitCost" name="text" /></td>
         <td><input type="text" ng-model="entry.date_purchased" name="text" /></td>
-        <td><input type="text" name="text" value="{{entry.amount}}"/></td>
         <td></td>
         <td><button class="button-inline-ok" ng-click="submitAssets()"></button></td>
         <td><button class="button-inline-remove" ng-click="resetEntry()"/></button></td>

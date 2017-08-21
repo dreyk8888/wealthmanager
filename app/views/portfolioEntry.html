@@ -3,9 +3,9 @@
   <div ng-init="getData()" name="loadPortfolio">
   <h1>Assets</h1>
 
-  <div id="assetGrid" ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid"></div>
+  <div id="assetGrid" ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
   <br>
-  <button class="button-add-new" ng-click="addNew = !addNew" value="Add New Entry"></button>
+  <button ng-click="addNew = !addNew" value="Add New Entry"></button>
   <div ng-submit="submitAssets()" ng-hide="addNew">
     <table>
     <thead>

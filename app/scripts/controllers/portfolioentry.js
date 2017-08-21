@@ -13,6 +13,7 @@
 - group by asset type
 - make an update API
 - hook up inline edit to get the right _id to pass to update function in API
+- add delete buttons to table
 - calculate the percentage of each assetType amount vs total assets
 - display total amount per assetType
  */
@@ -43,7 +44,7 @@ angular.module('wealthManagerApp')
             { name: 'Units Held', field: 'units', type: 'number', width: '10%' },
             { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%'},
             { name: 'Amount', field: 'amount', type: 'number', width: '20%', enableCellEdit: false},
-            { name: 'Date Purchased (mm-dd-yyyy)', field: 'date_purchased', type: 'date', width: '20%', cellFilter: 'date:"MM-dd-yyyy"'}
+            { name: 'Date Purchased (MM-DD-YYYY)', field: 'date_purchased', type: 'date', width: '30%', cellFilter: 'date:"MM-dd-yyyy"'}
         ];
 
         $scope.gridOptions = {};
@@ -52,10 +53,7 @@ angular.module('wealthManagerApp')
         $scope.gridOptions.data = 'assetData'
         $scope.gridOptions.onRegisterApi = function(gridApi) {
             $scope.gridApi = gridApi;
-            gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
-           console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.field + ' newValue:' + newValue + ' oldValue:' + oldValue);
-            $scope.$apply();
-          });
+            gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
         };
 
         $scope.calculateTotalAssets = function(){

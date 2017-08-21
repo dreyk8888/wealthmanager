@@ -8,14 +8,11 @@
  * Controller of the wealthManagerApp
  */
 
- /*todo 8/13/2017
- - separate table by assetType
-foreach (assetType){
-    foreach (asset in assetType){
-        create a row of data
-    }
-}
-- figure out how to do inline edit/save/cancel
+ /*todo
+- refactor from this.assets to
+- group by asset type
+- make an update API
+- hook up inline edit to get the right _id to pass to update function in API
 - calculate the percentage of each assetType amount vs total assets
 - display total amount per assetType
  */
@@ -23,7 +20,8 @@ foreach (assetType){
 
 angular.module('wealthManagerApp')
     .controller('PortfolioEntryCtrl', function ($scope, $http, AssetDataAPI) {
-        this.entry = {
+
+        $scope.entry = {
             assetType: "",
             assetName: "",
             units: "",
@@ -34,56 +32,69 @@ angular.module('wealthManagerApp')
             currency: ""
         };
 
+        $scope.totalAssets = 0;   //container for asset total amount
 
-        var self = this;        //save this to a different var so that we can access the data from http callback response
-        self.assets = [];       //local copy of asset data loaded from DB
+        //ui-grid setup
+        $scope.assetData = [];  //container for asset table
 
-        this.totalAssets = 0;
-
-        $scope.columns = [
-            { name: 'Name/Ticker', field: 'assetName' },
-            { name: 'Units Held', field: 'units' },
-            { name: 'Unit Cost', field: 'unitCost'},
-            { name: 'Amount', field: 'amount'},
-            { name: 'Date Purchased', field: 'date_purchased'}
+        var columnDefs = [
+            { name: 'ID', field: '_id', width: '0%', visible: false },
+            { name: 'Name/Ticker', field: 'assetName', width: '30%' },
+            { name: 'Units Held', field: 'units', type: 'number', width: '10%' },
+            { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%'},
+            { name: 'Amount', field: 'amount', type: 'number', width: '20%', enableCellEdit: false},
+            { name: 'Date Purchased (mm-dd-yyyy)', field: 'date_purchased', type: 'date', width: '20%', cellFilter: 'date:"MM-dd-yyyy"'}
         ];
 
         $scope.gridOptions = {};
         $scope.gridOptions.enableSorting = true;
-        $scope.gridOptions.columnDefs = $scope.columns;
-        $scope.gridOptions.data = 'myData'
+        $scope.gridOptions.columnDefs = columnDefs;
+        $scope.gridOptions.data = 'assetData'
         $scope.gridOptions.onRegisterApi = function(gridApi) {
-                $scope.gridApi = gridApi;
+            $scope.gridApi = gridApi;
+            gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+           console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.field + ' newValue:' + newValue + ' oldValue:' + oldValue);
+            $scope.$apply();
+          });
         };
 
-        this.calculateTotalAssets = function(){
-            this.totalAssets = 0;
+        $scope.calculateTotalAssets = function(){
+            $scope.totalAssets = 0;
             var total = 0;
-            for (var i = 0; i < this.assets.length; i++){
-                total = total + this.assets[i].amount;
+
+            for (var i = 0; i < $scope.assetData.length; i++){
+                total = total + $scope.assetData[i].amount;
             }
-            this.totalAssets = total.toFixed(2);
+
+            console.log ($scope.assetData.length);
+            $scope.totalAssets = total.toFixed(2);
         }
 
         //load asset data for the view
-        this.getData = function() {
+        $scope.getData = function() {
             AssetDataAPI.getData(successHandler_GET, failureHandler_GET);
-            this.calculateTotalAssets();
+        }
+/*
+        var refresh = function() {
+            $scope.refresh = true;
+            $timeout(function() {
+                $scope.refresh = false;
+            }, 0);
+        };
+*/
+         $scope.resetEntry = function(){
+            $scope.entry.assetType = "";
+            $scope.entry.assetName = "";
+            $scope.entry.units = "";
+            $scope.entry.unitCost = "";
+            $scope.entry.amount = "";
+            $scope.entry.category = "";
+            $scope.entry.date_purchased = "";
+            $scope.entry.currency = "";
         }
 
-        this.resetEntry = function(){
-            this.entry.assetType = "";
-            this.entry.assetName = "";
-            this.entry.units = "";
-            this.entry.unitCost = "";
-            this.entry.amount = "";
-            this.entry.category = "";
-            this.entry.date_purchased = "";
-            this.entry.currency = "";
-        }
-
-        this.submitAssets = function() {
-            var temp = this.entry;
+        $scope.submitAssets = function() {
+            var temp = $scope.entry;
             temp.units = Number(temp.units);
             temp.unitCost = Number(temp.unitCost);
             temp.amount = Number(temp.units * temp.unitCost);
@@ -91,31 +102,20 @@ angular.module('wealthManagerApp')
             //post to database
             AssetDataAPI.postData (successHandler_POST, failureHandler_POST, temp);
 
-            this.assets.push(temp);
+            $scope.assetData.push(temp);
             console.log (temp.assetName);
-            this.calculateTotalAssets();
+            $scope.calculateTotalAssets();
             return true;
             //this runs too soon, causing the push before to have empty data
-           // this.resetEntry();  //clear out text field
+           // $scope.resetEntry();  //clear out text field
         }
 
-        //trigger inline edit of an asset
-        this.editAsset = function(asset){
-            this.editing = this.assets.indexOf(asset);
-            this.newField = angular.copy(asset);
-        }
-
-        //cancel inline edit and restore previous value
-        this.cancelEdit = function(index){
-
-        }
-        this.deleteAsset = function(asset){
+        $scope.deleteAsset = function(asset){
             AssetDataAPI.deleteData(successHandler_DELETE, failureHandler_DELETE, asset);
-            this.assets.splice(this.assets.indexOf(asset), 1); //remove item from local list of assets
-            this.calculateTotalAssets();
-            console.log ('Assets list:' + this.assets);
+            $scope.assetData.splice($scope.assetData.indexOf(asset), 1); //remove item from local list of assets
+            $scope.calculateTotalAssets();
 
-            console.log($scope.myData);
+            console.log($scope.assetData);
         }
 
         //api success/failure error handling
@@ -135,11 +135,12 @@ angular.module('wealthManagerApp')
         }
 
         function successHandler_GET(res) {
-            $scope.myData = [];
+            $scope.assetData = [];
             for (var i = 0; i < res.data.length; i++){
-                self.assets[i] = res.data[i];
-                $scope.myData.push(res.data[i]);
+                $scope.assetData.push(res.data[i]);
             }
+            console.log("Get data: " + $scope.gridOptions.data);
+            $scope.calculateTotalAssets();
         }
 
         function failureHandler_GET(res) {

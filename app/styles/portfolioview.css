@@ -9,3 +9,59 @@ button.button-inline-ok {
     padding-left: 16px;     /* make text start to the right of the image */
     vertical-align: middle; /* align the text vertically centered */
 }
+
+button.button-inline-cancel {
+    background-image: url(/images/icons/glyphicons-208-remove.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 25px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+button.button-add-new {
+    background-image: url(/images/icons/glyphicons-433-plus.png); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 40px;           /* make this the size of your image */
+    width: 80px;
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+#diversification {
+	width: 70%;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 1.5em;
+    border-collapse: collapse;
+}
+
+#diversification td, #diversification th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#diversification tr:nth-child(even){background-color: #f2f2f2;}
+
+#diversification tr:hover {background-color: #ddd;}
+
+#diversification th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.display-amounts {
+	 text-align: right;
+}	
+.div-all-total {	
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}

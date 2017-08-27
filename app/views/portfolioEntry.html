@@ -1,52 +1,65 @@
 <div ng-controller="PortfolioEntryCtrl">
 
-  <div ng-init="portfolioEntry.getData()" name="loadPortfolio">
+  <div ng-init="getData()" name="loadPortfolio">
   <h1>Assets</h1>
+  <div id="diversification">
+    <table>
 
-
-  <p>
+      <thead>
+        <th>Asset Class</th>
+        <th>Amount ($)</th>
+        <th>Percentage (%)</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in classTotals">
+          <td>{{item.class}}</td>
+          <td class="display-amounts">{{item.total}}</td>
+          <td class="display-amounts">{{item.percentage}}</td>
+        </tr>
+        <tr><td> </td><td></td><td></td></tr>
+        <tr class="div-all-total">
+          <td>Total</td>
+          <td class="display-amounts">{{totalAssets}}</td>
+          <td class="display-amounts">100</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br/>
+  <br/>
+  <div id="assetGrid" ui-grid="gridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
+  <br>
+  <button ng-click="addNew = !addNew" value="Add New Entry"></button>
+  <div ng-submit="submitAssets()" ng-hide="addNew">
     <table>
       <thead>
+        <th>Asset Class</th>
+        <th>Location</th>
         <th>Name/Ticker</th>
         <th># of Units</th>
         <th>Unit Cost</th>
         <th>Date Purchased</th>
-        <th>Book Value</th>
         <th></th>
         <th></th>
         <th></th>
       </thead>
       <tbody>
-        <tr ng-repeat="asset in portfolioEntry.assets track by $index">
-          <td>{{asset.assetName}}</td>
-          <td>{{asset.units}}</td>
-          <td>{{asset.unitCost}}</td>
-          <td>{{asset.date_purchased}}</td>
-          <td>{{asset.amount}}</td>
-          <td></td>
-          <td><button ng-click="portfolioEntry.editAsset(asset)" name="editAsset"><span class="glyphicon glyphicon-pencil"></span></button></td>
-          <td><button ng-click="portfolioEntry.deleteAsset(asset)" name="deleteAsset"><span class="glyphicon glyphicon-trash"></span></button></td>
-          <td><span class="glyphicon glyphicon-move"></span></td>
-        </tr>
-      <div ng-submit="portfolioEntry.submitAssets()" ng-hide="submitted">
       <tr>
-        <td><input type="text" ng-model="portfolioEntry.entry.assetName" name="text"/></td>
-        <td><input type="text" ng-model="portfolioEntry.entry.units" name="text" /></td>
-        <td><input type="text" ng-model="portfolioEntry.entry.unitCost" name="text" /></td>
-        <td><input type="text" ng-model="portfolioEntry.entry.date_purchased" name="text" /></td>
-        <td><input type="text" name="text" value="{{portfolioEntry.entry.amount}}"/></td>
+        <td><input type="text" ng-model="entry.class" name="text"/></td>
+        <td><input type="text" ng-model="entry.location" name="text"/></td>
+        <td><input type="text" ng-model="entry.name" name="text"/></td>
+        <td><input type="text" ng-model="entry.units" name="text" /></td>
+        <td><input type="text" ng-model="entry.unitCost" name="text" /></td>
+        <td><input type="text" ng-model="entry.date_purchased" name="text" /></td>
         <td></td>
-        <td><button class="button-inline-ok" ng-click="submitted = portfolioEntry.submitAssets()" ng-init="submitted=false"/></button></td>
-        <td><button ng-click="portfolioEntry.resetEntry()"/><span class="glyphicon glyphicon-remove"></button></td>
+        <td><button class="button-inline-ok" ng-click="submitAssets()"></button></td>
+        <td><button class="button-inline-remove" ng-click="resetEntry()"/></button></td>
 
       </tr>
-      </div>
-      </tbody>
+</tbody>
     </table>
-    </p>
+  </div>
 
     </div>
 
-    <p>Total Assets: {{portfolioEntry.totalAssets}}</p>
-    <br/>
 </div>

@@ -41,7 +41,7 @@ angular.module('wealthManagerApp')
         var columnDefs = [
             { name: 'ID', field: '_id', width: '0%', visible: false },
             { name: 'Asset Class', field: 'class', width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' }, cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
-            { name: 'Geographical Location', field: 'location', width: '20%', grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'asc' }},
+            { name: 'Geographical Location', field: 'location', width: '20%'},
             { name: 'Name/Ticker', field: 'name', width: '20%' },
             { name: 'Units Held', field: 'units', type: 'number', width: '10%' },
             { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%'},
@@ -52,7 +52,8 @@ angular.module('wealthManagerApp')
         $scope.gridOptions = {
             enableSorting: true,
             columnDefs: columnDefs,
-            enableFiltering: true,
+            enableFiltering: false,
+            showTreeExpandNoChildren: true,
             treeRowHeaderAlwaysVisible: false,
             data: 'assetData',
             onRegisterApi: function(gridApi) {

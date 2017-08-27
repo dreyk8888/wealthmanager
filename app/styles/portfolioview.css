@@ -33,3 +33,35 @@ button.button-add-new {
     padding-left: 16px;     /* make text start to the right of the image */
     vertical-align: middle; /* align the text vertically centered */
 }
+
+#diversification {
+	width: 50%;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 1.5em;
+    border-collapse: collapse;
+}
+
+#diversification td, #diversification th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#diversification tr:nth-child(even){background-color: #f2f2f2;}
+
+#diversification tr:hover {background-color: #ddd;}
+
+#diversification th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.display-amounts {
+	 text-align: right;
+}	
+.div-all-total {	
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}

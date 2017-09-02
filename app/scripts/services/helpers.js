@@ -5,7 +5,7 @@
  * @name wealthManagerApp.wealthManagerData
  * @description
  * # wealthManagerData
- * Service in the wealthManagerApp to access API and retrieve asset data
+ * Helper functions for wealth manager
  */
 angular.module('wealthManagerApp')
     .service('Helpers', function() {
@@ -30,5 +30,12 @@ angular.module('wealthManagerApp')
         String.prototype.toTitleCase = function () {
             return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         };
+
+        this.checkIfEmptyString = function(myString){
+            if (!myString || myString.length == 0) {
+                return true;
+            }
+            return false;
+        }
 
 });

@@ -11,12 +11,15 @@
  /*todo
 - make an update API
 - hook up inline edit to get the right _id to pass to update function in API
-- add delete buttons to table
+- create hardcoded set of types and geographical locations in DB
+- add code to fetch these sets and use in grid as dropdowns
  */
 
 
 angular.module('wealthManagerApp')
     .controller('PortfolioEntryCtrl', function ($scope, $http, AssetDataAPI, Helpers) {
+
+    var DEBUG = true;
 
     $scope.entry = {
         class: "",
@@ -44,15 +47,14 @@ angular.module('wealthManagerApp')
         { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%', cellFilter: 'currency'},
         { name: 'Amount', field: 'amount', type: 'number', width: '10%', enableCellEdit: false, cellFilter: 'currency' },
         { name: 'Date Purchased (MM-DD-YYYY)', field: 'date_purchased', type: 'date', width: '10%', cellFilter: 'date:"MM-dd-yyyy"'},
-        {
-            name: "",
+        { name: "",
             field:"buttons",
             width: '10%',
-            cellTemplate: '<div class="ui-grid-cell-contents" >' +
-            '<button value="Edit" ng-if="!row.inlineEdit.isEditModeOn" class="button-inline-remove" ng-click="row.inlineEdit.enterEditMode($event)"></button>' +
-            '<button value="Edit" ng-if="!row.inlineEdit.isEditModeOn" class="button-inline-edit" ng-click="row.inlineEdit.enterEditMode($event)"></button>' +
-            '<button value="Edit" ng-if="row.inlineEdit.isEditModeOn" class="button-inline-ok" ng-click="row.inlineEdit.saveEdit($event)"></button>' +
-            '<button value="Edit" ng-if="row.inlineEdit.isEditModeOn" class="button-inline-cancel" ng-click="row.inlineEdit.cancelEdit($event)"></button>' +
+            cellTemplate: '<div class="ui-grid-cell-contents actions-column" >' +
+            '<button value="Edit" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.inlineEdit.isEditModeOn" ng-click="row.inlineEdit.enterEditMode($event)"><span class="glyphicon glyphicon-pencil"></span></button>' +
+            '<button value="Delete" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.inlineEdit.isEditModeOn" class="button-inline-remove" ng-click="grid.appScope.deleteAsset(row.entity._id, $event)"><span class="glyphicon glyphicon-trash"></span></button>' +
+            '<button value="Apply" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.inlineEdit.isEditModeOn" class="button-inline-ok" ng-click="row.inlineEdit.saveEdit($event)"><span class="glyphicon glyphicon-ok"></span></button>' +
+            '<button value="Cancel" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.inlineEdit.isEditModeOn" class="button-inline-cancel" ng-click="row.inlineEdit.cancelEdit($event)"><span  class="glyphicon glyphicon-cancel"></span></button>' +
             '</div>',
             enableCellEdit: false,
             enableFiltering:false,
@@ -63,19 +65,31 @@ angular.module('wealthManagerApp')
     ];
 
     $scope.gridOptions = {
-    enableSorting: true,
-    columnDefs: columnDefs,
-    enableFiltering: false,
-    showTreeExpandNoChildren: true,
-    treeRowHeaderAlwaysVisible: false,
-    data: 'assetData',
-    onRegisterApi: function(gridApi) {
+        enableSorting: true,
+        columnDefs: columnDefs,
+        enableFiltering: false,
+        showTreeExpandNoChildren: true,
+        treeRowHeaderAlwaysVisible: false,
+        appScopeProvider: $scope,
+        data: 'assetData',
+        onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
             $scope.gridApi.grid.registerDataChangeCallback(function() {
                 $scope.gridApi.treeBase.expandAllRows();
             });
+
         }
     };
+
+
+
+    var refresh = function() {
+      $scope.refresh = true;
+      $timeout(function() {
+          $scope.refresh = false;
+      }, 0);
+    };
+
 
     //load asset data for the view
     $scope.getData = function() {
@@ -96,7 +110,7 @@ angular.module('wealthManagerApp')
             total = total + $scope.assetData[i].amount;
         }
 
-        console.log ($scope.assetData.length);
+        if (DEBUG){ console.log ("Number of asset entries: " + $scope.assetData.length); }
         $scope.totalAssets = total.toFixed(2);
     }
 
@@ -110,7 +124,7 @@ angular.module('wealthManagerApp')
             if (index === -1){
                 var percentOfTotal = ($scope.assetData[i].amount/$scope.totalAssets * 100).toFixed(2);
                 $scope.classTotals.push({class: $scope.assetData[i].class.toTitleCase(), total: $scope.assetData[i].amount, percentage: percentOfTotal} );
-                console.log ($scope.classTotals);
+                if (DEBUG){ console.log ("Calculating amount per asset class: " + $scope.classTotals); }
             } else {
                 var newTotal = $scope.classTotals[index].total + $scope.assetData[i].amount;
                 $scope.classTotals[index].total = newTotal;
@@ -119,28 +133,8 @@ angular.module('wealthManagerApp')
                 $scope.classTotals[index].percentage = newPercentage;
             }
         }
-        console.log ($scope.classTotals);
+        if (DEBUG){ console.log ("Total amount per asset class: " + $scope.classTotals); }
 
-    }
-
-
-    /*
-    var refresh = function() {
-      $scope.refresh = true;
-      $timeout(function() {
-          $scope.refresh = false;
-      }, 0);
-    };
-    */
-    $scope.resetEntry = function(){
-        $scope.entry.class = "";
-        $scope.entry.name = "";
-        $scope.entry.units = "";
-        $scope.entry.unitCost = "";
-        $scope.entry.amount = "";
-        $scope.entry.location = "";
-        $scope.entry.date_purchased = "";
-        $scope.entry.currency = "";
     }
 
     $scope.submitAssets = function() {
@@ -160,27 +154,46 @@ angular.module('wealthManagerApp')
      // $scope.resetEntry();  //clear out text field
     }
 
-    $scope.deleteAsset = function(asset){
-        AssetDataAPI.deleteData(successHandler_DELETE, failureHandler_DELETE, asset);
-        $scope.assetData.splice($scope.assetData.indexOf(asset), 1); //remove item from local list of assets
+    $scope.deleteAsset = function(id, $event){
+        if(DEBUG) {
+            console.log ("Deleting: " + id);
+            console.log ("Data to be deleted: " + $scope.assetData[$scope.assetData.indexOf(id)]);
+        }
+        AssetDataAPI.deleteData(successHandler_DELETE, failureHandler_DELETE, id);
+        $scope.assetData.splice($scope.assetData.indexOf(id), 1); //remove item from local list of assets
         $scope.recalculate();
+    }
+
+     $scope.resetEntry = function(){
+        $scope.entry.class = "";
+        $scope.entry.name = "";
+        $scope.entry.units = "";
+        $scope.entry.unitCost = "";
+        $scope.entry.amount = "";
+        $scope.entry.location = "";
+        $scope.entry.date_purchased = "";
+        $scope.entry.currency = "";
+    }
+
+    $scope.isEmptyString = function(myString){
+        return Helpers.checkIfEmptyString(myString);
     }
 
 
     //api success/failure error handling
     function successHandler_POST(res, data) {
-        console.log ("Posted" + data);
+        console.log ("API Success: Posted" + data);
     }
 
     function failureHandler_POST(res) {
-        console.log ('Failed to post data!')
+        console.log ('API Error: Failed to post data!')
     }
     function successHandler_DELETE(res, id) {
-        console.log ("Deleting:" + id);
+        console.log ("API Success: Deleting:" + id);
     }
 
     function failureHandler_DELETE(res) {
-        console.log ('Failed to delete data!')
+        console.log ('API Error: Failed to delete data!')
     }
 
     function successHandler_GET(res) {
@@ -192,7 +205,7 @@ angular.module('wealthManagerApp')
     }
 
     function failureHandler_GET(res) {
-        console.log ('Failed to retrieve data!')
+        console.log ('API error: Failed to retrieve data!')
     }
 
 });

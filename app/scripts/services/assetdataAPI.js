@@ -20,10 +20,10 @@ angular.module('wealthManagerApp')
             })
         }
 
-        this.deleteData = function(successHandler, failureHandler, data){
-            $http.delete(apiURL + '/' + data._id)
+        this.deleteData = function(successHandler, failureHandler, id){
+            $http.delete(apiURL + '/' + id)
             .then(function(response){
-                successHandler(response, data._id);    //data can't be used outside this function
+                successHandler(response, id);    //data can't be used outside this function
                 return true;
             }, function(error) {
                 failureHandler(error);

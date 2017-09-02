@@ -1,65 +1,97 @@
+button.button-add-new {
+    color: #ffffff;
+    font-size: 20px;
+    background: transparent;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+}
+
+button.button-add-new span{
+    padding-left: 20px;
+    background: url(/images/icons/glyphicons-433-plus.png) no-repeat 0 0px;
+}
+
 button.button-inline-ok {
-    background-image: url(/images/icons/glyphicons-207-ok.png); /* 16px x 16px */
-    background-color: transparent; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: 0px 0px;  /* equivalent to 'top left' */
+    color: #ffffff;
+    font-size: 20px;
+    background: transparent;
+    text-decoration: none;
     border: none;           /* assuming we don't want any borders */
     cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 25px;           /* make this the size of your image */
-    padding-left: 16px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
+
+}
+
+button.button-inline-ok span{
+    background: url(/images/icons/glyphicons-207-ok.png) no-repeat 0 0px;
 }
 
 button.button-inline-cancel {
-    background-image: url(/images/icons/glyphicons-208-remove.png); /* 16px x 16px */
-    background-color: transparent; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: 0px 0px;  /* equivalent to 'top left' */
+   color: #ffffff;
+    font-size: 20px;
+    background: transparent;
+    text-decoration: none;
     border: none;           /* assuming we don't want any borders */
     cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 25px;           /* make this the size of your image */
-    padding-left: 16px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
+
+}
+
+button.button-inline-cancel span{
+    padding-left: 36px;
+    background: url(/images/icons/glyphicons-208-remove.png) no-repeat 0 0px;
 }
 
 button.button-inline-edit {
-    background-image: url(/images/icons/glyphicons-31-pencil.png); /* 16px x 16px */
-    background-color: transparent; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: center;  /* equivalent to 'top left' */
+   color: #ffffff;
+    background: transparent;
+    text-decoration: none;
     border: none;           /* assuming we don't want any borders */
-    color: transparent;
     cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 16px;           /* make this the size of your image */
-    padding-left: 0px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
+
+}
+
+button.button-inline-edit span{
+    padding: 5px;
     background-size: cover;
+    background-position: center;
+    background: url(/images/icons/glyphicons-31-pencil.png) no-repeat 0 0px;
 }
 
 button.button-inline-delete {
-    background-image: url(/images/icons/glyphicons-17-bin.png); /* 16px x 16px */
-    background-color: transparent; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: 0px 0px;  /* equivalent to 'top left' */
+    color: #ffffff;
+    font-size: 20px;
+    background: transparent;
+    text-decoration: none;
     border: none;           /* assuming we don't want any borders */
     cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 25px;           /* make this the size of your image */
-    padding-left: 0px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
+
 }
-button.button-add-new {
-    background-image: url(/images/icons/glyphicons-433-plus.png); /* 16px x 16px */
-    background-color: transparent; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: 0px 0px;  /* equivalent to 'top left' */
-    background-size: cover;
-    border: none;           /* assuming we don't want any borders */
-    color: transparent;
-    cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 40px;           /* make this the size of your image */
-    width: 80px;
-    padding-left: 16px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
+
+
+button.button-inline-delete span {
+    padding:5px;
+    background-image: url(/images/icons/glyphicons-17-bin.png);
+}
+
+button.button-future:hover {
+ background: transparent;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+button.button-future:active {
+background-image: -moz-linear-gradient(top, #dbdbdb, #ffffff);
+background-image: -webkit-gradient(linear,left top,left bottom,
+    color-stop(0, #dbdbdb),color-stop(1, #ffffff));
+filter: progid:DXImageTransform.Microsoft.gradient
+    (startColorStr='#dbdbdb', EndColorStr='#ffffff');
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient
+    (startColorStr='#dbdbdb', EndColorStr='#ffffff')";
+text-shadow: 0px -1px 0 rgba(255, 255, 255, 0.5);
+margin-top: 1px;
 }
 
 #diversification {

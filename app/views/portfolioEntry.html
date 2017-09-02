@@ -29,7 +29,7 @@
   <br/>
   <div id="assetGrid" ui-grid="gridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
   <br>
-  <button ng-click="addNew = !addNew" value="Add New Entry"></button>
+  <button class="button-add-new" ng-click="addNew = !addNew" value="Add New Entry"><span></span></button>
   <div ng-submit="submitAssets()" ng-hide="addNew">
     <table>
       <thead>

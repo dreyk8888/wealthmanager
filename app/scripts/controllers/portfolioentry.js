@@ -40,22 +40,17 @@ angular.module('wealthManagerApp')
 
     var columnDefs = [
         { name: 'ID', field: '_id', width: '0%', visible: false },
-        { name: 'Asset Class', field: 'class', width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' }, cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
+        { name: 'Asset Class', field: 'class', width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' }, cellTemplate: 'views/portfolioentry-grid-grouping-template.html' },
         { name: 'Geographical Location', field: 'location', width: '10%'},
         { name: 'Name/Ticker', field: 'name', width: '20%' },
         { name: 'Units Held', field: 'units', type: 'number', width: '10%' },
         { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%', cellFilter: 'currency'},
         { name: 'Amount', field: 'amount', type: 'number', width: '10%', enableCellEdit: false, cellFilter: 'currency' },
         { name: 'Date Purchased (MM-DD-YYYY)', field: 'date_purchased', type: 'date', width: '10%', cellFilter: 'date:"MM-dd-yyyy"'},
-        { name: "",
+        { name: "Actions",
             field:"buttons",
             width: '10%',
-            cellTemplate: '<div class="ui-grid-cell-contents actions-column" >' +
-            '<button value="Edit" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.inlineEdit.isEditModeOn" ng-click="row.inlineEdit.enterEditMode($event)"><span class="glyphicon glyphicon-pencil"></span></button>' +
-            '<button value="Delete" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.inlineEdit.isEditModeOn" class="button-inline-remove" ng-click="grid.appScope.deleteAsset(row.entity._id, $event)"><span class="glyphicon glyphicon-trash"></span></button>' +
-            '<button value="Apply" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.inlineEdit.isEditModeOn" class="button-inline-ok" ng-click="row.inlineEdit.saveEdit($event)"><span class="glyphicon glyphicon-ok"></span></button>' +
-            '<button value="Cancel" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.inlineEdit.isEditModeOn" class="button-inline-cancel" ng-click="row.inlineEdit.cancelEdit($event)"><span  class="glyphicon glyphicon-cancel"></span></button>' +
-            '</div>',
+            cellTemplate: 'views/portfolioentry-grid-button-template.html',
             enableCellEdit: false,
             enableFiltering:false,
             enableSorting: false,
@@ -77,11 +72,8 @@ angular.module('wealthManagerApp')
             $scope.gridApi.grid.registerDataChangeCallback(function() {
                 $scope.gridApi.treeBase.expandAllRows();
             });
-
         }
     };
-
-
 
     var refresh = function() {
       $scope.refresh = true;
@@ -102,6 +94,7 @@ angular.module('wealthManagerApp')
         $scope.calculateTotalPerAssetClass();
     }
 
+    //#TODO: Refactor calculate functions into separate service
     $scope.calculateTotalAssets = function(){
         $scope.totalAssets = 0;
         var total = 0;
@@ -114,6 +107,7 @@ angular.module('wealthManagerApp')
         $scope.totalAssets = total.toFixed(2);
     }
 
+    //#TODO: Refactor calculate functions into separate service
     $scope.calculateTotalPerAssetClass = function(){
         //array of {asset class, total, percentage of all assets}
         $scope.classTotals = [];
@@ -202,6 +196,7 @@ angular.module('wealthManagerApp')
             $scope.assetData.push(res.data[i]);
         }
         $scope.recalculate();
+        console.log ("API Success: Data retrieved and all amounts recalculated.");
     }
 
     function failureHandler_GET(res) {

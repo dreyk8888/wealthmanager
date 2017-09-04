@@ -1,6 +1,16 @@
 <div class="ui-grid-cell-contents actions-column" >
-    <button value="Edit" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.entity.editrow" ng-click="grid.appScope.enterEditMode($event)"><span class="glyphicon glyphicon-pencil"></span></button>
-    <button value="Delete" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.entity.editrow" class="button-inline-remove" ng-click="grid.appScope.deleteAsset(row.entity._id, $event)"><span class="glyphicon glyphicon-trash"></span></button>
-    <button value="Apply" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.entity.editrow" class="button-inline-ok" ng-click="row.inlineEdit.saveEdit($event)"><span class="glyphicon glyphicon-ok"></span></button>
-    <button value="Cancel" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.entity.editrow" class="button-inline-cancel" ng-click="row.inlineEdit.cancelEdit($event)"><span  class="glyphicon glyphicon-cancel"></span></button>
+  <button value="Edit" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.entity.editrow" ng-click="grid.appScope.enterEditMode($event)">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </button>
+  <button value="Delete" ng-if="!grid.appScope.isEmptyString(row.entity.class) && !row.entity.editrow" class="button-inline-remove" ng-click="grid.appScope.deleteAsset(row.entity._id, $event)">
+    <span class="glyphicon glyphicon-trash"></span>
+  </button>
+  <!-- Not needed since we are doing a modal edit box
+  <button value="Apply" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.entity.editrow" class="button-inline-ok" ng-click="row.inlineEdit.saveEdit($event)">
+    <span class="glyphicon glyphicon-ok"></span>
+  </button>
+  <button value="Cancel" ng-if="!grid.appScope.isEmptyString(row.entity.class) && row.entity.editrow" class="button-inline-cancel" ng-click="row.inlineEdit.cancelEdit($event)">
+    <span class="glyphicon glyphicon-cancel"></span>
+  </button>
+  -->
 </div>

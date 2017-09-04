@@ -38,4 +38,13 @@ angular.module('wealthManagerApp')
                 failureHandler(error);
             })
         }
+
+        this.updateData = function(successHandler, failureHandler, data){
+            $http.put(apiURL, JSON.stringify(data))
+            .then(function(response){
+                successHandler(response, data);
+            }, function(error){
+                failureHandler(error);
+            })
+        }
 }]);

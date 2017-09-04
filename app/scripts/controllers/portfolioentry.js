@@ -9,15 +9,14 @@
  */
 
  /*todo
-- make an update API
-- hook up inline edit to get the right _id to pass to update function in API
+- hook up modal dialog to update data
 - create hardcoded set of types and geographical locations in DB
 - add code to fetch these sets and use in grid as dropdowns
  */
 
 
 angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl', function ($scope, $http, AssetDataAPI, Helpers) {
+    .controller('PortfolioEntryCtrl', function ($scope, $http, AssetDataAPI, Helpers, RowEditor) {
 
     var DEBUG = true;
 
@@ -74,6 +73,9 @@ angular.module('wealthManagerApp')
             });
         }
     };
+
+
+    $scope.editRow = RowEditor.editRow; //expose edit row function by binding to controller scope
 
     var refresh = function() {
       $scope.refresh = true;
@@ -158,7 +160,15 @@ angular.module('wealthManagerApp')
         $scope.recalculate();
     }
 
-     $scope.resetEntry = function(){
+    $scope.updateAssets = function (data){
+        if(DEBUG) {
+            console.log ("Updating: " + data._id + " with " + data);
+        }
+        AssetDataAPI.updateData(successHandler_PUT, failureHandler_PUT, data);
+        $scope.recalculate();
+    }
+
+    $scope.resetEntry = function(){
         $scope.entry.class = "";
         $scope.entry.name = "";
         $scope.entry.units = "";
@@ -169,6 +179,7 @@ angular.module('wealthManagerApp')
         $scope.entry.currency = "";
     }
 
+    //expose helper function by binding to controller scope
     $scope.isEmptyString = function(myString){
         return Helpers.checkIfEmptyString(myString);
     }
@@ -181,6 +192,14 @@ angular.module('wealthManagerApp')
 
     function failureHandler_POST(res) {
         console.log ('API Error: Failed to post data!')
+    }
+
+    function successHandler_PUT(res, data) {
+        console.log ("API Success: Updated" + data);
+    }
+
+    function failureHandler_PUT(res) {
+        console.log ('API Error: Failed to update data!')
     }
     function successHandler_DELETE(res, id) {
         console.log ("API Success: Deleting:" + id);

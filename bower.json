@@ -1,13 +1,14 @@
 {
   "name": "wealth-manager",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "angular": "^1.4.0",
     "bootstrap": "^3.2.0",
     "angular-ui-router": "^1.0.3",
     "angular-ui-grid": "^4.0.6",
-    "angular-ui-bootstrap": "^2.5.0",
-    "angular-schema-form": "^0.8.13"
+    "angular-schema-form": "^0.8.13",
+	"ui-bootstrap": "./local_dependencies/ui-bootstrap-custom-build/ui-bootstrap-custom-2.5.0.min.js",
+	"ui-bootstrap-templates": "./local_dependencies/ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-2.5.0.min.js"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"

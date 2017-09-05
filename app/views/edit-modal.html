@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="AssetRowEditCtrl as vm">
   <div class="modal-header">
       <h3 class="modal-title">Edit Row</h3>
   </div>
@@ -7,6 +7,6 @@
   </div>
   <div class="modal-footer">
       <button class="btn btn-success" ng-click="vm.save()">Save</button>
-      <button class="btn btn-warning" ng-click="$close()">Cancel</button>
+      <button class="btn btn-warning" ng-click="vm.cancel()">Cancel</button>
   </div>
 </div>

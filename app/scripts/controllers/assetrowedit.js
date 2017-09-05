@@ -12,23 +12,29 @@ angular.module('wealthManagerApp')
 .controller('AssetRowEditCtrl', function ($uibModalInstance, AssetSchema, grid, row) {
     var vm = this;
 
-    vm.schema = AssetScema;
+    vm.schema = AssetSchema;
     vm.entity = angular.copy(row.entity);
     vm.form = [
+        'class',
         'name',
-        'company',
-        'phone',
-        {
-            'key': 'address.city',
-            'title': 'City'
-        },
+        'units',
+        'unitCost',
+        'amount',
+        'location',
+        'date_purchased',
+        'currency'
     ];
 
-    vm.save = save;
-
-    function save() {
+    vm.save =  function save() {
+        console.log ("Saving values");
         // Copy row values over
         row.entity = angular.extend(row.entity, vm.entity);
         $uibModalInstance.close(row.entity);
+    };
+
+    vm.cancel = function cancel(){
+        console.log("Cancelled");
+        $uibModalInstance.dismiss('cancel');
     }
+
 });

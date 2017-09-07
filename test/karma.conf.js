@@ -30,8 +30,7 @@ module.exports = function(config) {
       'bower_components/objectpath/lib/ObjectPath.js',
       'bower_components/angular-schema-form/dist/schema-form.js',
       'bower_components/angular-schema-form/dist/bootstrap-decorator.js',
-      'bower_components/ui-bootstrap/index.js',
-      'bower_components/ui-bootstrap-templates/index.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

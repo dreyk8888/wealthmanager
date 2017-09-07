@@ -1,7 +1,7 @@
 {
   "name": "ui-bootstrap-templates",
   "main": "index.js",
-  "_source": "C:\\Web Development\\WealthManager\\local_dependencies\\ui-bootstrap-custom-build\\ui-bootstrap-custom-tpls-2.5.0.min.js",
+  "_source": "C:\\Web Development\\WealthManager\\local_dependencies\\ui-bootstrap-custom-build\\ui-bootstrap-custom-tpls-2.5.0.js",
   "_target": "*",
-  "_originalSource": "./local_dependencies/ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-2.5.0.min.js"
+  "_originalSource": "./local_dependencies/ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-2.5.0.js"
 }

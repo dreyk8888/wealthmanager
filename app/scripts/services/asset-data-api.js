@@ -39,8 +39,8 @@ angular.module('wealthManagerApp')
             })
         }
 
-        this.updateData = function(successHandler, failureHandler, data){
-            $http.put(apiURL, JSON.stringify(data))
+        this.updateData = function(successHandler, failureHandler, data, id){
+            $http.put(apiURL + '/' + id, JSON.stringify(data))
             .then(function(response){
                 successHandler(response, data);
             }, function(error){

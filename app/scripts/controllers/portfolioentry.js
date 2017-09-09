@@ -12,15 +12,18 @@
 - hook up modal dialog to update data
 - create hardcoded set of types and geographical locations in DB
 - add code to fetch these sets and use in grid as dropdowns
+
  */
 
 
 angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl', function ($scope, $http, AssetDataAPI, Helpers, RowEditor) {
+    .controller('PortfolioEntryCtrl', function ($http, AssetDataAPI, Helpers, RowEditor) {
 
     var DEBUG = true;
 
-    $scope.entry = {
+    var vm = this;
+
+    vm.entry = {
         class: "",
         name: "",
         units: "",
@@ -31,11 +34,11 @@ angular.module('wealthManagerApp')
         currency: ""
     };
 
-    $scope.totalAssets = 0;   //container for asset total amount
-    $scope.classTotals = [];
+    vm.totalAssets = 0;   //container for asset total amount
+    vm.classTotals = [];
 
     //ui-grid setup
-    $scope.assetData = [];  //container for asset table
+    vm.assetData = [];  //container for asset table
 
     var columnDefs = [
         { name: 'ID', field: '_id', width: '0%', visible: false },
@@ -58,83 +61,84 @@ angular.module('wealthManagerApp')
         },
     ];
 
-    $scope.gridOptions = {
+    vm.gridOptions = {
         enableSorting: true,
         columnDefs: columnDefs,
         enableFiltering: false,
         showTreeExpandNoChildren: true,
         treeRowHeaderAlwaysVisible: false,
-        appScopeProvider: $scope,
-        data: 'assetData',
+        appScopeProvider: vm,
+        data: vm.assetData,
         onRegisterApi: function(gridApi) {
-            $scope.gridApi = gridApi;
-            $scope.gridApi.grid.registerDataChangeCallback(function() {
-                $scope.gridApi.treeBase.expandAllRows();
+            vm.gridApi = gridApi;
+            vm.gridApi.grid.registerDataChangeCallback(function() {
+                vm.gridApi.treeBase.expandAllRows();
             });
         }
     };
 
 
-    $scope.editRow = RowEditor.editRow; //expose edit row function by binding to controller scope
+    vm.editRow = RowEditor.editRow; //expose edit row function by binding to controller scope
 
     var refresh = function() {
-      $scope.refresh = true;
+      vm.refresh = true;
       $timeout(function() {
-          $scope.refresh = false;
+          vm.refresh = false;
       }, 0);
     };
 
 
+
     //load asset data for the view
-    $scope.getData = function() {
+    vm.getData = function() {
         AssetDataAPI.getData(successHandler_GET, failureHandler_GET);
     }
 
     //contains all the functions needed to recalculate everything
-    $scope.recalculate = function(){
-        $scope.calculateTotalAssets();
-        $scope.calculateTotalPerAssetClass();
+    vm.recalculate = function(){
+        vm.calculateTotalAssets();
+        vm.calculateTotalPerAssetClass();
     }
 
     //#TODO: Refactor calculate functions into separate service
-    $scope.calculateTotalAssets = function(){
-        $scope.totalAssets = 0;
+    vm.calculateTotalAssets = function(){
+        vm.totalAssets = 0;
         var total = 0;
 
-        for (var i = 0; i < $scope.assetData.length; i++){
-            total = total + $scope.assetData[i].amount;
+        for (var i = 0; i < vm.assetData.length; i++){
+            total = total + vm.assetData[i].amount;
         }
 
-        if (DEBUG){ console.log ("Number of asset entries: " + $scope.assetData.length); }
-        $scope.totalAssets = total.toFixed(2);
+        if (DEBUG){ console.log ("Number of asset entries: " + vm.assetData.length); }
+        vm.totalAssets = total.toFixed(2);
     }
 
     //#TODO: Refactor calculate functions into separate service
-    $scope.calculateTotalPerAssetClass = function(){
+    vm.calculateTotalPerAssetClass = function(){
         //array of {asset class, total, percentage of all assets}
-        $scope.classTotals = [];
+        vm.classTotals = [];
         var classIndex = 0;
-        for (var i = 0; i < $scope.assetData.length; i++){
-            var index = Helpers.searchArray($scope.assetData[i].class, $scope.classTotals, 'class');
+        for (var i = 0; i < vm.assetData.length; i++){
+            var index = Helpers.searchArray(vm.assetData[i].class, vm.classTotals, 'class');
 
             if (index === -1){
-                var percentOfTotal = ($scope.assetData[i].amount/$scope.totalAssets * 100).toFixed(2);
-                $scope.classTotals.push({class: $scope.assetData[i].class.toTitleCase(), total: $scope.assetData[i].amount, percentage: percentOfTotal} );
-                if (DEBUG){ console.log ("Calculating amount per asset class: " + $scope.classTotals); }
+                var percentOfTotal = (vm.assetData[i].amount/vm.totalAssets * 100).toFixed(2);
+                vm.classTotals.push({class: vm.assetData[i].class.toTitleCase(), total: vm.assetData[i].amount, percentage: percentOfTotal} );
+                if (DEBUG){ console.log ("Calculating amount per asset class: " + vm.classTotals); }
             } else {
-                var newTotal = $scope.classTotals[index].total + $scope.assetData[i].amount;
-                $scope.classTotals[index].total = newTotal;
+                var newTotal = vm.classTotals[index].total + vm.assetData[i].amount;
+                vm.classTotals[index].total = newTotal;
 
-                var newPercentage = (newTotal/$scope.totalAssets * 100).toFixed(2);
-                $scope.classTotals[index].percentage = newPercentage;
+                var newPercentage = (newTotal/vm.totalAssets * 100).toFixed(2);
+                vm.classTotals[index].percentage = newPercentage;
             }
         }
-        if (DEBUG){ console.log ("Total amount per asset class: " + $scope.classTotals); }
+        if (DEBUG){ console.log ("Total amount per asset class: " + vm.classTotals); }
 
     }
 
-    $scope.submitAssets = function() {
-        var temp = $scope.entry;
+    vm.submitAssets = function() {
+        var temp = vm.entry;
         temp.class = temp.class.toTitleCase();
         temp.units = Number(temp.units);
         temp.unitCost = Number(temp.unitCost);
@@ -142,45 +146,45 @@ angular.module('wealthManagerApp')
 
         //post to database
         AssetDataAPI.postData (successHandler_POST, failureHandler_POST, temp);
-
-        $scope.assetData.push(temp);
-        $scope.recalculate();
+        vm.assetData.push(temp);
+        vm.recalculate();
         return true;
       //this runs too soon, causing the push before to have empty data
-     // $scope.resetEntry();  //clear out text field
+     // vm.resetEntry();  //clear out text field
     }
 
-    $scope.deleteAsset = function(id, $event){
+    vm.deleteAsset = function(id, $event){
         if(DEBUG) {
             console.log ("Deleting: " + id);
-            console.log ("Data to be deleted: " + $scope.assetData[$scope.assetData.indexOf(id)]);
+            console.log ("Data to be deleted: " + vm.assetData[vm.assetData.indexOf(id)]);
         }
         AssetDataAPI.deleteData(successHandler_DELETE, failureHandler_DELETE, id);
-        $scope.assetData.splice($scope.assetData.indexOf(id), 1); //remove item from local list of assets
-        $scope.recalculate();
+        vm.assetData.splice(vm.assetData.indexOf(id), 1); //remove item from local list of assets
+        vm.recalculate();
+
     }
 
-    $scope.updateAssets = function (data){
+    vm.updateAssets = function (data){
         if(DEBUG) {
             console.log ("Updating: " + data._id + " with " + data);
         }
         AssetDataAPI.updateData(successHandler_PUT, failureHandler_PUT, data);
-        $scope.recalculate();
+        vm.recalculate();
     }
 
-    $scope.resetEntry = function(){
-        $scope.entry.class = "";
-        $scope.entry.name = "";
-        $scope.entry.units = "";
-        $scope.entry.unitCost = "";
-        $scope.entry.amount = "";
-        $scope.entry.location = "";
-        $scope.entry.date_purchased = "";
-        $scope.entry.currency = "";
+    vm.resetEntry = function(){
+        vm.entry.class = "";
+        vm.entry.name = "";
+        vm.entry.units = "";
+        vm.entry.unitCost = "";
+        vm.entry.amount = "";
+        vm.entry.location = "";
+        vm.entry.date_purchased = "";
+        vm.entry.currency = "";
     }
 
     //expose helper function by binding to controller scope
-    $scope.isEmptyString = function(myString){
+    vm.isEmptyString = function(myString){
         return Helpers.checkIfEmptyString(myString);
     }
 
@@ -210,11 +214,13 @@ angular.module('wealthManagerApp')
     }
 
     function successHandler_GET(res) {
-        $scope.assetData = [];
+        vm.assetData = [];
         for (var i = 0; i < res.data.length; i++){
-            $scope.assetData.push(res.data[i]);
+            vm.assetData.push(res.data[i]);
+            console.log ("Asset added: " + vm.assetData[i].name);
         }
-        $scope.recalculate();
+        vm.recalculate();
+        vm.gridOptions.data = vm.assetData;
         console.log ("API Success: Data retrieved and all amounts recalculated.");
     }
 

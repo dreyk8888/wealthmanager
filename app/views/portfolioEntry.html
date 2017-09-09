@@ -1,6 +1,6 @@
-<div ng-controller="PortfolioEntryCtrl">
+<div ng-controller="PortfolioEntryCtrl as vm">
 
-  <div ng-init="getData()" name="loadPortfolio">
+  <div ng-init="vm.getData()" name="loadPortfolio">
   <h1>Assets</h1>
   <div id="diversification">
     <table>
@@ -11,7 +11,7 @@
         <th>Percentage (%)</th>
       </thead>
       <tbody>
-        <tr ng-repeat="item in classTotals">
+        <tr ng-repeat="item in vm.classTotals">
           <td>{{item.class}}</td>
           <td class="display-amounts">{{item.total}}</td>
           <td class="display-amounts">{{item.percentage}}</td>
@@ -27,10 +27,10 @@
   </div>
   <br/>
   <br/>
-  <div id="assetGrid" ui-grid="gridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
+  <div id="assetGrid" ui-grid="vm.gridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
   <br>
   <button class="button-add-new" ng-click="addNew = !addNew" value="Add New Entry"><span></span></button>
-  <div ng-submit="submitAssets()" ng-hide="addNew">
+  <div ng-submit="vm.submitAssets()" ng-hide="addNew">
     <table>
       <thead>
         <th>Asset Class</th>
@@ -45,15 +45,15 @@
       </thead>
       <tbody>
       <tr>
-        <td><input type="text" ng-model="entry.class" name="text"/></td>
-        <td><input type="text" ng-model="entry.location" name="text"/></td>
-        <td><input type="text" ng-model="entry.name" name="text"/></td>
-        <td><input type="text" ng-model="entry.units" name="text" /></td>
-        <td><input type="text" ng-model="entry.unitCost" name="text" /></td>
-        <td><input type="text" ng-model="entry.date_purchased" name="text" /></td>
+        <td><input type="text" ng-model="vm.entry.class" name="text"/></td>
+        <td><input type="text" ng-model="vm.entry.location" name="text"/></td>
+        <td><input type="text" ng-model="vm.entry.name" name="text"/></td>
+        <td><input type="text" ng-model="vm.entry.units" name="text" /></td>
+        <td><input type="text" ng-model="vm.entry.unitCost" name="text" /></td>
+        <td><input type="text" ng-model="vm.entry.date_purchased" name="text" /></td>
         <td></td>
-        <td><button class="button-inline-ok" ng-click="submitAssets()"></button></td>
-        <td><button class="button-inline-remove" ng-click="resetEntry()"/></button></td>
+        <td><button class="button-inline-ok" ng-click="vm.submitAssets()"></button></td>
+        <td><button class="button-inline-remove" ng-click="vm.resetEntry()"/></button></td>
 
       </tr>
 </tbody>

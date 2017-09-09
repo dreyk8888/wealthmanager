@@ -9,7 +9,6 @@
  */
 
  /*todo
-- hook up modal dialog to update data
 - create hardcoded set of types and geographical locations in DB
 - add code to fetch these sets and use in grid as dropdowns
 
@@ -17,22 +16,13 @@
 
 
 angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl', function ($http, AssetDataAPI, Helpers, RowEditor) {
+    .controller('PortfolioEntryCtrl', ['$http', 'Asset', 'AssetDataAPI', 'APIResponseHandlersCommon', 'Helpers', 'RowEditor', function ($http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor) {
 
     var DEBUG = true;
 
     var vm = this;
 
-    vm.entry = {
-        class: "",
-        name: "",
-        units: "",
-        unitCost: "",
-        amount: "",
-        location: "",
-        date_purchased: "",
-        currency: ""
-    };
+    vm.entry = Asset.init();
 
     vm.totalAssets = 0;   //container for asset total amount
     vm.classTotals = [];
@@ -78,7 +68,7 @@ angular.module('wealthManagerApp')
     };
 
 
-    vm.editRow = RowEditor.editRow; //expose edit row function by binding to controller scope
+    vm.editRow = RowEditor.editRow
 
     var refresh = function() {
       vm.refresh = true;
@@ -91,7 +81,7 @@ angular.module('wealthManagerApp')
 
     //load asset data for the view
     vm.getData = function() {
-        AssetDataAPI.getData(successHandler_GET, failureHandler_GET);
+        AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
     }
 
     //contains all the functions needed to recalculate everything
@@ -138,19 +128,14 @@ angular.module('wealthManagerApp')
     }
 
     vm.submitAssets = function() {
-        var temp = vm.entry;
-        temp.class = temp.class.toTitleCase();
-        temp.units = Number(temp.units);
-        temp.unitCost = Number(temp.unitCost);
-        temp.amount = Number(temp.units * temp.unitCost);
-
+        var temp = Asset.copyAndCalculateAmount(vm.entry);
         //post to database
-        AssetDataAPI.postData (successHandler_POST, failureHandler_POST, temp);
+        AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
         vm.assetData.push(temp);
         vm.recalculate();
         return true;
       //this runs too soon, causing the push before to have empty data
-     // vm.resetEntry();  //clear out text field
+     // vm.entry = Asset.reset();  //clear out text field
     }
 
     vm.deleteAsset = function(id, $event){
@@ -158,7 +143,7 @@ angular.module('wealthManagerApp')
             console.log ("Deleting: " + id);
             console.log ("Data to be deleted: " + vm.assetData[vm.assetData.indexOf(id)]);
         }
-        AssetDataAPI.deleteData(successHandler_DELETE, failureHandler_DELETE, id);
+        AssetDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
         vm.assetData.splice(vm.assetData.indexOf(id), 1); //remove item from local list of assets
         vm.recalculate();
 
@@ -168,19 +153,8 @@ angular.module('wealthManagerApp')
         if(DEBUG) {
             console.log ("Updating: " + data._id + " with " + data);
         }
-        AssetDataAPI.updateData(successHandler_PUT, failureHandler_PUT, data);
+        AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, data);
         vm.recalculate();
-    }
-
-    vm.resetEntry = function(){
-        vm.entry.class = "";
-        vm.entry.name = "";
-        vm.entry.units = "";
-        vm.entry.unitCost = "";
-        vm.entry.amount = "";
-        vm.entry.location = "";
-        vm.entry.date_purchased = "";
-        vm.entry.currency = "";
     }
 
     //expose helper function by binding to controller scope
@@ -188,32 +162,8 @@ angular.module('wealthManagerApp')
         return Helpers.checkIfEmptyString(myString);
     }
 
-
-    //api success/failure error handling
-    function successHandler_POST(res, data) {
-        console.log ("API Success: Posted" + data);
-    }
-
-    function failureHandler_POST(res) {
-        console.log ('API Error: Failed to post data!')
-    }
-
-    function successHandler_PUT(res, data) {
-        console.log ("API Success: Updated" + data);
-    }
-
-    function failureHandler_PUT(res) {
-        console.log ('API Error: Failed to update data!')
-    }
-    function successHandler_DELETE(res, id) {
-        console.log ("API Success: Deleting:" + id);
-    }
-
-    function failureHandler_DELETE(res) {
-        console.log ('API Error: Failed to delete data!')
-    }
-
-    function successHandler_GET(res) {
+    //custom success handler for API Get
+    vm.assetGetSuccessHandler = function successHandler_GET(res) {
         vm.assetData = [];
         for (var i = 0; i < res.data.length; i++){
             vm.assetData.push(res.data[i]);
@@ -224,8 +174,6 @@ angular.module('wealthManagerApp')
         console.log ("API Success: Data retrieved and all amounts recalculated.");
     }
 
-    function failureHandler_GET(res) {
-        console.log ('API error: Failed to retrieve data!')
-    }
 
-});
+
+}]);

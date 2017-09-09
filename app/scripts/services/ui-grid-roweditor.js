@@ -16,14 +16,14 @@ angular.module('wealthManagerApp')
        var modalInstance = $uibModal.open({
             templateUrl: 'views/edit-modal.html',
             //controller: AssetRowEditCtrl,
-            //controllerAs: 'editModal',
-            controller: function ($scope, $uibModalInstance, AssetSchema, grid, row) {
+            controllerAs: 'vm',
+
+            controller: function ($uibModalInstance, AssetSchema, grid, row) {
                 console.log("Running AssetRowEditCtrl");
-                //var $scope = this;
-                console.log ("Test");
-                $scope.schema = AssetSchema;
-                $scope.entity = angular.copy(row.entity);
-                $scope.form = [
+                var vm = this;
+                vm.schema = AssetSchema;
+                vm.entity = angular.copy(row.entity);
+                vm.form = [
                     'class',
                     'name',
                     'units',
@@ -34,24 +34,28 @@ angular.module('wealthManagerApp')
                     'currency'
                 ];
 
-                $scope.save =  function save() {
+               vm.save =  function save() {
                     console.log ("Saving values");
                     // Copy row values over
-                    row.entity = angular.extend(row.entity, $scope.entity);
+                    row.entity = angular.extend(row.entity, vm.entity);
                     $uibModalInstance.close(row.entity);
                 };
 
-                $scope.cancel = function cancel(){
+                vm.cancel = function cancel(){
                     console.log("Cancelled");
                     $uibModalInstance.dismiss('cancel');
                 };
             },
+
+
             resolve: {
                 grid: function () { return grid; },
                 row: function () { return row; }
             }
         });
     }
+
+    console.log ("row.entity.name");
 
     return service;
 }]);

@@ -8,8 +8,10 @@
  * Controller of the wealthManagerApp
  */
 
-angular.module('wealthManagerApp')
-.controller('AssetRowEditCtrl', function ($uibModalInstance, AssetSchema, grid, row) {
+
+
+angular.module('wealthManagerApp').controller('AssetRowEditCtrl', ['$uibModalInstance', function ($uibModalInstance, AssetSchema, grid, row) {
+    console.log("Running AssetRowEditCtrl");
     var vm = this;
 
     vm.schema = AssetSchema;
@@ -37,4 +39,4 @@ angular.module('wealthManagerApp')
         $uibModalInstance.dismiss('cancel');
     }
 
-});
+}]);

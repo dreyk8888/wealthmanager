@@ -13,10 +13,10 @@ angular.module('wealthManagerApp')
     service.editRow = editRow;
 
     function editRow(grid, row) {
-        $uibModal.open({
+       var modalInstance = $uibModal.open({
             templateUrl: 'views/edit-modal.html',
             controller: ['$uibModalInstance', 'AssetSchema', 'grid', 'row', AssetRowEditCtrl],
-            controllerAs: 'vm',
+            controllerAs: 'editModal',
             resolve: {
                 grid: function () { return grid; },
                 row: function () { return row; }
@@ -26,3 +26,4 @@ angular.module('wealthManagerApp')
 
     return service;
 }]);
+

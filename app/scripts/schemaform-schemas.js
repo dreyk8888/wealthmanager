@@ -9,11 +9,12 @@
  */
 
  angular.module('wealthManagerApp')
-.constant ('AssetSchema', {
+ .constant ('AssetSchema', {
     type: 'object',
     properties: {
         class: { type: 'string', title: 'Asset Class'},
-        name: { type: 'string', title: 'Name/Ticker'},
+        name: { type: 'string', title: 'Name or Symbol'},
+        ticker: { type: 'string', title: 'Ticker'},
         units: { type: 'number', title: 'Number of Units'},
         unitCost: {type: 'number', title: 'Unit Cost'},
         amount: { type: 'number', title: 'Amount'},   //this will be calculated from units X unitCost
@@ -21,4 +22,4 @@
         date_purchased: { type: 'string', title: 'Date Purchased' },
         currency: { type: 'string', title: 'Currency'}
     }
-})
+});

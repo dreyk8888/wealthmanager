@@ -18,21 +18,13 @@ angular.module('wealthManagerApp')
             templateUrl: 'views/edit-modal.html',
             //controller: AssetRowEditCtrl,
             controllerAs: 'vm',
-            controller: function ($uibModalInstance, AssetSchema, grid, row) {
+            controller: function ($uibModalInstance, AssetSchema, PortfolioForms, grid, row) {
                 var vm = this;
                 vm.schema = AssetSchema;
                 vm.entity = angular.copy(row.entity);
-                vm.form = [
-                    'class',
-                    'name',
-                    'units',
-                    'unitCost',
-                    'location',
-                    'date_purchased',
-                    'currency'
-                ];
+                vm.form = PortfolioForms.getAssetForm (vm.entity.class);
 
-               vm.save =  function save() {
+                vm.save =  function save() {
 
                     // Copy row values over
                     row.entity = angular.extend(row.entity, vm.entity);

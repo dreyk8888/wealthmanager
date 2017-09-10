@@ -1,8 +1,8 @@
 <div ng-controller="PortfolioEntryCtrl as vm">
 
   <div ng-init="vm.getData()" name="loadPortfolio">
-  <h1>Assets</h1>
-  <div id="diversification">
+  <h1>Portfolio Breakdown</h1>
+    <div id="diversification">
     <table>
 
       <thead>
@@ -27,10 +27,63 @@
   </div>
   <br/>
   <br/>
+  <span id="asset-label"><h2>Assets</h2></span>
+  <div id="assets-top-menu" class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+    <div class="btn-group btn-group-lg" role="group">
+      <button id="btnGroupDrop-asset-groupby" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group By  <span class="glyphicon glyphicon-chevron-down"></span></button>
+      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <button class="dropdown-item" type="button">Group by Class</button>
+        <button class="dropdown-item" type="button">Group by Geography</button>
+      </div>
+    </div>
+    <div class="btn-group btn-group-lg" role="group">
+      <button id="btnGroupDrop-asset-export" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export  <span class="glyphicon glyphicon-chevron-down"></span></button>
+      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <button class="dropdown-item" type="button">Export to CSV</button>
+        <button class="dropdown-item" type="button">Export to PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <br/>
+  <br/>
+
   <div id="assetGrid" ui-grid="vm.gridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
   <br>
   <button class="button-add-new" ng-click="addNew = !addNew" value="Add New Entry"><span></span></button>
-  <div ng-submit="vm.submitAssets()" ng-hide="addNew">
+  <div id="assetInput" ng-submit="vm.submitAssets()" ng-hide="addNew">
+    <div class="input-group">
+       <div class="input-group-btn">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Asset Class  <span class="glyphicon glyphicon-chevron-down"></span>
+        </button>
+        <div class="dropdown-menu" ng-repeat="classes in vm.assetClasses">
+          <button class="dropdown-item" type="button">{{classes}}</button>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+      </div>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">@</span>
+      <input type="text" class="form-control" placeholder="Name or ticker symbol" aria-describedby="basic-addon1">
+    </div>
+    <br>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <input type="text" class="form-control" placeholder="Number of units" aria-label="Number of units held">
+    </div>
+    <br>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+      <span class="input-group-addon">.00</span>
+    </div>
+    <br>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <span class="input-group-addon">0.00</span>
+      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+    </div>
     <table>
       <thead>
         <th>Asset Class</th>

@@ -9,9 +9,13 @@
  */
 
  /*todo
-- create hardcoded set of types and geographical locations in DB
+- add class and geography editing, save to DB
 - add code to fetch these sets and use in grid as dropdowns
-
+- make input area nicer
+- input validation in modal
+- input validation in input area
+- how to unit test?
+- CSS columns so everything align properly
  */
 
 
@@ -133,9 +137,9 @@ angular.module('wealthManagerApp')
         AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
         vm.assetData.push(temp);
         vm.recalculate();
+        vm.entry = Asset.reset(vm.entry);  //clear out text field
         return true;
-      //this runs too soon, causing the push before to have empty data
-     // vm.entry = Asset.reset();  //clear out text field
+
     }
 
     vm.deleteAsset = function(id, $event){

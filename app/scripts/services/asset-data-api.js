@@ -8,8 +8,8 @@
  * Service in the wealthManagerApp to access API and retrieve asset data
  */
 angular.module('wealthManagerApp')
-    .service('AssetDataAPI', ['$http', function($http) {
-        var apiURL = 'http://localhost:4000/assetentry';
+    .service('AssetDataAPI', ['$http', 'GlobalConstants', function($http, GlobalConstants) {
+        var apiURL = GlobalConstants.API_URL_LOCAL + '/assetentry';
         //can put additional code here
         this.getData = function(successHandler, failureHandler) {
             $http.get(apiURL)

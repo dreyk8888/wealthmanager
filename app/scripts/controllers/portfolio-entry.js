@@ -9,18 +9,16 @@
  */
 
  /*todo
-- add class and geography editing, save to DB
-- add code to fetch these sets and use in grid as dropdowns
-- make input area nicer
+- change input to have class dropdown, then change form based on selection
+- use same form for input area
 - input validation in modal
-- input validation in input area
 - how to unit test?
 - CSS columns so everything align properly
  */
 
 
 angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl', ['$http', 'Asset', 'AssetDataAPI', 'APIResponseHandlersCommon', 'Helpers', 'RowEditor', function ($http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor) {
+    .controller('PortfolioEntryCtrl', ['$http', 'Asset', 'AssetDataAPI', 'APIResponseHandlersCommon', 'Helpers', 'RowEditor', 'PortfolioForms', function ($http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, PortfolioForms) {
 
     var DEBUG = true;
 
@@ -31,7 +29,9 @@ angular.module('wealthManagerApp')
     vm.totalAssets = 0;   //container for asset total amount
     vm.classTotals = [];
 
-    //ui-grid setup
+////////////////////////////////////////////////////////////////////////////
+//ui-grid setup to display assets
+
     vm.assetData = [];  //container for asset table
 
     var columnDefs = [
@@ -74,19 +74,12 @@ angular.module('wealthManagerApp')
 
     vm.editRow = RowEditor.editRow
 
-    var refresh = function() {
-      vm.refresh = true;
-      $timeout(function() {
-          vm.refresh = false;
-      }, 0);
-    };
+////////////////////////////////////////////////////////////////////////////
+//Input form
 
+////////////////////////////////////////////////////////////////////////////
+//Calculations
 
-
-    //load asset data for the view
-    vm.getData = function() {
-        AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
-    }
 
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
@@ -131,6 +124,13 @@ angular.module('wealthManagerApp')
 
     }
 
+////////////////////////////////////////////////////////////////////////////
+//Data retrieval and updating
+
+    //load asset data for the view
+    vm.getData = function() {
+        AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
+    }
     vm.submitAssets = function() {
         var temp = Asset.copyAndCalculateAmount(vm.entry);
         //post to database

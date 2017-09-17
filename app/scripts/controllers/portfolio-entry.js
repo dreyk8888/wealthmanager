@@ -9,8 +9,7 @@
  */
 
  /*todo
-- change input to have class dropdown, then change form based on selection
-- use same form for input area
+ - recalculate when row is edited
 - input validation in modal
 - how to unit test?
 - CSS columns so everything align properly
@@ -34,7 +33,6 @@ angular.module('wealthManagerApp')
     var vm = this;
 
     vm.entry = Asset.init();
-
     vm.totalAssets = 0;   //container for asset total amount
     vm.classTotals = [];
 
@@ -85,11 +83,13 @@ angular.module('wealthManagerApp')
 ////////////////////////////////////////////////////////////////////////////
 //Input form
     vm.assetclasses = Asset.ASSETCLASSES;
-    vm.selectedItem = 'Select asset class';
+    //vm.selectedItem = 'Select asset class';
 
     vm.form = PortfolioForms.getAssetForm('');  //fetch default form until user selects asset type
     vm.classSelected = function(assetClass){
-        vm.selectedItem = assetClass;
+        //vm.selectedItem = assetClass;
+        //vm.entry.class = vm.selectedItem;
+        vm.entry.class = assetClass;
         vm.form = PortfolioForms.getAssetForm(assetClass);
         if (DEBUG) { console.log ('Class selected: ' + assetClass ); }
     }
@@ -152,13 +152,18 @@ angular.module('wealthManagerApp')
     vm.getData = function() {
         AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
     }
-    vm.submitAssets = function() {
+    vm.submitAssets = function(next) {
         var temp = Asset.copyAndCalculateAmount(vm.entry);
         //post to database
         AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
         vm.assetData.push(temp);
         vm.recalculate();
-        vm.entry = Asset.reset(vm.entry);  //clear out text field
+        if (next){
+            //this was a submit and next call. Don't reset the class
+            vm.entry = Asset.resetKeepClass(vm.entry);
+        } else {
+            vm.entry = Asset.reset(vm.entry);  //clear out text field
+        }
         return true;
 
     }

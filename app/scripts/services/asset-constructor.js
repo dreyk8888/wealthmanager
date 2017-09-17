@@ -39,6 +39,18 @@ angular.module('wealthManagerApp')
 
             return asset;
         }
+
+        this.resetKeepClass = function (asset){
+            asset.name = "";
+            asset.units = "";
+            asset.unitCost = "";
+            asset.amount = "";
+            asset.location = "";
+            asset.date_purchased = "";
+            asset.currency = "";
+
+            return asset;
+        }
         //return the Asset object parameter populated with parameterized values and calculated amount
         //keep track of _id for API posting purposes
         this.populate = function (asset, _id, assetClass, name, units, unitCost, amount, location, date_purchased, currency){

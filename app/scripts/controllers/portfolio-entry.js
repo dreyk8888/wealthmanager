@@ -18,7 +18,16 @@
 
 
 angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl', ['$http', 'Asset', 'AssetDataAPI', 'APIResponseHandlersCommon', 'Helpers', 'RowEditor', 'PortfolioForms', function ($http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, PortfolioForms) {
+    .controller('PortfolioEntryCtrl',
+        ['$http',
+        'Asset',
+        'AssetDataAPI',
+        'APIResponseHandlersCommon',
+        'Helpers',
+        'RowEditor',
+        'AssetSchema',
+        'PortfolioForms',
+        function ($http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, PortfolioForms) {
 
     var DEBUG = true;
 
@@ -71,11 +80,23 @@ angular.module('wealthManagerApp')
         }
     };
 
-
-    vm.editRow = RowEditor.editRow
+    vm.editRow = RowEditor.editRow; //handle edit row functionality in grid
 
 ////////////////////////////////////////////////////////////////////////////
 //Input form
+    vm.assetclasses = Asset.ASSETCLASSES;
+    vm.selectedItem = 'Select asset class';
+
+    vm.form = PortfolioForms.getAssetForm('');  //fetch default form until user selects asset type
+    vm.classSelected = function(assetClass){
+        vm.selectedItem = assetClass;
+        vm.form = PortfolioForms.getAssetForm(assetClass);
+        if (DEBUG) { console.log ('Class selected: ' + assetClass ); }
+    }
+
+    vm.schema = AssetSchema.schema;
+    vm.entity = vm.entry;
+    vm.model = {};
 
 ////////////////////////////////////////////////////////////////////////////
 //Calculations

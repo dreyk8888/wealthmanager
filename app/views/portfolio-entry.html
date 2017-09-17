@@ -49,41 +49,24 @@
   <br/>
 
   <div id="assetGrid" ui-grid="vm.gridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
-  <br>
+  <br/>
   <button class="button-add-new" ng-click="addNew = !addNew" value="Add New Entry"><span></span></button>
   <div id="assetInput" ng-submit="vm.submitAssets()" ng-hide="addNew">
-    <div class="input-group">
-       <div class="input-group-btn">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Asset Class  <span class="glyphicon glyphicon-chevron-down"></span>
-        </button>
-        <div class="dropdown-menu" ng-repeat="classes in vm.assetClasses">
-          <button class="dropdown-item" type="button">{{classes}}</button>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </div>
-      </div>
+  <br/>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="assetclassdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            {{vm.selectedItem}}
+            <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="assetclassdropdown">
+            <li ng-repeat="class in vm.assetclasses"><a ng-click="vm.classSelected(class)">{{class}}</a></li>
+        </ul>
     </div>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">@</span>
-      <input type="text" class="form-control" placeholder="Name or ticker symbol" aria-describedby="basic-addon1">
-    </div>
-    <br>
-    <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <input type="text" class="form-control" placeholder="Number of units" aria-label="Number of units held">
-    </div>
-    <br>
-    <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-      <span class="input-group-addon">.00</span>
-    </div>
-    <br>
-    <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <span class="input-group-addon">0.00</span>
-      <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-    </div>
+    <br/>
+    <form sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity"></form>
+    <br/>
+    <br/>
+    <!--
     <table>
       <thead>
         <th>Asset Class</th>
@@ -111,6 +94,7 @@
       </tr>
 </tbody>
     </table>
+  -->
   </div>
 
     </div>

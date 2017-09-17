@@ -10,6 +10,8 @@
  */
 angular.module('wealthManagerApp')
     .service('Asset', ['GlobalConstants', function(GlobalConstants) {
+        //set of asset classes
+        this.ASSETCLASSES = [GlobalConstants.CASH, GlobalConstants.EQUITIES, GlobalConstants.FIXEDINCOME, GlobalConstants.FIXEDASSETS,GlobalConstants.FOREIGNCURR]
         //return a clean Asset object
         this.init = function(){
             var asset = {

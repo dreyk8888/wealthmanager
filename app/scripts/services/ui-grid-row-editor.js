@@ -20,7 +20,7 @@ angular.module('wealthManagerApp')
             controllerAs: 'vm',
             controller: function ($uibModalInstance, AssetSchema, PortfolioForms, grid, row) {
                 var vm = this;
-                vm.schema = AssetSchema;
+                vm.schema = AssetSchema.schema;
                 vm.entity = angular.copy(row.entity);
                 vm.form = PortfolioForms.getAssetForm (vm.entity.class);
 

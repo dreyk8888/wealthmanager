@@ -23,7 +23,8 @@
             location: { type: 'string', title: 'Geographical Location'},
             date_purchased: { type: 'string', title: 'Date Purchased' },
             currency: { type: 'string', title: 'Currency'}
-        }
+        },
+        'required': ['name','units', 'unitCost', 'amount', 'location', 'date_purchased']
     }
     return;
 }]);

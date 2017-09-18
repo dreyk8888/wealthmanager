@@ -24,7 +24,10 @@ angular.module('wealthManagerApp')
                     'units',
                     'unitCost',
                     'location',
-                    'date_purchased',
+                    {
+                        'key': 'date_purchased',
+                        'validationMessage': 'Enter as mm/dd/yyyy'
+                    },
                     'currency'
                 ];
             } else if (assetClass === GlobalConstants.FIXEDASSETS){
@@ -32,14 +35,20 @@ angular.module('wealthManagerApp')
                     'name',
                     'amount',
                     'location',
-                    'date_purchased',
+                    {
+                        'key': 'date_purchased',
+                        'validationMessage': 'Enter as mm/dd/yyyy'
+                    },
                     'currency'
                 ];
             } else if (assetClass === GlobalConstants.FOREIGNCURR){
                  form = [
                     'name',
                     'amount',
-                    'date_purchased',
+                    {
+                        'key': 'date_purchased',
+                        'validationMessage': 'Enter as mm/dd/yyyy'
+                    },
                     'currency'
                 ];
             } else {
@@ -48,7 +57,10 @@ angular.module('wealthManagerApp')
                     'units',
                     'unitCost',
                     'location',
-                    'date_purchased',
+                    {
+                        'key': 'date_purchased',
+                        'validationMessage': 'Enter as mm/dd/yyyy'
+                    },
                     'currency'
                 ];
             }

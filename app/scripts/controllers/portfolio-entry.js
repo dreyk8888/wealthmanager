@@ -10,7 +10,6 @@
 
  /*todo
  - recalculate when row is edited
-- input validation in modal
 - how to unit test?
 - CSS columns so everything align properly
  */
@@ -18,7 +17,8 @@
 
 angular.module('wealthManagerApp')
     .controller('PortfolioEntryCtrl',
-        ['$http',
+        ['$scope',
+        '$http',
         'Asset',
         'AssetDataAPI',
         'APIResponseHandlersCommon',
@@ -26,7 +26,7 @@ angular.module('wealthManagerApp')
         'RowEditor',
         'AssetSchema',
         'PortfolioForms',
-        function ($http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, PortfolioForms) {
+        function ($scope, $http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, PortfolioForms) {
 
     var DEBUG = true;
 
@@ -152,20 +152,18 @@ angular.module('wealthManagerApp')
     vm.getData = function() {
         AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
     }
-    vm.submitAssets = function(next) {
-        var temp = Asset.copyAndCalculateAmount(vm.entry);
-        //post to database
-        AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
-        vm.assetData.push(temp);
-        vm.recalculate();
-        if (next){
-            //this was a submit and next call. Don't reset the class
-            vm.entry = Asset.resetKeepClass(vm.entry);
-        } else {
-            vm.entry = Asset.reset(vm.entry);  //clear out text field
+
+    vm.submitAssets = function(form) {
+        $scope.$broadcast('schemaFormValidate');
+        if (form.$valid){
+            console.log ("Form is valid");
+            var temp = Asset.copyAndCalculateAmount(vm.entry);
+            //post to database
+            AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
+            vm.assetData.push(temp);
+            vm.recalculate();
         }
         return true;
-
     }
 
     vm.deleteAsset = function(id, $event){
@@ -187,6 +185,9 @@ angular.module('wealthManagerApp')
         vm.recalculate();
     }
 
+    vm.cancel = function (){
+        Asset.resetKeepClass(vm.entry);
+    }
     //expose helper function by binding to controller scope
     vm.isEmptyString = function(myString){
         return Helpers.checkIfEmptyString(myString);

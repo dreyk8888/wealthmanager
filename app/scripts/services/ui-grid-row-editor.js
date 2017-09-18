@@ -18,14 +18,15 @@ angular.module('wealthManagerApp')
             templateUrl: 'views/edit-modal.html',
             //controller: AssetRowEditCtrl,
             controllerAs: 'vm',
-            controller: function ($uibModalInstance, AssetSchema, PortfolioForms, grid, row) {
+            controller: function ($scope, $uibModalInstance, AssetSchema, PortfolioForms, grid, row) {
                 var vm = this;
                 vm.schema = AssetSchema.schema;
                 vm.entity = angular.copy(row.entity);
                 vm.form = PortfolioForms.getAssetForm (vm.entity.class);
 
-                vm.save =  function save() {
-
+                vm.save =  function save(form) {
+                    $scope.$broadcast('schemaFormValidate');
+                    if (form.$valid){
                     // Copy row values over
                     row.entity = angular.extend(row.entity, vm.entity);
                     var updateData = Asset.copyAndCalculateAmount(row.entity);
@@ -35,6 +36,7 @@ angular.module('wealthManagerApp')
                     AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, updateData, updateData._id);
                     //close modal
                     $uibModalInstance.close(row.entity);
+                }
                 };
 
                 vm.cancel = function cancel(){

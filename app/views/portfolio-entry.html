@@ -66,13 +66,11 @@
             </ul>
         </div>
         <br/>
-        <form name="assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity" ng-submit="vm.submitAssets(assetInputForm)"></form>
+        <form name="assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity"></form>
 
-        <!--
-        <button class="btn btn-success" ng-click="vm.submitAssets(vm.form)">Submit</button>
-        <button class="btn btn-primary" ng-click="vm.submitAssets(vm.form,next=true)">Submit and add another</button>
+
+        <button class="btn btn-success" ng-click="vm.submitAssets(assetInputForm)">Submit</button>
         <button class="btn btn-danger" ng-click="vm.resetEntry()">Cancel</button>
-      -->
         <p>{{vm.entry.class}}</p>
     </div>
     <br/>

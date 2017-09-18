@@ -15,14 +15,23 @@ angular.module('wealthManagerApp')
             if (assetClass === GlobalConstants.CASH){
                  form = [
                     'name',
-                    'amount',
+                    {
+                        'key': 'amount',
+                        'validationMessage': 'Enter 1 or more'
+                    },
                     'currency'
                 ];
             } else if (assetClass === GlobalConstants.FIXEDINCOME){
                  form = [
                     'name',
-                    'units',
-                    'unitCost',
+                    {
+                        'key': 'units',
+                        'validationMessage': 'Enter 1 or more'
+                    },
+                    {
+                        'key': 'unitCost',
+                        'validationMessage': 'Enter 1 or more'
+                    },
                     'location',
                     {
                         'key': 'date_purchased',
@@ -44,7 +53,10 @@ angular.module('wealthManagerApp')
             } else if (assetClass === GlobalConstants.FOREIGNCURR){
                  form = [
                     'name',
-                    'amount',
+                    {
+                        'key': 'amount',
+                        'validationMessage': 'Enter 1 or more'
+                    },
                     {
                         'key': 'date_purchased',
                         'validationMessage': 'Enter as mm/dd/yyyy'
@@ -54,8 +66,14 @@ angular.module('wealthManagerApp')
             } else {
                  form = [
                     'name',
-                    'units',
-                    'unitCost',
+                    {
+                        'key': 'units',
+                        'validationMessage': 'Enter 1 or more'
+                    },
+                    {
+                        'key': 'unitCost',
+                        'validationMessage': 'Enter 1 or more'
+                    },
                     'location',
                     {
                         'key': 'date_purchased',

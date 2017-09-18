@@ -15,7 +15,7 @@
         type: 'object',
         title: 'Asset Entry Form',
         properties: {
-            name: { type: 'string', title: 'Name or Symbol'},
+            name: { type: 'string', title: 'Name or Ticker symbol'},
             ticker: { type: 'string', title: 'Ticker'},
             units: { type: 'number', title: 'Number of Units'},
             unitCost: {type: 'number', title: 'Unit Cost'},

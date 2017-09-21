@@ -19,6 +19,7 @@ angular.module('wealthManagerApp')
     .controller('PortfolioEntryCtrl',
         ['$scope',
         '$http',
+        'uiGridConstants',
         'Asset',
         'AssetDataAPI',
         'APIResponseHandlersCommon',
@@ -26,7 +27,7 @@ angular.module('wealthManagerApp')
         'RowEditor',
         'AssetSchema',
         'PortfolioForms',
-        function ($scope, $http, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, PortfolioForms) {
+        function ($scope, $http, uiGridConstants, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, PortfolioForms) {
 
     var DEBUG = true;
 
@@ -75,6 +76,7 @@ angular.module('wealthManagerApp')
             vm.gridApi.grid.registerDataChangeCallback(function() {
                 vm.gridApi.treeBase.expandAllRows();
             });
+            vm.gridApi.core.on.rowsRendered( $scope, recalculate() );
         }
     };
 
@@ -169,12 +171,14 @@ angular.module('wealthManagerApp')
     vm.deleteAsset = function(id, $event){
         if(DEBUG) {
             console.log ("Deleting: " + id);
+            console.log ("Array index of item to remove: " + vm.assetData.findIndex(x => x._id === id));
             console.log ("Data to be deleted: " + vm.assetData[vm.assetData.indexOf(id)]);
         }
-        AssetDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
-        vm.assetData.splice(vm.assetData.indexOf(id), 1); //remove item from local list of assets
-        vm.recalculate();
 
+        AssetDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
+        vm.assetData.splice(vm.assetData.findIndex(x => x._id === id), 1); //remove item from local list of assets
+        vm.gridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
+        vm.recalculate();
     }
 
     vm.updateAssets = function (data){
@@ -182,6 +186,7 @@ angular.module('wealthManagerApp')
             console.log ("Updating: " + data._id + " with " + data);
         }
         AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, data);
+        vm.gridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
         vm.recalculate();
     }
 

@@ -27,16 +27,18 @@ angular.module('wealthManagerApp')
                 vm.save =  function save(form) {
                     $scope.$broadcast('schemaFormValidate');
                     if (form.$valid){
-                    // Copy row values over
-                    row.entity = angular.extend(row.entity, vm.entity);
-                    var updateData = Asset.copyAndCalculateAmount(row.entity);
+                        // Copy row values over
+                        row.entity = angular.extend(row.entity, vm.entity);
+                        var updateData = Asset.copyAndCalculateAmount(row.entity);
 
-                     //update data in storage
-                    if (DEBUG){ console.log("Data to save: " + updateData); }
-                    AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, updateData, updateData._id);
-                    //close modal
-                    $uibModalInstance.close(row.entity);
-                }
+                         //update data in storage
+                        if (DEBUG){ console.log("Data to save: " + updateData); }
+                        AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, updateData, updateData._id);
+                        row.entity = updateData; //update grid
+
+                        //close modal
+                        $uibModalInstance.close(row.entity);
+                    }
                 };
 
                 vm.cancel = function cancel(){

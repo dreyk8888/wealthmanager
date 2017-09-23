@@ -10,6 +10,7 @@
 
  /*todo
  - recalculate when row is edited
+ - table not always updated when row edited
 - how to unit test?
 - CSS columns so everything align properly
  */
@@ -76,7 +77,6 @@ angular.module('wealthManagerApp')
             vm.gridApi.grid.registerDataChangeCallback(function() {
                 vm.gridApi.treeBase.expandAllRows();
             });
-            vm.gridApi.core.on.rowsRendered( $scope, recalculate() );
         }
     };
 
@@ -180,7 +180,8 @@ angular.module('wealthManagerApp')
         vm.gridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
         vm.recalculate();
     }
-
+/*
+//No longer update through this controller
     vm.updateAssets = function (data){
         if(DEBUG) {
             console.log ("Updating: " + data._id + " with " + data);
@@ -189,7 +190,7 @@ angular.module('wealthManagerApp')
         vm.gridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
         vm.recalculate();
     }
-
+*/
     vm.cancel = function (){
         Asset.resetKeepClass(vm.entry);
     }

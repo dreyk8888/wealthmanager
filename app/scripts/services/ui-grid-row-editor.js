@@ -31,10 +31,17 @@ angular.module('wealthManagerApp')
                         row.entity = angular.extend(row.entity, vm.entity);
                         var updateData = Asset.copyAndCalculateAmount(row.entity);
 
-                         //update data in storage
+
                         if (DEBUG){ console.log("Data to save: " + updateData); }
+
+                        //update data in storage
                         AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, updateData, updateData._id);
-                        row.entity = updateData; //update grid
+
+                        //update grid
+                        grid.appScope.assetData[grid.appScope.assetData.findIndex(x => x._id === updateData._id)] = updateData;
+
+                        //assetData was never updated. That's why recalculate doesn't work
+                        grid.appScope.recalculate();
 
                         //close modal
                         $uibModalInstance.close(row.entity);

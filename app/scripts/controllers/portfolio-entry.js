@@ -9,10 +9,8 @@
  */
 
  /*todo
- - recalculate when row is edited
- - table not always updated when row edited
+ - filter out the N/A values in the grid
 - how to unit test?
-- CSS columns so everything align properly
  */
 
 
@@ -37,6 +35,40 @@ angular.module('wealthManagerApp')
     vm.entry = Asset.init();
     vm.totalAssets = 0;   //container for asset total amount
     vm.classTotals = [];
+
+///////////////////////////////////////////////////////////////////////////
+//Pie Chart
+    vm.typeChartData = [];
+    vm.typeChartConfig = {
+        chart: {
+            type: 'pie'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        title: {
+            text: 'Asset Mix by Type'
+        },
+        series: [{
+            name: 'Asset Mix',
+            data: vm.typeChartData
+            //data: [15,21,30,6]
+        }]
+    };
+
 
 ////////////////////////////////////////////////////////////////////////////
 //ui-grid setup to display assets
@@ -100,14 +132,14 @@ angular.module('wealthManagerApp')
     vm.entity = vm.entry;
     vm.model = {};
 
+
 ////////////////////////////////////////////////////////////////////////////
 //Calculations
-
-
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
         vm.calculateTotalAssets();
         vm.calculateTotalPerAssetClass();
+        vm.updateTypeChartData();
     }
 
     //#TODO: Refactor calculate functions into separate service
@@ -124,6 +156,7 @@ angular.module('wealthManagerApp')
     }
 
     //#TODO: Refactor calculate functions into separate service
+    //#TODO: Do we really need to calculate the totals here, then in another function for the chart?
     vm.calculateTotalPerAssetClass = function(){
         //array of {asset class, total, percentage of all assets}
         vm.classTotals = [];
@@ -144,7 +177,14 @@ angular.module('wealthManagerApp')
             }
         }
         if (DEBUG){ console.log ("Total amount per asset class: " + vm.classTotals); }
+    }
 
+    vm.updateTypeChartData = function(){
+         vm.typeChartData = [];
+         for (var i = 0; i < vm.classTotals.length; i++){
+            vm.typeChartData.push([vm.classTotals[i].class, vm.classTotals[i].total]);
+         }
+         vm.typeChartConfig.series[0].data = vm.typeChartData;  //refresh data in chart config
     }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -210,7 +250,5 @@ angular.module('wealthManagerApp')
         vm.gridOptions.data = vm.assetData;
         console.log ("API Success: Data retrieved and all amounts recalculated.");
     }
-
-
 
 }]);

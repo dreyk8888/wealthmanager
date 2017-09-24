@@ -1,46 +1,57 @@
-<div ng-controller="PortfolioEntryCtrl as vm">
-
+<div ng-controller="PortfolioEntryCtrl as vm" id="portfolio-view-container" class="container">
   <div ng-init="vm.getData()" name="loadPortfolio">
   <h1>Portfolio Breakdown</h1>
-    <div id="diversification">
-    <table>
-
-      <thead>
-        <th>Asset Class</th>
-        <th>Amount ($)</th>
-        <th>Percentage (%)</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="item in vm.classTotals">
-          <td>{{item.class}}</td>
-          <td class="display-amounts">{{item.total}}</td>
-          <td class="display-amounts">{{item.percentage}}</td>
-        </tr>
-        <tr><td> </td><td></td><td></td></tr>
-        <tr class="div-all-total">
-          <td>Total</td>
-          <td class="display-amounts">{{vm.totalAssets}}</td>
-          <td class="display-amounts">100</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row" id="diversification">
+      <div class="col-md-6">
+        <table>
+          <thead>
+            <th>Asset Class</th>
+            <th>Amount ($)</th>
+            <th>Percentage (%)</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.classTotals">
+              <td>{{item.class}}</td>
+              <td class="display-amounts">{{item.total}}</td>
+              <td class="display-amounts">{{item.percentage}}</td>
+            </tr>
+            <tr><td> </td><td></td><td></td></tr>
+            <tr class="div-all-total">
+              <td>Total</td>
+              <td class="display-amounts">{{vm.totalAssets}}</td>
+              <td class="display-amounts">100</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <highchart id="assetClassChart" config="vm.typeChartConfig"></highchart>
+      </div>
+    </div>
   </div>
   <br/>
   <br/>
-  <span id="asset-label"><h2>Assets</h2></span>
-  <div id="assets-top-menu" class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-    <div class="btn-group btn-group-lg" role="group">
-      <button id="btnGroupDrop-asset-groupby" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group By  <span class="glyphicon glyphicon-chevron-down"></span></button>
-      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-        <button class="dropdown-item" type="button">Group by Class</button>
-        <button class="dropdown-item" type="button">Group by Geography</button>
+  <div class="row" id="asset-table-controls">
+    <div class="col-md-6">
+      <span id="asset-label"><h2>Assets</h2></span>
+    </div>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3" id="asset-table-control-buttons">
+    <div id="assets-top-menu" class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+      <div class="btn-group btn-group-lg" role="group">
+        <button id="btnGroupDrop-asset-groupby" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group By  <span class="glyphicon glyphicon-chevron-down"></span></button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <button class="dropdown-item" type="button">Group by Class</button>
+          <button class="dropdown-item" type="button">Group by Geography</button>
+        </div>
       </div>
     </div>
-    <div class="btn-group btn-group-lg">
-      <button id="btnGroupDrop-asset-export" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export  <span class="glyphicon glyphicon-chevron-down"></span></button>
-      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-        <button class="dropdown-item" type="button">Export to CSV</button>
-        <button class="dropdown-item" type="button">Export to PDF</button>
+      <div class="btn-group btn-group-lg">
+        <button id="btnGroupDrop-asset-export" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export  <span class="glyphicon glyphicon-chevron-down"></span></button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <button class="dropdown-item" type="button">Export to CSV</button>
+          <button class="dropdown-item" type="button">Export to PDF</button>
+        </div>
       </div>
     </div>
   </div>
@@ -53,7 +64,8 @@
   <div class="expand-input-button">
       <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNew = !addNew"><span class="glyphicon glyphicon-plus"></span></button></h3>
   </div>
-  <div class="asset-input-form">
+  <div class="row" id="asset-input-form">
+    <div class="col-md-6">
       <div id="assetInputForm" ng-submit="vm.submitAssets()" ng-hide="addNew">
       <br/>
         <div class="dropdown">Asset type:
@@ -76,6 +88,7 @@
     <br/>
     <br/>
   </div>
+</div>
 
     </div>
 

@@ -19,5 +19,6 @@ angular
         'ui.grid.cellNav',
         'ui.grid.autoResize',
         'ui.bootstrap',
-        'schemaForm'
+        'schemaForm',
+        'highcharts-ng'
     ]);

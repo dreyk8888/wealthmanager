@@ -18,5 +18,7 @@
         EQUITIES: 'Equities',
         FIXEDINCOME: 'Fixed Income',
         FIXEDASSETS: 'Fixed Assets',
-        FOREIGNCURR: 'Foreign Currency'
+        FOREIGNCURR: 'Foreign Currency',
+        SHORT_TERM: 'Short Term',
+        LONG_TERM: 'Long Term'
 });

@@ -27,4 +27,18 @@
         'required': ['name','units', 'unitCost', 'amount', 'location', 'date_purchased']
     }
     return;
+}])
+
+.service ('DebtSchema', ['Debt', function(Debt) {
+    this.schema = {
+        type: 'object',
+        title: 'Debt Entry Form',
+        properties: {
+            term: { 'type': 'string', 'title': 'Short term or long term liability'},
+            name: { 'type': 'string', 'title': 'Description of liability'},
+            amount: { 'type': 'number', 'title': 'Amount', 'minimum': 1}
+        },
+        'required': ['name', 'amount']
+    }
+    return;
 }]);

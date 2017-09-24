@@ -1,12 +1,13 @@
-<div  ng-keydown="$event.keyCode === 27 && vm.cancel()">
+<div ng-keydown="$event.keyCode === 27 && vm.cancel()">
 <div class="modal-header">
     <h3 class="modal-title">Edit Row</h3>
 </div>
 
-<div class="modal-body" ng-keydown="$event.keyCode === 13 && vm.save()">
+<div class="modal-body" ng-keydown="$event.keyCode === 13 && vm.save()" ng-submit="vm.save(modalForm)">
   <form name="modalForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity"></form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-success" ng-click="vm.save(modalForm)" >Save</button>
     <button class="btn btn-warning" ng-click="vm.cancel(modalForm)">Cancel</button>
+</div>
 </div>

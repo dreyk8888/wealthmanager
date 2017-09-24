@@ -16,7 +16,6 @@ angular.module('wealthManagerApp')
 
         var modalInstance = $uibModal.open({
             templateUrl: 'views/edit-modal.html',
-            //controller: AssetRowEditCtrl,
             controllerAs: 'vm',
             controller: function ($scope, $uibModalInstance, AssetSchema, PortfolioForms, grid, row) {
                 var vm = this;

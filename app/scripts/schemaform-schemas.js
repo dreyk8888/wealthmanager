@@ -34,7 +34,7 @@
         type: 'object',
         title: 'Debt Entry Form',
         properties: {
-            term: { 'type': 'string', 'title': 'Short term or long term liability'},
+            term: { 'type': 'string', 'title': 'Liability type'},
             name: { 'type': 'string', 'title': 'Description of liability'},
             amount: { 'type': 'number', 'title': 'Amount', 'minimum': 1}
         },

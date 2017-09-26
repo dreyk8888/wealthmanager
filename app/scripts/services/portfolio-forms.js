@@ -5,7 +5,7 @@
  * @name wealthManagerApp.wealthManagerData
  * @description
  * # wealthManagerData
- * Portfolio input form to display based on the asset type
+ * Portfolio input form to display based on the input object type
  */
 angular.module('wealthManagerApp')
     .service('PortfolioForms', ['GlobalConstants', function(GlobalConstants) {
@@ -82,6 +82,26 @@ angular.module('wealthManagerApp')
                     'currency'
                 ];
             }
+        return form;
+    }
+
+    this.getDebtForm = function(){
+        var form = [];
+        form = [
+            {
+                'key': 'term',
+                'type': 'select',
+                 'titleMap': [
+                    { value: GlobalConstants.SHORT_TERM, name: "Short term liability" },
+                    { value: GlobalConstants.LONG_TERM, name: "Long term liability" }
+                ]
+            },
+            'name',
+            {
+                'key': 'amount',
+                'validationMessage': 'Enter 1 or more'
+            }
+        ];
         return form;
     }
 }]);

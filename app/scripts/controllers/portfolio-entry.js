@@ -9,6 +9,8 @@
  */
 
  /*todo
+ - add all data get/set/put/delete functions for debt data
+ - uigrid for debt data
  - filter out the N/A values in the grid
 - how to unit test?
  */
@@ -20,22 +22,26 @@ angular.module('wealthManagerApp')
         '$http',
         'uiGridConstants',
         'Asset',
+        'Debt',
         'AssetDataAPI',
+        'DebtDataAPI',
         'APIResponseHandlersCommon',
         'Helpers',
         'RowEditor',
         'AssetSchema',
+        'DebtSchema',
         'PortfolioForms',
-        function ($scope, $http, uiGridConstants, Asset, AssetDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, PortfolioForms) {
+        function ($scope, $http, uiGridConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
     var DEBUG = true;
 
     var vm = this;
 
-    vm.entry = Asset.init();
+    vm.assetEntry = Asset.init();
     vm.totalAssets = 0;   //container for asset total amount
     vm.classTotals = [];
 
+    vm.debtEntry = Debt.init();
 ///////////////////////////////////////////////////////////////////////////
 //Pie Chart
     vm.typeChartData = [];
@@ -65,7 +71,6 @@ angular.module('wealthManagerApp')
         series: [{
             name: 'Asset Mix',
             data: vm.typeChartData
-            //data: [15,21,30,6]
         }]
     };
 
@@ -115,23 +120,25 @@ angular.module('wealthManagerApp')
     vm.editRow = RowEditor.editRow; //handle edit row functionality in grid
 
 ////////////////////////////////////////////////////////////////////////////
-//Input form
+//Asset Input form
     vm.assetclasses = Asset.ASSETCLASSES;
-    //vm.selectedItem = 'Select asset class';
 
     vm.form = PortfolioForms.getAssetForm('');  //fetch default form until user selects asset type
     vm.classSelected = function(assetClass){
-        //vm.selectedItem = assetClass;
-        //vm.entry.class = vm.selectedItem;
-        vm.entry.class = assetClass;
+        vm.assetEntry.class = assetClass;
         vm.form = PortfolioForms.getAssetForm(assetClass);
         if (DEBUG) { console.log ('Class selected: ' + assetClass ); }
     }
 
     vm.schema = AssetSchema.schema;
-    vm.entity = vm.entry;
+    vm.entity = vm.assetEntry;
     vm.model = {};
 
+////////////////////////////////////////////////////////////////////////////
+//Debt Input form
+    vm.debtform = PortfolioForms.getDebtForm();
+    vm.debtentity = vm.debtEntry;
+    vm.debtschema = DebtSchema.schema;
 
 ////////////////////////////////////////////////////////////////////////////
 //Calculations
@@ -193,13 +200,14 @@ angular.module('wealthManagerApp')
     //load asset data for the view
     vm.getData = function() {
         AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
+        DebtDataAPI.getData(vm.debtGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
     }
 
     vm.submitAssets = function(form) {
         $scope.$broadcast('schemaFormValidate');
         if (form.$valid){
             console.log ("Form is valid");
-            var temp = Asset.copyAndCalculateAmount(vm.entry);
+            var temp = Asset.copyAndCalculateAmount(vm.assetEntry);
             //post to database
             AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
             vm.assetData.push(temp);
@@ -231,15 +239,15 @@ angular.module('wealthManagerApp')
         vm.recalculate();
     }
 */
-    vm.cancel = function (){
-        Asset.resetKeepClass(vm.entry);
+    vm.cancelAssetEntry = function (){
+        Asset.resetKeepClass(vm.assetEntry);
     }
     //expose helper function by binding to controller scope
     vm.isEmptyString = function(myString){
         return Helpers.checkIfEmptyString(myString);
     }
 
-    //custom success handler for API Get
+    //custom success handler for API Get Asset
     vm.assetGetSuccessHandler = function successHandler_GET(res) {
         vm.assetData = [];
         for (var i = 0; i < res.data.length; i++){
@@ -251,4 +259,8 @@ angular.module('wealthManagerApp')
         console.log ("API Success: Data retrieved and all amounts recalculated.");
     }
 
+      //custom success handler for API Get Debt
+    vm.debtGetSuccessHandler = function successHandler_GET(res) {
+        //how will debt data be displayed?
+    }
 }]);

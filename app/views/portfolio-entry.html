@@ -1,9 +1,9 @@
 <div ng-controller="PortfolioEntryCtrl as vm" id="portfolio-view-container" class="container">
   <div ng-init="vm.getData()" name="loadPortfolio">
   <h1>Portfolio Breakdown</h1>
-    <div class="row" id="diversification">
+    <div class="row" >
       <div class="col-md-6">
-        <table>
+        <table id="diversification">
           <thead>
             <th>Asset Class</th>
             <th>Amount ($)</th>
@@ -28,34 +28,31 @@
         <highchart id="assetClassChart" config="vm.typeChartConfig"></highchart>
       </div>
     </div>
-  </div>
   <br/>
   <br/>
   <div class="row" id="asset-table-controls">
     <div class="col-md-6">
       <span id="asset-label"><h2>Assets</h2></span>
     </div>
-    <div class="col-sm-3"></div>
-    <div class="col-sm-3" id="asset-table-control-buttons">
-    <div id="assets-top-menu" class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
-      <div class="btn-group btn-group-lg" role="group">
-        <button id="btnGroupDrop-asset-groupby" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group By  <span class="glyphicon glyphicon-chevron-down"></span></button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <button class="dropdown-item" type="button">Group by Class</button>
-          <button class="dropdown-item" type="button">Group by Geography</button>
+    <div class="col-md-3"></div>
+    <div class="col-md-3" id="asset-table-control-buttons">
+
+      <div id="assets-top-menu" class="btn-group btn-group-lg" role="group" aria-label="Button group with nested dropdown">
+        <button id="btnGroupDrop-asset-groupby" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group By <span class="caret"></span></button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop-asset-groupby">
+          <button class="dropdown-item btn btn-secondary" type="button">Group by Class</button>
+          <button class="dropdown-item btn btn-secondary" type="button">Group by Geography</button>
         </div>
-      </div>
-    </div>
       <div class="btn-group btn-group-lg">
-        <button id="btnGroupDrop-asset-export" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export  <span class="glyphicon glyphicon-chevron-down"></span></button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <button class="dropdown-item" type="button">Export to CSV</button>
-          <button class="dropdown-item" type="button">Export to PDF</button>
+        <button id="btnGroupDrop-asset-export" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export  <span class="caret"></span></button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop-asset-export">
+          <button class="dropdown-item btn btn-secondary" type="button">Export to CSV</button>
+          <button class="dropdown-item btn btn-secondary" type="button">Export to PDF</button>
         </div>
       </div>
     </div>
   </div>
-
+</div>
   <br/>
   <br/>
 
@@ -70,7 +67,7 @@
       <br/>
         <div class="dropdown">Asset type:
           <button class="btn btn-default dropdown-toggle" type="button" id="assetclassdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                {{vm.entry.class}}
+                {{vm.assetEntry.class}}
                 <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="assetclassdropdown">
@@ -79,17 +76,24 @@
         </div>
         <br/>
         <form name="assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity"></form>
-
-
         <button class="btn btn-success" ng-click="vm.submitAssets(assetInputForm)">Submit</button>
-        <button class="btn btn-danger" ng-click="vm.resetEntry()">Cancel</button>
-        <p>{{vm.entry.class}}</p>
+        <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
+        <p>{{vm.assetEntry.class}}</p>
     </div>
     <br/>
     <br/>
   </div>
-</div>
-
+  </div>
+  <br/>
+  <div class="row" id="debt-input-form">
+    <div class="col-md-6">
+      <form name="debtInputForm" sf-schema="vm.debtschema" sf-form="vm.debtform" sf-model="vm.debtentity"></form>
+        <button class="btn btn-success" ng-click="vm.submitDebt(debtInputForm)">Submit</button>
+        <button class="btn btn-danger" ng-click="vm.cancelDebtEntry()">Cancel</button>
+      </div>
     </div>
-
+  </div>
+  <br/>
+  <br/>
 </div>
+

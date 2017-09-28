@@ -80,7 +80,7 @@ angular.module('wealthManagerApp')
 
     vm.assetData = [];  //container for asset table
 
-    var columnDefs = [
+    var assetColumnDefs = [
         { name: 'ID', field: '_id', width: '0%', visible: false },
         { name: 'Asset Class', field: 'class', width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' }, cellTemplate: 'views/portfolioentry-grid-grouping-template.html' },
         { name: 'Geographical Location', field: 'location', width: '10%'},
@@ -101,22 +101,58 @@ angular.module('wealthManagerApp')
         },
     ];
 
-    vm.gridOptions = {
+    vm.assetGridOptions = {
         enableSorting: true,
-        columnDefs: columnDefs,
+        columnDefs: assetColumnDefs,
         enableFiltering: false,
         showTreeExpandNoChildren: true,
         treeRowHeaderAlwaysVisible: false,
         appScopeProvider: vm,
         data: vm.assetData,
         onRegisterApi: function(gridApi) {
-            vm.gridApi = gridApi;
-            vm.gridApi.grid.registerDataChangeCallback(function() {
-                vm.gridApi.treeBase.expandAllRows();
+            vm.assetGridApi = gridApi;
+            vm.assetGridApi.grid.registerDataChangeCallback(function() {
+                vm.assetGridApi.treeBase.expandAllRows();
             });
         }
     };
 
+////////////////////////////////////////////////////////////////////////////
+//ui-grid setup to display debt
+
+    vm.debtData = [];  //container for asset table
+
+    var debtColumnDefs = [
+        { name: 'Name', field: 'name', width: '20%' },
+        { name: 'Amount', field: 'amount', type: 'number', width: '10%', enableCellEdit: false, cellFilter: 'currency' },
+        { name: 'Description', field: 'name', width: '60%' },
+        { name: "Actions",
+            field:"buttons",
+            width: '10%',
+            cellTemplate: 'views/portfolioentry-grid-button-template.html',
+            enableCellEdit: false,
+            enableFiltering:false,
+            enableSorting: false,
+            showSortMenu : false,
+            enableColumnMenu: false,
+        },
+    ];
+
+    vm.debtGridOptions = {
+        enableSorting: true,
+        columnDefs: debtColumnDefs,
+        enableFiltering: false,
+        showTreeExpandNoChildren: true,
+        treeRowHeaderAlwaysVisible: false,
+        appScopeProvider: vm,
+        data: vm.assetData,
+        onRegisterApi: function(gridApi) {
+            vm.debtGridApi = gridApi;
+            vm.debtGridApi.grid.registerDataChangeCallback(function() {
+                vm.debtGridApi.treeBase.expandAllRows();
+            });
+        }
+    };
     vm.editRow = RowEditor.editRow; //handle edit row functionality in grid
 
 ////////////////////////////////////////////////////////////////////////////
@@ -216,6 +252,22 @@ angular.module('wealthManagerApp')
         return true;
     }
 
+    vm.submitDebt = function(form){
+        $scope.$broadcast('schemaFormValidate');
+        if (form.$valid){
+            if(DEBUG) {
+                console.log ("Form is valid");
+                console.log (vm.debtEntry);
+            }
+
+            //post to database
+            DebtDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, vm.debtEntry);
+            vm.debtData.push(vm.debtEntry);
+            vm.recalculate();
+        }
+        return true;
+    }
+
     vm.deleteAsset = function(id, $event){
         if(DEBUG) {
             console.log ("Deleting: " + id);
@@ -225,8 +277,13 @@ angular.module('wealthManagerApp')
 
         AssetDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
         vm.assetData.splice(vm.assetData.findIndex(x => x._id === id), 1); //remove item from local list of assets
-        vm.gridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
+        vm.assetGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
         vm.recalculate();
+    }
+
+    vm.deleteDebt = function(id, event){
+        DebtDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
+        vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
     }
 /*
 //No longer update through this controller
@@ -255,12 +312,20 @@ angular.module('wealthManagerApp')
             console.log ("Asset added: " + vm.assetData[i].name);
         }
         vm.recalculate();
-        vm.gridOptions.data = vm.assetData;
+        vm.assetGridOptions.data = vm.assetData;
         console.log ("API Success: Data retrieved and all amounts recalculated.");
     }
 
       //custom success handler for API Get Debt
     vm.debtGetSuccessHandler = function successHandler_GET(res) {
-        //how will debt data be displayed?
+        vm.debtData = [];
+        for (var i = 0; i < res.data.length; i++){
+            vm.debtData.push(res.data[i]);
+            console.log ("Debt added: " + vm.debtData[i].name);
+        }
+        vm.recalculate();
+        vm.debtGridOptions.data = vm.debtData;
+        console.log ("API Success: Data retrieved and all amounts recalculated.");
     }
+
 }]);

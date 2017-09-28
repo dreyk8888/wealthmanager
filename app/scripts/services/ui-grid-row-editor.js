@@ -12,7 +12,7 @@ angular.module('wealthManagerApp')
 
     var DEBUG = true;
 
-    this.editRow = function editRow(grid, row) {
+    this.editAssetRow = function (grid, row) {
 
         var modalInstance = $uibModal.open({
             templateUrl: 'views/edit-modal.html',
@@ -57,7 +57,51 @@ angular.module('wealthManagerApp')
                 row: function () { return row; }
             }
         });
+    }
 
+    this.editDebtRow = function (grid, row) {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'views/edit-modal.html',
+            controllerAs: 'vm',
+            controller: function ($scope, $uibModalInstance, DebtSchema, PortfolioForms, grid, row) {
+                var vm = this;
+                vm.schema = DebtSchema.schema;
+                vm.entity = angular.copy(row.entity);
+                vm.form = PortfolioForms.getDebtForm ();
+
+                vm.save =  function save(form) {
+                    $scope.$broadcast('schemaFormValidate');
+                    if (form.$valid){
+                        // Copy row values over
+                        row.entity = angular.extend(row.entity, vm.entity);
+
+                        if (DEBUG){ console.log("Data to save: " + row.entity); }
+
+                        //update data in storage
+                        DebtDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, row.entity, row.entity._id);
+
+                        //update grid
+                        grid.appScope.debtData[grid.appScope.debtData.findIndex(x => x._id === row.entity._id)] = row.entity;
+
+                        //assetData was never updated. That's why recalculate doesn't work
+                        grid.appScope.recalculate();
+
+                        //close modal
+                        $uibModalInstance.close(row.entity);
+                    }
+                };
+
+                vm.cancel = function cancel(){
+                    console.log("Cancelled");
+                    $uibModalInstance.dismiss('cancel');
+                };
+            },
+            resolve: {
+                grid: function () { return grid; },
+                row: function () { return row; }
+            }
+        });
     }
 
 }]);

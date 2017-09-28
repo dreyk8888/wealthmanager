@@ -92,7 +92,7 @@ angular.module('wealthManagerApp')
         { name: "Actions",
             field:"buttons",
             width: '10%',
-            cellTemplate: 'views/portfolioentry-grid-button-template.html',
+            cellTemplate: 'views/portfolioentry-grid-button-template-asset.html',
             enableCellEdit: false,
             enableFiltering:false,
             enableSorting: false,
@@ -124,12 +124,12 @@ angular.module('wealthManagerApp')
 
     var debtColumnDefs = [
         { name: 'Name', field: 'name', width: '20%' },
-        { name: 'Amount', field: 'amount', type: 'number', width: '10%', enableCellEdit: false, cellFilter: 'currency' },
-        { name: 'Description', field: 'name', width: '60%' },
+        { name: 'Amount', field: 'amount', type: 'number', width: '30%', enableCellEdit: false, cellFilter: 'currency' },
+        { name: 'Description', field: 'name', width: '30%' },
         { name: "Actions",
             field:"buttons",
-            width: '10%',
-            cellTemplate: 'views/portfolioentry-grid-button-template.html',
+            width: '20%',
+            cellTemplate: 'views/portfolioentry-grid-button-template-debt.html',
             enableCellEdit: false,
             enableFiltering:false,
             enableSorting: false,
@@ -145,7 +145,7 @@ angular.module('wealthManagerApp')
         showTreeExpandNoChildren: true,
         treeRowHeaderAlwaysVisible: false,
         appScopeProvider: vm,
-        data: vm.assetData,
+        data: vm.debtData,
         onRegisterApi: function(gridApi) {
             vm.debtGridApi = gridApi;
             vm.debtGridApi.grid.registerDataChangeCallback(function() {
@@ -153,8 +153,9 @@ angular.module('wealthManagerApp')
             });
         }
     };
-    vm.editRow = RowEditor.editRow; //handle edit row functionality in grid
 
+    vm.editAssetRow = RowEditor.editAssetRow; //handle edit row functionality in grid
+    vm.editDebtRow = RowEditor.editDebtRow;
 ////////////////////////////////////////////////////////////////////////////
 //Asset Input form
     vm.assetclasses = Asset.ASSETCLASSES;

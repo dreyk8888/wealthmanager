@@ -5,23 +5,37 @@
       <div class="col-md-6">
         <table id="diversification">
           <thead>
-            <th>Asset Class</th>
+            <th>Type</th>
             <th>Amount ($)</th>
-            <th>Percentage (%)</th>
+            <!--<th>Percentage (%)</th>-->
           </thead>
           <tbody>
-            <tr ng-repeat="item in vm.classTotals">
+            <tr ng-repeat="item in vm.assetTotals">
               <td>{{item.class}}</td>
               <td class="display-amounts">{{item.total}}</td>
-              <td class="display-amounts">{{item.percentage}}</td>
             </tr>
-            <tr><td> </td><td></td><td></td></tr>
+            <tr><td> </td><td></td></tr>
             <tr class="div-all-total">
-              <td>Total</td>
+              <td>Total assets</td>
               <td class="display-amounts">{{vm.totalAssets}}</td>
-              <td class="display-amounts">100</td>
+             <!-- <td class="display-amounts">100</td> -->
+            </tr>
+            <tr><td> </td><td></td></tr>
+             <tr ng-repeat="item in vm.debtTotals">
+              <td>{{item.type}}</td>
+              <td class="display-amounts">{{item.amount}}</td>
+            </tr>
+             <tr class="div-all-total">
+              <td>Total liabilities</td>
+              <td class="display-amounts">{{vm.totalDebt}}</td>
+            </tr>
+            <tr><td> </td><td></td></tr>
+             <tr class="div-all-total">
+              <td>Net worth</td>
+              <td class="display-amounts">{{vm.totalAssets - vm.totalDebt}}</td>
             </tr>
           </tbody>
+
         </table>
       </div>
       <div class="col-md-6">

@@ -10,9 +10,8 @@
 
  /*todo
  - filter out the N/A values in the grid
- - refactor calculate functions and add tests for them
+ - add tests for calculations
  - get debt row edit/delete working
- - add net worth number
  */
 
 
@@ -43,10 +42,11 @@ angular.module('wealthManagerApp')
 
     vm.assetEntry = Asset.init();
     vm.totalAssets = 0;   //container for asset total amount
-    vm.classTotals = [];
+    vm.assetTotals = [];
 
     vm.debtEntry = Debt.init();
     vm.totalDebt = 0;
+    vm.debtTotals = [];
 ///////////////////////////////////////////////////////////////////////////
 //Pie Chart
     vm.typeChartData = [];
@@ -121,16 +121,17 @@ angular.module('wealthManagerApp')
 //Calculations
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
-        vm.totalAssets = PortfolioCalcs.assetTotalCalc(vm.assetData);
-        vm.classTotals = PortfolioCalcs.assetClassTotalPercentCalc(vm.assetData);
-        vm.totalDebt = PortfolioCalcs.debtTotalCalc(vm.debtData);
+        vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData);
+        vm.assetTotals = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData);
+        vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData);
+        vm.debtTotals = PortfolioCalcs.perTypeTotalCalc(vm.debtData);
         vm.updateTypeChartData();
     }
 
      vm.updateTypeChartData = function(){
          vm.typeChartData = [];
-         for (var i = 0; i < vm.classTotals.length; i++){
-            vm.typeChartData.push([vm.classTotals[i].class, vm.classTotals[i].total]);
+         for (var i = 0; i < vm.assetTotals.length; i++){
+            vm.typeChartData.push([vm.assetTotals[i].class, vm.assetTotals[i].total]);
          }
          vm.typeChartConfig.series[0].data = vm.typeChartData;  //refresh data in chart config
     }

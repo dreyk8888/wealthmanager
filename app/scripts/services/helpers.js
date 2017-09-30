@@ -11,7 +11,7 @@ angular.module('wealthManagerApp')
     .service('Helpers', function() {
 
         //search for an item in an array of objects, return index if found, or -1 if not found
-        this.searchArray = function(searchTerm, array, objectToSearch){
+        this.searchObjectArray = function(searchTerm, array, objectToSearch){
             var index = -1;
             if (array.length < 1){
                 return index;
@@ -19,6 +19,21 @@ angular.module('wealthManagerApp')
 
             for(var i = 0, len = array.length; i < len; i++) {
                 if (array[i][objectToSearch].toLowerCase() === searchTerm.toLowerCase()) {
+                    index = i;
+                    return index;
+                }
+            }
+            return index;
+        }
+
+        this.search2DArray = function(searchTerm, array, searchIndex){
+            var index = -1;
+            if (array.length < 1){
+                return index;
+            }
+
+            for(var i = 0, len = array.length; i < len; i++) {
+                if (array[i][searchIndex].toLowerCase() === searchTerm.toLowerCase()) {
                     index = i;
                     return index;
                 }

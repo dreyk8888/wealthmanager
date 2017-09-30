@@ -9,10 +9,10 @@
  */
 
  /*todo
- - add all data get/set/put/delete functions for debt data
- - uigrid for debt data
  - filter out the N/A values in the grid
-- how to unit test?
+ - refactor calculate functions and add tests for them
+ - get debt row edit/delete working
+ - add net worth number
  */
 
 
@@ -27,11 +27,15 @@ angular.module('wealthManagerApp')
         'DebtDataAPI',
         'APIResponseHandlersCommon',
         'Helpers',
+        'PortfolioGridColumnDef',
+        'PortfolioCalcs',
+        'PortfolioChartConfig',
         'RowEditor',
         'AssetSchema',
         'DebtSchema',
         'PortfolioForms',
-        function ($scope, $http, uiGridConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Helpers, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
+        function ($scope, $http, uiGridConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Helpers,
+            PortfolioGridColumnDef, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
     var DEBUG = true;
 
@@ -42,118 +46,54 @@ angular.module('wealthManagerApp')
     vm.classTotals = [];
 
     vm.debtEntry = Debt.init();
+    vm.totalDebt = 0;
 ///////////////////////////////////////////////////////////////////////////
 //Pie Chart
     vm.typeChartData = [];
-    vm.typeChartConfig = {
-        chart: {
-            type: 'pie'
-        },
-        tooltip: {
-            pointFormat: '<b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        },
-        title: {
-            text: 'Asset Mix by Type'
-        },
-        series: [{
-            name: 'Asset Mix',
-            data: vm.typeChartData
-        }]
-    };
-
+    vm.typeChartConfig = PortfolioChartConfig.portfolioPieConfig(vm.typeChartData);
 
 ////////////////////////////////////////////////////////////////////////////
 //ui-grid setup to display assets
 
     vm.assetData = [];  //container for asset table
-
-    var assetColumnDefs = [
-        { name: 'ID', field: '_id', width: '0%', visible: false },
-        { name: 'Asset Class', field: 'class', width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' }, cellTemplate: 'views/portfolioentry-grid-grouping-template.html' },
-        { name: 'Geographical Location', field: 'location', width: '10%'},
-        { name: 'Name/Ticker', field: 'name', width: '20%' },
-        { name: 'Units Held', field: 'units', type: 'number', width: '10%' },
-        { name: 'Unit Cost', field: 'unitCost', type: 'number', width: '10%', cellFilter: 'currency'},
-        { name: 'Amount', field: 'amount', type: 'number', width: '10%', enableCellEdit: false, cellFilter: 'currency' },
-        { name: 'Date Purchased (MM-DD-YYYY)', field: 'date_purchased', type: 'date', width: '10%', cellFilter: 'date:"MM-dd-yyyy"'},
-        { name: "Actions",
-            field:"buttons",
-            width: '10%',
-            cellTemplate: 'views/portfolioentry-grid-button-template-asset.html',
-            enableCellEdit: false,
-            enableFiltering:false,
-            enableSorting: false,
-            showSortMenu : false,
-            enableColumnMenu: false,
-        },
-    ];
-
     vm.assetGridOptions = {
-        enableSorting: true,
-        columnDefs: assetColumnDefs,
-        enableFiltering: false,
-        showTreeExpandNoChildren: true,
-        treeRowHeaderAlwaysVisible: false,
-        appScopeProvider: vm,
-        data: vm.assetData,
-        onRegisterApi: function(gridApi) {
-            vm.assetGridApi = gridApi;
-            vm.assetGridApi.grid.registerDataChangeCallback(function() {
-                vm.assetGridApi.treeBase.expandAllRows();
-            });
-        }
-    };
+            enableSorting: true,
+            columnDefs: PortfolioGridColumnDef.assetColDef,
+            enableFiltering: false,
+            showTreeExpandNoChildren: true,
+            treeRowHeaderAlwaysVisible: false,
+            appScopeProvider: vm,
+            data: vm.assetData,
+            onRegisterApi: function(gridApi) {
+                vm.assetGridApi = gridApi;
+                vm.assetGridApi.grid.registerDataChangeCallback(function() {
+                    vm.assetGridApi.treeBase.expandAllRows();
+                });
+            }
+        };
 
 ////////////////////////////////////////////////////////////////////////////
 //ui-grid setup to display debt
 
     vm.debtData = [];  //container for asset table
-
-    var debtColumnDefs = [
-        { name: 'Name', field: 'name', width: '20%' },
-        { name: 'Amount', field: 'amount', type: 'number', width: '30%', enableCellEdit: false, cellFilter: 'currency' },
-        { name: 'Description', field: 'name', width: '30%' },
-        { name: "Actions",
-            field:"buttons",
-            width: '20%',
-            cellTemplate: 'views/portfolioentry-grid-button-template-debt.html',
-            enableCellEdit: false,
-            enableFiltering:false,
-            enableSorting: false,
-            showSortMenu : false,
-            enableColumnMenu: false,
-        },
-    ];
-
     vm.debtGridOptions = {
-        enableSorting: true,
-        columnDefs: debtColumnDefs,
-        enableFiltering: false,
-        showTreeExpandNoChildren: true,
-        treeRowHeaderAlwaysVisible: false,
-        appScopeProvider: vm,
-        data: vm.debtData,
-        onRegisterApi: function(gridApi) {
-            vm.debtGridApi = gridApi;
-            vm.debtGridApi.grid.registerDataChangeCallback(function() {
-                vm.debtGridApi.treeBase.expandAllRows();
-            });
-        }
-    };
+            enableSorting: true,
+            columnDefs: PortfolioGridColumnDef.debtColDef,
+            enableFiltering: false,
+            showTreeExpandNoChildren: true,
+            treeRowHeaderAlwaysVisible: false,
+            appScopeProvider: vm,
+            data: vm.debtData,
+            onRegisterApi: function(gridApi) {
+                vm.debtGridApi = gridApi;
+                vm.debtGridApi.grid.registerDataChangeCallback(function() {
+                    vm.debtGridApi.treeBase.expandAllRows();
+                });
+            }
+        };
 
+//////////////////////////////////////////////////////////////////////////////
+// Grid Row Edit modal
     vm.editAssetRow = RowEditor.editAssetRow; //handle edit row functionality in grid
     vm.editDebtRow = RowEditor.editDebtRow;
 ////////////////////////////////////////////////////////////////////////////
@@ -181,56 +121,19 @@ angular.module('wealthManagerApp')
 //Calculations
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
-        vm.calculateTotalAssets();
-        vm.calculateTotalPerAssetClass();
+        vm.totalAssets = PortfolioCalcs.assetTotalCalc(vm.assetData);
+        vm.classTotals = PortfolioCalcs.assetClassTotalPercentCalc(vm.assetData);
+        vm.totalDebt = PortfolioCalcs.debtTotalCalc(vm.debtData);
         vm.updateTypeChartData();
     }
 
-    //#TODO: Refactor calculate functions into separate service
-    vm.calculateTotalAssets = function(){
-        vm.totalAssets = 0;
-        var total = 0;
-
-        for (var i = 0; i < vm.assetData.length; i++){
-            total = total + vm.assetData[i].amount;
-        }
-
-        if (DEBUG){ console.log ("Number of asset entries: " + vm.assetData.length); }
-        vm.totalAssets = total.toFixed(2);
-    }
-
-    //#TODO: Refactor calculate functions into separate service
-    //#TODO: Do we really need to calculate the totals here, then in another function for the chart?
-    vm.calculateTotalPerAssetClass = function(){
-        //array of {asset class, total, percentage of all assets}
-        vm.classTotals = [];
-        var classIndex = 0;
-        for (var i = 0; i < vm.assetData.length; i++){
-            var index = Helpers.searchArray(vm.assetData[i].class, vm.classTotals, 'class');
-
-            if (index === -1){
-                var percentOfTotal = (vm.assetData[i].amount/vm.totalAssets * 100).toFixed(2);
-                vm.classTotals.push({class: vm.assetData[i].class.toTitleCase(), total: vm.assetData[i].amount, percentage: percentOfTotal} );
-                if (DEBUG){ console.log ("Calculating amount per asset class: " + vm.classTotals); }
-            } else {
-                var newTotal = vm.classTotals[index].total + vm.assetData[i].amount;
-                vm.classTotals[index].total = newTotal;
-
-                var newPercentage = (newTotal/vm.totalAssets * 100).toFixed(2);
-                vm.classTotals[index].percentage = newPercentage;
-            }
-        }
-        if (DEBUG){ console.log ("Total amount per asset class: " + vm.classTotals); }
-    }
-
-    vm.updateTypeChartData = function(){
+     vm.updateTypeChartData = function(){
          vm.typeChartData = [];
          for (var i = 0; i < vm.classTotals.length; i++){
             vm.typeChartData.push([vm.classTotals[i].class, vm.classTotals[i].total]);
          }
          vm.typeChartConfig.series[0].data = vm.typeChartData;  //refresh data in chart config
     }
-
 ////////////////////////////////////////////////////////////////////////////
 //Data retrieval and updating
 
@@ -286,17 +189,7 @@ angular.module('wealthManagerApp')
         DebtDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
         vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
     }
-/*
-//No longer update through this controller
-    vm.updateAssets = function (data){
-        if(DEBUG) {
-            console.log ("Updating: " + data._id + " with " + data);
-        }
-        AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, data);
-        vm.gridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
-        vm.recalculate();
-    }
-*/
+
     vm.cancelAssetEntry = function (){
         Asset.resetKeepClass(vm.assetEntry);
     }

@@ -91,7 +91,8 @@ angular.module('wealthManagerApp')
             {
                 'key': 'term',
                 'type': 'select',
-                 'titleMap': [
+                'description': 'Select liability type',
+                'titleMap': [
                     { value: GlobalConstants.SHORT_TERM, name: "Short term liability" },
                     { value: GlobalConstants.LONG_TERM, name: "Long term liability" }
                 ]

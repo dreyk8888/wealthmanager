@@ -18,13 +18,13 @@ angular.module('wealthManagerApp')
             }
 
             for(var i = 0, len = array.length; i < len; i++) {
-                if (array[i][objectToSearch].toLowerCase() === searchTerm.toLowerCase()) {
+                if (array[i][objectToSearch] && array[i][objectToSearch].toLowerCase() === searchTerm.toLowerCase()) {
                     index = i;
                     return index;
                 }
             }
             return index;
-        }
+        };
 
         this.search2DArray = function(searchTerm, array, searchIndex){
             var index = -1;
@@ -33,13 +33,13 @@ angular.module('wealthManagerApp')
             }
 
             for(var i = 0, len = array.length; i < len; i++) {
-                if (array[i][searchIndex].toLowerCase() === searchTerm.toLowerCase()) {
+                if (array[i][searchIndex] && array[i][searchIndex].toLowerCase() === searchTerm.toLowerCase()) {
                     index = i;
                     return index;
                 }
             }
             return index;
-        }
+        };
 
         //convert strings to title case
         String.prototype.toTitleCase = function () {
@@ -47,10 +47,10 @@ angular.module('wealthManagerApp')
         };
 
         this.checkIfEmptyString = function(myString){
-            if (!myString || myString.length == 0) {
+            if (!myString || myString.length === 0) {
                 return true;
             }
             return false;
-        }
+        };
 
 });

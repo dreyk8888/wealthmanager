@@ -37,7 +37,19 @@ describe('Service: PortfolioCalcs', function () {
     {
       class: 'Fixed Income',
       amount: 1.5023e6
-    }
+    },
+    {
+      class: 'Equities',
+      amount: 20000
+    },
+    {
+      class: 'Fixed Assets',
+      amount: 450305.10
+    },
+    {
+      class: 'Cash',
+      amount: 25366897.156
+    },
   ];
 
   var mockAssetDataZeroes = [
@@ -108,15 +120,15 @@ describe('Service: PortfolioCalcs', function () {
     expect(PortfolioCalcs.totalCalc(mockDataEmpty)).toBeDefined();
   });
 
-  it('totalCalc(asset data) with large float and exponentials should calculate the correct total with 2 decimal places', function () {
-    expect(PortfolioCalcs.totalCalc(mockAssetDataFloat)).toEqual('1652425.91');
+  it('totalCalc(asset data) with large float and exponentials should calculate the correct total with 2 decimal places (returns a string due to fixed function)', function () {
+    expect(PortfolioCalcs.totalCalc(mockAssetDataFloat)).toEqual('27489628.17');
   });
 
-  it('totalCalc(asset data) with zeroes should return 0.00', function () {
+  it('totalCalc(asset data) with zeroes should return 0.00 (returns a string due to fixed function)', function () {
     expect(PortfolioCalcs.totalCalc(mockAssetDataZeroes)).toEqual('0.00');
   });
 
-  it('totalCalc(asset data) with negatives should return negative number with 2 decimals', function () {
+  it('totalCalc(asset data) with negatives should return negative number with 2 decimals (returns a string due to fixed function)', function () {
     expect(PortfolioCalcs.totalCalc(mockAssetDataNegative)).toEqual('-73320.00');
   });
 
@@ -130,6 +142,33 @@ describe('Service: PortfolioCalcs', function () {
 
   it('totalCalc(data) if 3rd decimal >= 5, should round up', function () {
     expect(PortfolioCalcs.totalCalc(mockDataRoundingDown)).toEqual('0.24');
+  });
+
+  it('perTypeTotalCalc() should exist', function () {
+    expect(PortfolioCalcs.totalCalc(mockDataEmpty)).toBeDefined();
+  });
+
+  var expectedData = [
+    {
+      type: 'Equities',
+      amount: 70123
+    },
+    {
+      type: 'Cash',
+      amount: 100002.4556
+    },
+    {
+      type: 'Fixed Assets',
+      amount: 450305.10
+    },
+    {
+        class: 'Fixed Income',
+        amount: 1.5023e6
+    }
+  ];
+
+  it('perTypeTotalCalc() should calculate right total for float and exponentials', function () {
+    expect(PortfolioCalcs.perTypeTotalCalc(mockAssetDataFloat)).toEqual(expectedData);
   });
 
 });

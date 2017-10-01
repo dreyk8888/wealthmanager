@@ -11,7 +11,7 @@
 angular.module('wealthManagerApp')
     .service('Asset', ['GlobalConstants', function(GlobalConstants) {
         //set of asset classes
-        this.ASSETCLASSES = [GlobalConstants.CASH, GlobalConstants.EQUITIES, GlobalConstants.FIXEDINCOME, GlobalConstants.FIXEDASSETS,GlobalConstants.FOREIGNCURR]
+        this.ASSETCLASSES = [GlobalConstants.CASH, GlobalConstants.EQUITIES, GlobalConstants.FIXEDINCOME, GlobalConstants.FIXEDASSETS,GlobalConstants.FOREIGNCURR];
         //return a clean Asset object
         this.init = function(){
             var asset = {
@@ -23,9 +23,9 @@ angular.module('wealthManagerApp')
                 location: "",
                 date_purchased: "",
                 currency: ""
-            }
+            };
             return asset;
-        }
+        };
 
         this.reset = function (asset){
             asset.class = "";
@@ -38,7 +38,7 @@ angular.module('wealthManagerApp')
             asset.currency = "";
 
             return asset;
-        }
+        };
 
         this.resetKeepClass = function (asset){
             asset.name = "";
@@ -50,7 +50,8 @@ angular.module('wealthManagerApp')
             asset.currency = "";
 
             return asset;
-        }
+        };
+
         //return the Asset object parameter populated with parameterized values and calculated amount
         //keep track of _id for API posting purposes
         this.populate = function (asset, _id, assetClass, name, units, unitCost, amount, location, date_purchased, currency){
@@ -85,7 +86,7 @@ angular.module('wealthManagerApp')
                 asset.currency = currency;
             }
             return asset;
-        }
+        };
 
         //return a copy of an existing Asset object with amount calculated
         //for fields that don't apply, set to EMPTY --> '---'
@@ -119,6 +120,6 @@ angular.module('wealthManagerApp')
                 asset.currency = obj.currency;
             }
             return asset;
-        }
+        };
 
 }]);

@@ -10,7 +10,7 @@
  */
 
  angular.module('wealthManagerApp')
- .service ('AssetSchema', ['Asset', function(Asset) {
+ .service ('AssetSchema', function() {
     this.schema = {
         type: 'object',
         title: 'Asset Entry Form',
@@ -25,11 +25,11 @@
             currency: { 'type': 'string', 'title': 'Currency'}
         },
         'required': ['name','units', 'unitCost', 'amount', 'location', 'date_purchased']
-    }
+    };
     return;
-}])
+})
 
-.service ('DebtSchema', ['Debt', function(Debt) {
+.service ('DebtSchema', function() {
     this.schema = {
         type: 'object',
         title: 'Debt Entry Form',
@@ -39,6 +39,6 @@
             amount: { 'type': 'number', 'title': 'Amount', 'minimum': 1}
         },
         'required': ['name', 'amount']
-    }
+    };
     return;
-}]);
+});

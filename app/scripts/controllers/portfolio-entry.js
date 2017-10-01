@@ -10,6 +10,7 @@
 
  /*todo
  - filter out the N/A values in the grid
+ - display short term, long term liabilities in table
  - add tests for calculations
  - get debt row edit/delete working
  */
@@ -52,7 +53,8 @@ angular.module('wealthManagerApp')
     vm.typeChartData = [];
     vm.typeChartConfig = PortfolioChartConfig.portfolioPieConfig(vm.typeChartData);
 
-////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
 //ui-grid setup to display assets
 
     vm.assetData = [];  //container for asset table
@@ -105,7 +107,7 @@ angular.module('wealthManagerApp')
         vm.assetEntry.class = assetClass;
         vm.form = PortfolioForms.getAssetForm(assetClass);
         if (DEBUG) { console.log ('Class selected: ' + assetClass ); }
-    }
+    };
 
     vm.schema = AssetSchema.schema;
     vm.entity = vm.assetEntry;
@@ -126,7 +128,7 @@ angular.module('wealthManagerApp')
         vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData);
         vm.debtTotals = PortfolioCalcs.perTypeTotalCalc(vm.debtData);
         vm.updateTypeChartData();
-    }
+    };
 
      vm.updateTypeChartData = function(){
          vm.typeChartData = [];
@@ -134,7 +136,7 @@ angular.module('wealthManagerApp')
             vm.typeChartData.push([vm.assetTotals[i].class, vm.assetTotals[i].total]);
          }
          vm.typeChartConfig.series[0].data = vm.typeChartData;  //refresh data in chart config
-    }
+    };
 ////////////////////////////////////////////////////////////////////////////
 //Data retrieval and updating
 
@@ -142,7 +144,7 @@ angular.module('wealthManagerApp')
     vm.getData = function() {
         AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
         DebtDataAPI.getData(vm.debtGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
-    }
+    };
 
     vm.submitAssets = function(form) {
         $scope.$broadcast('schemaFormValidate');
@@ -155,7 +157,7 @@ angular.module('wealthManagerApp')
             vm.recalculate();
         }
         return true;
-    }
+    };
 
     vm.submitDebt = function(form){
         $scope.$broadcast('schemaFormValidate');
@@ -171,33 +173,34 @@ angular.module('wealthManagerApp')
             vm.recalculate();
         }
         return true;
-    }
+    };
 
-    vm.deleteAsset = function(id, $event){
+    vm.deleteAsset = function(id){
         if(DEBUG) {
             console.log ("Deleting: " + id);
-            console.log ("Array index of item to remove: " + vm.assetData.findIndex(x => x._id === id));
+            console.log ("Array index of item to remove: " + vm.assetData.findIndex(obj => obj._id === id));
             console.log ("Data to be deleted: " + vm.assetData[vm.assetData.indexOf(id)]);
         }
 
         AssetDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
-        vm.assetData.splice(vm.assetData.findIndex(x => x._id === id), 1); //remove item from local list of assets
+        vm.assetData.splice(vm.assetData.findIndex(obj => obj._id === id), 1); //remove item from local list of assets
         vm.assetGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
         vm.recalculate();
-    }
+    };
 
-    vm.deleteDebt = function(id, event){
+    vm.deleteDebt = function(id){
         DebtDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
         vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
-    }
+    };
 
     vm.cancelAssetEntry = function (){
         Asset.resetKeepClass(vm.assetEntry);
-    }
+    };
+
     //expose helper function by binding to controller scope
     vm.isEmptyString = function(myString){
         return Helpers.checkIfEmptyString(myString);
-    }
+    };
 
     //custom success handler for API Get Asset
     vm.assetGetSuccessHandler = function successHandler_GET(res) {
@@ -209,7 +212,7 @@ angular.module('wealthManagerApp')
         vm.recalculate();
         vm.assetGridOptions.data = vm.assetData;
         console.log ("API Success: Data retrieved and all amounts recalculated.");
-    }
+    };
 
       //custom success handler for API Get Debt
     vm.debtGetSuccessHandler = function successHandler_GET(res) {
@@ -221,6 +224,6 @@ angular.module('wealthManagerApp')
         vm.recalculate();
         vm.debtGridOptions.data = vm.debtData;
         console.log ("API Success: Data retrieved and all amounts recalculated.");
-    }
+    };
 
 }]);

@@ -17,8 +17,8 @@ angular.module('wealthManagerApp')
                 successHandler(response);    //data can't be used outside this function
             }, function(error) {
                 failureHandler(error);
-            })
-        }
+            });
+        };
 
         this.deleteData = function(successHandler, failureHandler, id){
             $http.delete(apiURL + '/' + id)
@@ -27,8 +27,8 @@ angular.module('wealthManagerApp')
                 return true;
             }, function(error) {
                 failureHandler(error);
-            })
-        }
+            });
+        };
 
         this.postData = function(successHandler, failureHandler, data){
             $http.post(apiURL, JSON.stringify(data))
@@ -36,8 +36,8 @@ angular.module('wealthManagerApp')
                 successHandler(response, data);
             }, function(error){
                 failureHandler(error);
-            })
-        }
+            });
+        };
 
         this.updateData = function(successHandler, failureHandler, data, id){
             $http.put(apiURL + '/' + id, JSON.stringify(data))
@@ -45,6 +45,6 @@ angular.module('wealthManagerApp')
                 successHandler(response, data);
             }, function(error){
                 failureHandler(error);
-            })
-        }
+            });
+        };
 }]);

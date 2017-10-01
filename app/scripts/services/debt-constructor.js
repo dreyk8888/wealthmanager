@@ -18,9 +18,9 @@ angular.module('wealthManagerApp')
                 term: "",
                 name: "",
                 amount: ""
-            }
+            };
             return debt;
-        }
+        };
 
         this.reset = function (debt){
             debt.term = "";
@@ -28,14 +28,15 @@ angular.module('wealthManagerApp')
             debt.amount = "";
 
             return debt;
-        }
+        };
 
         this.resetKeepClass = function (debt){
             debt.name = "";
             debt.amount = "";
 
             return debt;
-        }
+        };
+
         //return the debt object parameter populated with parameterized values and calculated amount
         //keep track of _id for API posting purposes
         this.populate = function (debt, _id, term, name, amount){
@@ -45,5 +46,5 @@ angular.module('wealthManagerApp')
             debt.term = term;
 
             return debt;
-        }
+        };
 }]);

@@ -24,9 +24,7 @@ angular.module('wealthManagerApp')
                         dataLabels: {
                             enabled: true,
                             format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
+
                         }
                     }
                 },
@@ -40,6 +38,6 @@ angular.module('wealthManagerApp')
             };
 
             return chartConfig;
-        }
+        };
 
 });

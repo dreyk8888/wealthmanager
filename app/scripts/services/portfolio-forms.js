@@ -83,7 +83,7 @@ angular.module('wealthManagerApp')
                 ];
             }
         return form;
-    }
+    };
 
     this.getDebtForm = function(){
         var form = [];
@@ -104,5 +104,5 @@ angular.module('wealthManagerApp')
             }
         ];
         return form;
-    }
+    };
 }]);

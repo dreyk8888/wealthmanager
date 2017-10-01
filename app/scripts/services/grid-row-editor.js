@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 /**
  * @ngdoc service
@@ -8,7 +8,7 @@
  * Service for opening a new modal for row editing in ui-grid and saving changed data
  */
 angular.module('wealthManagerApp')
-.service('RowEditor', ['$rootScope', '$uibModal', 'AssetDataAPI', 'APIResponseHandlersCommon', 'Asset', function ($rootScope, $uibModal, AssetDataAPI, APIResponseHandlersCommon, Asset) {
+.service('RowEditor', ['$rootScope', '$uibModal', 'AssetDataAPI', 'DebtDataAPI', 'APIResponseHandlersCommon', 'Asset', function ($rootScope, $uibModal, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Asset) {
 
     var DEBUG = true;
 
@@ -57,7 +57,9 @@ angular.module('wealthManagerApp')
                 row: function () { return row; }
             }
         });
-    }
+
+        return modalInstance;
+    };
 
     this.editDebtRow = function (grid, row) {
 
@@ -102,7 +104,8 @@ angular.module('wealthManagerApp')
                 row: function () { return row; }
             }
         });
-    }
+        return modalInstance;
+    };
 
 }]);
 

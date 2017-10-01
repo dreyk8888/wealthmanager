@@ -19,7 +19,7 @@ angular.module('wealthManagerApp')
             }
             return total.toFixed(2);
 
-        }
+        };
 
         this.perTypeTotalCalc = function(data){
         //array of {type: <value>, total: 'value'}
@@ -27,9 +27,10 @@ angular.module('wealthManagerApp')
             var totalEnum = {
                 CLASS: 0,
                 TOTAL: 1
-            }
+            };
+
             var typeTotals = [];
-            var total = this.totalCalc(data);
+
             for (var i = 0; i < data.length; i++){
                 //search for this class name in the 2-D array, where the first index is class, second is total
                 var index = Helpers.search2DArray(data[i].class, typeTotals, totalEnum.CLASS);
@@ -48,7 +49,7 @@ angular.module('wealthManagerApp')
             if (DEBUG){ console.log ("Total amount per type: " + typeTotals); }
 
             return typeTotals;
-        }
+        };
 
         this.perTypeTotalPercentCalc = function(data){
         //array of objects {asset class, total, percentage of all assets}
@@ -77,7 +78,7 @@ angular.module('wealthManagerApp')
             if (DEBUG){ console.log ("Total amount per asset class: " + typeTotals); }
 
             return typeTotals;
-        }
+        };
 
 
 }]);

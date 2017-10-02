@@ -124,9 +124,9 @@ angular.module('wealthManagerApp')
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
         vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData);
-        vm.assetTotals = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData);
+        vm.assetTotals = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, 'class');
         vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData);
-        vm.debtTotals = PortfolioCalcs.perTypeTotalCalc(vm.debtData);
+        vm.debtTotals = PortfolioCalcs.perTypeTotalCalc(vm.debtData, 'term');
         vm.updateTypeChartData();
     };
 

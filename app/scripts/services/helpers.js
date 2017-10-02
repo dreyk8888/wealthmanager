@@ -16,26 +16,29 @@ angular.module('wealthManagerApp')
             if (array.length < 1){
                 return index;
             }
-
             for(var i = 0, len = array.length; i < len; i++) {
-                if (array[i][objectToSearch] && array[i][objectToSearch].toLowerCase() === searchTerm.toLowerCase()) {
-                    index = i;
-                    return index;
+                if (typeof array[i][objectToSearch]  !== 'undefined'){
+                    if (array[i][objectToSearch].toLowerCase() === searchTerm.toLowerCase()) {
+                        index = i;
+                        return index;
+                    }
                 }
             }
             return index;
         };
 
-        this.search2DArray = function(searchTerm, array, searchIndex){
+        this.search2DArray = function(searchTerm, array, objectToSearch){
             var index = -1;
             if (array.length < 1){
                 return index;
             }
 
             for(var i = 0, len = array.length; i < len; i++) {
-                if (array[i][searchIndex] && array[i][searchIndex].toLowerCase() === searchTerm.toLowerCase()) {
-                    index = i;
-                    return index;
+                if (typeof array[i][objectToSearch]  !== 'undefined'){
+                    if (array[i][objectToSearch].toLowerCase() === searchTerm.toLowerCase()) {
+                        index = i;
+                        return index;
+                    }
                 }
             }
             return index;

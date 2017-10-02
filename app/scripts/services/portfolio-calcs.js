@@ -21,47 +21,47 @@ angular.module('wealthManagerApp')
 
         };
 
-        this.perTypeTotalCalc = function(data){
-        //array of {type: <value>, total: 'value'}
-
-            var totalEnum = {
-                CLASS: 0,
-                TOTAL: 1
-            };
-
+        //data: array of portfolio data
+        //typeName: name of the type in the data object we should be calculating the total for
+        //returns: array of {type: <value>, total: 'value'}
+        this.perTypeTotalCalc = function(data, objTypeName){
             var typeTotals = [];
 
             for (var i = 0; i < data.length; i++){
                 //search for this class name in the 2-D array, where the first index is class, second is total
-                var index = Helpers.search2DArray(data[i].class, typeTotals, totalEnum.CLASS);
+                var index = Helpers.search2DArray(data[i][objTypeName], typeTotals, 'type');
 
                 if (index === -1){
-                    typeTotals.push({'type': data[i].class, 'amount': data[i].amount});
-
-                    if (DEBUG){ console.log ("Calculating amount per type: " + typeTotals); }
-
+                    typeTotals.push({'type': data[i][objTypeName], 'amount': data[i].amount});
                 } else {
                     var newTotal = typeTotals[index].total + data[i].amount;
                     typeTotals[index].total = newTotal;
                 }
             }
 
-            if (DEBUG){ console.log ("Total amount per type: " + typeTotals); }
+            if (DEBUG){
+                for (var j = 0; j < typeTotals.length; j++){
+                    console.log ("Type: " + typeTotals[j].type + " Amount: " + typeTotals[j].amount);
+                }
+            }
 
             return typeTotals;
         };
 
-        this.perTypeTotalPercentCalc = function(data){
-        //array of objects {asset class, total, percentage of all assets}
+        //data: array of portfolio data
+        //typeName: name of the type in the data object we should be calculating the total for
+        //returns: array of objects {type: '<value>, total:<value>, percentage: <value>}
+        this.perTypeTotalPercentCalc = function(data, objTypeName){
             var typeTotals = [];
             var total = this.totalCalc (data);
             for (var i = 0; i < data.length; i++){
-                var index = Helpers.searchObjectArray(data[i].class, typeTotals, 'class');
 
+                var index = Helpers.searchObjectArray(data[i][objTypeName], typeTotals, 'type');
+                 console.log (data[i][objTypeName] + " index: " + index);
                 //first of this class encountered, just use amount as total
                 if (index === -1){
                     var percentOfTotal = (data[i].amount/total * 100).toFixed(2);
-                    typeTotals.push({class: data[i].class, total: data[i].amount, percentage: percentOfTotal} );
+                    typeTotals.push({type: data[i][objTypeName], total: data[i].amount, percentage: percentOfTotal} );
 
                     if (DEBUG){ console.log ("Calculating amount per asset class: " + typeTotals); }
 
@@ -75,7 +75,11 @@ angular.module('wealthManagerApp')
                 }
             }
 
-            if (DEBUG){ console.log ("Total amount per asset class: " + typeTotals); }
+            if (DEBUG){
+                for (var j = 0; j < typeTotals.length; j++){
+                    console.log ("Type: " + typeTotals[j].type + " Amount: " + typeTotals[j].total + " Percentage: " + typeTotals[j].percentage);
+                }
+            }
 
             return typeTotals;
         };

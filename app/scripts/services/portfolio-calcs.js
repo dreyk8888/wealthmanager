@@ -11,11 +11,11 @@ angular.module('wealthManagerApp')
     .service('PortfolioCalcs', ['Helpers', function(Helpers) {
         var DEBUG = true;
         //take an array of asset data and calculate the total
-        this.totalCalc = function (data){
+        this.totalCalc = function (data, objValueName){
             var total = 0;
 
             for (var i = 0; i < data.length; i++){
-                total = total + data[i].amount;
+                total = total + data[i][objValueName];
             }
             return total.toFixed(2);
 
@@ -24,7 +24,7 @@ angular.module('wealthManagerApp')
         //data: array of portfolio data
         //typeName: name of the type in the data object we should be calculating the total for
         //returns: array of {type: <value>, total: 'value'}
-        this.perTypeTotalCalc = function(data, objTypeName){
+        this.perTypeTotalCalc = function(data, objTypeName, objValueName){
             var typeTotals = [];
 
             for (var i = 0; i < data.length; i++){
@@ -32,16 +32,16 @@ angular.module('wealthManagerApp')
                 var index = Helpers.search2DArray(data[i][objTypeName], typeTotals, 'type');
 
                 if (index === -1){
-                    typeTotals.push({'type': data[i][objTypeName], 'amount': data[i].amount});
+                    typeTotals.push({'type': data[i][objTypeName], 'total': data[i][objValueName]});
                 } else {
-                    var newTotal = typeTotals[index].total + data[i].amount;
+                    var newTotal = typeTotals[index].total + data[i][objValueName];
                     typeTotals[index].total = newTotal;
                 }
             }
 
             if (DEBUG){
                 for (var j = 0; j < typeTotals.length; j++){
-                    console.log ("Type: " + typeTotals[j].type + " Amount: " + typeTotals[j].amount);
+                    console.log ("Type: " + typeTotals[j].type + " Total: " + typeTotals[j].total);
                 }
             }
 
@@ -49,26 +49,27 @@ angular.module('wealthManagerApp')
         };
 
         //data: array of portfolio data
-        //typeName: name of the type in the data object we should be calculating the total for
+        //objTypeName: name of the type in the data object we should be calculating the total for
+        //objValueName: name of the amount value in the object use to calculate total
         //returns: array of objects {type: '<value>, total:<value>, percentage: <value>}
-        this.perTypeTotalPercentCalc = function(data, objTypeName){
+        this.perTypeTotalPercentCalc = function(data, objTypeName, objValueName){
             var typeTotals = [];
-            var total = this.totalCalc (data);
+            var total = this.totalCalc (data, objValueName);
             for (var i = 0; i < data.length; i++){
 
                 var index = Helpers.searchObjectArray(data[i][objTypeName], typeTotals, 'type');
                  console.log (data[i][objTypeName] + " index: " + index);
                 //first of this class encountered, just use amount as total
                 if (index === -1){
-                    var percentOfTotal = (data[i].amount/total * 100).toFixed(2);
-                    typeTotals.push({type: data[i][objTypeName], total: data[i].amount, percentage: percentOfTotal} );
+                    var percentOfTotal = (data[i][objValueName]/total * 100).toFixed(2);
+                    typeTotals.push({type: data[i][objTypeName], total: data[i][objValueName], percentage: percentOfTotal} );
 
                     if (DEBUG){ console.log ("Calculating amount per asset class: " + typeTotals); }
 
                 //add the current amount to the existing amount in the array
                 } else {
-                    var newTotal = typeTotals[index].total + data[i].amount;
-                    typeTotals[index].total = newTotal;
+                    var newTotal = typeTotals[index].total + data[i][objValueName];
+                    typeTotals[index].total = newTotal
 
                     var newPercentage = (newTotal/total * 100).toFixed(2);
                     typeTotals[index].percentage = newPercentage;

@@ -32,12 +32,14 @@ angular.module('wealthManagerApp')
         ];
 
         this.debtColDef = [
-            { name: 'Name', field: 'name', width: '20%' },
-            { name: 'Amount', field: 'amount', type: 'number', width: '30%', enableCellEdit: false, cellFilter: 'currency' },
+            { name: 'ID', field: '_id', width: '0%', visible: false },
+            { name: 'Term', field: 'term', width: '20%', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' }, cellTemplate: 'views/portfolioentry-grid-grouping-template.html' },
+            { name: 'Name', field: 'name', width: '30%' },
+            { name: 'Amount', field: 'amount', type: 'number', width: '10%', enableCellEdit: false, cellFilter: 'currency' },
             { name: 'Description', field: 'name', width: '30%' },
             { name: "Actions",
                 field:"buttons",
-                width: '20%',
+                width: '10%',
                 cellTemplate: 'views/portfolioentry-grid-button-template-debt.html',
                 enableCellEdit: false,
                 enableFiltering:false,

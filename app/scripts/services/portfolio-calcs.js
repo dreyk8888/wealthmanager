@@ -51,7 +51,7 @@ angular.module('wealthManagerApp')
         //data: array of portfolio data
         //objTypeName: name of the type in the data object we should be calculating the total for
         //objValueName: name of the amount value in the object use to calculate total
-        //returns: array of objects {type: '<value>, total:<value>, percentage: <value>}
+        //returns: array of objects {type: <value>, total:<value>, percentage: <value>}
         this.perTypeTotalPercentCalc = function(data, objTypeName, objValueName){
             var typeTotals = [];
             var total = this.totalCalc (data, objValueName);
@@ -61,7 +61,10 @@ angular.module('wealthManagerApp')
                  console.log (data[i][objTypeName] + " index: " + index);
                 //first of this class encountered, just use amount as total
                 if (index === -1){
-                    var percentOfTotal = (data[i][objValueName]/total * 100).toFixed(2);
+                    var percentOfTotal = 0;
+                    if (data[i][objValueName] > 0 && total > 0){
+                        percentOfTotal = (data[i][objValueName]/total * 100).toFixed(2);
+                    }
                     typeTotals.push({type: data[i][objTypeName], total: data[i][objValueName], percentage: percentOfTotal} );
 
                     if (DEBUG){ console.log ("Calculating amount per asset class: " + typeTotals); }
@@ -69,9 +72,13 @@ angular.module('wealthManagerApp')
                 //add the current amount to the existing amount in the array
                 } else {
                     var newTotal = typeTotals[index].total + data[i][objValueName];
-                    typeTotals[index].total = newTotal
+                    typeTotals[index].total = newTotal;
 
-                    var newPercentage = (newTotal/total * 100).toFixed(2);
+                    var newPercentage = 0;
+
+                    if (newTotal > 0 && total > 0){
+                        newPercentage = (newTotal/total * 100).toFixed(2);
+                    }
                     typeTotals[index].percentage = newPercentage;
                 }
             }

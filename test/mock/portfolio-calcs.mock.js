@@ -58,6 +58,30 @@ angular.module('wealthManagerApp')
       }
     ];
 
+    this.mockAssetDataContainsZeroes = [
+      {
+        class: 'Fixed Assets',
+        amount: 100
+      },
+      {
+        class: 'Cash',
+        amount: 0.00
+      },
+      {
+        class: 'Equities',
+        amount: 0
+      },
+      {
+        class: 'Fixed Assets',
+        amount: 0.0000000
+      },
+
+      {
+        class: 'Equities',
+        amount: 100.00000
+      }
+    ];
+
     this.mockAssetDataNegative = [
       {
         class: 'Equities',

@@ -68,7 +68,7 @@ describe('Service: PortfolioCalcs', function () {
     expect(PortfolioCalcs.perTypeTotalCalc(PortfolioCalcsMock.mockDataEmpty, 'class', 'amount')).toEqual(expectedEmptyArray);
   });
 
-  var expectedEmptyZeroes = [
+  var expectedAssetZeroes = [
     {
       type: 'Fixed Assets',
       total: 0
@@ -84,7 +84,7 @@ describe('Service: PortfolioCalcs', function () {
   ];
 
   it('perTypeTotalCalc() should return array of zeroes if given an array of zeroes', function () {
-    expect(PortfolioCalcs.perTypeTotalCalc(PortfolioCalcsMock.mockAssetDataZeroes, 'class', 'amount')).toEqual(expectedEmptyZeroes);
+    expect(PortfolioCalcs.perTypeTotalCalc(PortfolioCalcsMock.mockAssetDataZeroes, 'class', 'amount')).toEqual(expectedAssetZeroes);
   });
 
   var expectedNegativeDebtData = [
@@ -140,6 +140,7 @@ describe('Service: PortfolioCalcs', function () {
     expect(PortfolioCalcs.perTypeTotalCalc(PortfolioCalcsMock.mockDebtDataFloat, 'type', 'amount')).toEqual(expectedDataMockDebtDataFloat);
   });
 
+  //expecting a string with 2 decimals because of the toFixed() function run on percentage values
   var expectedDataMockDebtDataPercent = [
     {
       type: 'Long term',
@@ -181,6 +182,50 @@ describe('Service: PortfolioCalcs', function () {
   ];
   it('perTypeTotalPercentCalc() should calculate right total and percentage for asset data', function () {
     expect(PortfolioCalcs.perTypeTotalPercentCalc(PortfolioCalcsMock.mockAssetDataFloat, 'class', 'amount')).toEqual(expectedDataMockAssetDataPercent);
+  });
+
+  //if entry is 0, toFixed() is not run on it, hence it will not be a string but actually an integer 0
+  var expectedAssetPercentageZeroes = [
+    {
+      type: 'Fixed Assets',
+      total: 0,
+      percentage: 0
+    },
+    {
+      type: 'Cash',
+      total: 0,
+      percentage: 0
+    },
+    {
+      type: 'Equities',
+      total: 0,
+      percentage: 0
+    }
+  ];
+
+  it('perTypeTotalPercentCalc() should handle zeroes', function () {
+    expect(PortfolioCalcs.perTypeTotalPercentCalc(PortfolioCalcsMock.mockAssetDataZeroes, 'class', 'amount')).toEqual(expectedAssetPercentageZeroes);
+  });
+
+  var expectedAssetPercentageContainsZeroes = [
+    {
+      type: 'Fixed Assets',
+      total: 100,
+      percentage: '50.00'
+    },
+    {
+      type: 'Cash',
+      total: 0,
+      percentage: 0
+    },
+    {
+      type: 'Equities',
+      total: 100,
+      percentage: '50.00'
+    }
+  ];
+  it('perTypeTotalPercentCalc() should handle entries that are zero', function () {
+    expect(PortfolioCalcs.perTypeTotalPercentCalc(PortfolioCalcsMock.mockAssetDataContainsZeroes, 'class', 'amount')).toEqual(expectedAssetPercentageContainsZeroes);
   });
 
 });

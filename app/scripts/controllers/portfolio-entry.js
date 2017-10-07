@@ -10,7 +10,6 @@
 
  /*todo
  - filter out the N/A values in the grid
- - display short term, long term liabilities in table
  - add tests for calculations
  - get debt row edit/delete working
  */
@@ -64,6 +63,7 @@ angular.module('wealthManagerApp')
             enableFiltering: false,
             showTreeExpandNoChildren: true,
             treeRowHeaderAlwaysVisible: false,
+            rowHeight:38,
             appScopeProvider: vm,
             data: vm.assetData,
             onRegisterApi: function(gridApi) {
@@ -84,6 +84,7 @@ angular.module('wealthManagerApp')
             enableFiltering: false,
             showTreeExpandNoChildren: true,
             treeRowHeaderAlwaysVisible: false,
+            rowHeight:38,
             appScopeProvider: vm,
             data: vm.debtData,
             onRegisterApi: function(gridApi) {

@@ -21,10 +21,6 @@ describe('Service: PortfolioCalcs', function () {
     expect(PortfolioCalcs).toBeDefined();
   });
 
-  it('has a dummy test to test 1+3', function () {
-    expect(1+3).toEqual(4);
-  });
-
 
   it('totalCalc() should exist', function () {
     expect(PortfolioCalcs.totalCalc(PortfolioCalcsMock.mockDataEmpty, 'amount')).toBeDefined();

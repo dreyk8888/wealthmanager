@@ -135,7 +135,7 @@ angular.module("wealthManagerApp")
      vm.updateTypeChartData = function(){
          vm.typeChartData = [];
          for (var i = 0; i < vm.assetTotals.length; i++){
-            vm.typeChartData.push([vm.assetTotals[i].class, vm.assetTotals[i].total]);
+            vm.typeChartData.push([vm.assetTotals[i].type, vm.assetTotals[i].total]);
          }
          vm.typeChartConfig.series[0].data = vm.typeChartData;  //refresh data in chart config
     };

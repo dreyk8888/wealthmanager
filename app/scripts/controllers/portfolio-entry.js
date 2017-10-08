@@ -10,9 +10,9 @@
 
  /*todo
  - filter out the N/A values in the grid
- - add tests for helpers
  - diversification by region
  - how to make a net worth trend?
+ - API unit tests -> how to test API calls?
  */
 
 
@@ -27,7 +27,7 @@ angular.module("wealthManagerApp")
         "DebtDataAPI",
         "APIResponseHandlersCommon",
         "Helpers",
-        "PortfolioGridColumnDef",
+        "PortfolioGridColumnDefs",
         "PortfolioCalcs",
         "PortfolioChartConfig",
         "RowEditor",
@@ -35,7 +35,7 @@ angular.module("wealthManagerApp")
         "DebtSchema",
         "PortfolioForms",
         function ($scope, $http, uiGridConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Helpers,
-            PortfolioGridColumnDef, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
+            PortfolioGridColumnDefs, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
     var DEBUG = true;
 
@@ -60,7 +60,7 @@ angular.module("wealthManagerApp")
     vm.assetData = [];  //container for asset table
     vm.assetGridOptions = {
             enableSorting: true,
-            columnDefs: PortfolioGridColumnDef.assetColDef,
+            columnDefs: PortfolioGridColumnDefs.assetColDef,
             enableFiltering: false,
             showTreeExpandNoChildren: true,
             treeRowHeaderAlwaysVisible: false,
@@ -81,7 +81,7 @@ angular.module("wealthManagerApp")
     vm.debtData = [];  //container for asset table
     vm.debtGridOptions = {
             enableSorting: true,
-            columnDefs: PortfolioGridColumnDef.debtColDef,
+            columnDefs: PortfolioGridColumnDefs.debtColDef,
             enableFiltering: false,
             showTreeExpandNoChildren: true,
             treeRowHeaderAlwaysVisible: false,

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc function
@@ -10,29 +10,30 @@
 
  /*todo
  - filter out the N/A values in the grid
- - add tests for calculations
- - get debt row edit/delete working
+ - add tests for helpers
+ - diversification by region
+ - how to make a net worth trend?
  */
 
 
-angular.module('wealthManagerApp')
-    .controller('PortfolioEntryCtrl',
-        ['$scope',
-        '$http',
-        'uiGridConstants',
-        'Asset',
-        'Debt',
-        'AssetDataAPI',
-        'DebtDataAPI',
-        'APIResponseHandlersCommon',
-        'Helpers',
-        'PortfolioGridColumnDef',
-        'PortfolioCalcs',
-        'PortfolioChartConfig',
-        'RowEditor',
-        'AssetSchema',
-        'DebtSchema',
-        'PortfolioForms',
+angular.module("wealthManagerApp")
+    .controller("PortfolioEntryCtrl",
+        ["$scope",
+        "$http",
+        "uiGridConstants",
+        "Asset",
+        "Debt",
+        "AssetDataAPI",
+        "DebtDataAPI",
+        "APIResponseHandlersCommon",
+        "Helpers",
+        "PortfolioGridColumnDef",
+        "PortfolioCalcs",
+        "PortfolioChartConfig",
+        "RowEditor",
+        "AssetSchema",
+        "DebtSchema",
+        "PortfolioForms",
         function ($scope, $http, uiGridConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Helpers,
             PortfolioGridColumnDef, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
@@ -103,11 +104,11 @@ angular.module('wealthManagerApp')
 //Asset Input form
     vm.assetclasses = Asset.ASSETCLASSES;
 
-    vm.form = PortfolioForms.getAssetForm('');  //fetch default form until user selects asset type
+    vm.form = PortfolioForms.getAssetForm("");  //fetch default form until user selects asset type
     vm.classSelected = function(assetClass){
         vm.assetEntry.class = assetClass;
         vm.form = PortfolioForms.getAssetForm(assetClass);
-        if (DEBUG) { console.log ('Class selected: ' + assetClass ); }
+        if (DEBUG) { console.log ("Class selected: " + assetClass ); }
     };
 
     vm.schema = AssetSchema.schema;
@@ -124,10 +125,10 @@ angular.module('wealthManagerApp')
 //Calculations
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
-        vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData, 'amount');
-        vm.assetTotals = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, 'class', 'amount');
-        vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData, 'amount');
-        vm.debtTotals = PortfolioCalcs.perTypeTotalCalc(vm.debtData, 'term', 'amount');
+        vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData, "amount");
+        vm.assetTotals = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "class", "amount");
+        vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData, "amount");
+        vm.debtTotals = PortfolioCalcs.perTypeTotalCalc(vm.debtData, "term", "amount");
         vm.updateTypeChartData();
     };
 
@@ -148,7 +149,7 @@ angular.module('wealthManagerApp')
     };
 
     vm.submitAssets = function(form) {
-        $scope.$broadcast('schemaFormValidate');
+        $scope.$broadcast("schemaFormValidate");
         if (form.$valid){
             console.log ("Form is valid");
             var temp = Asset.copyAndCalculateAmount(vm.assetEntry);
@@ -161,7 +162,7 @@ angular.module('wealthManagerApp')
     };
 
     vm.submitDebt = function(form){
-        $scope.$broadcast('schemaFormValidate');
+        $scope.$broadcast("schemaFormValidate");
         if (form.$valid){
             if(DEBUG) {
                 console.log ("Form is valid");

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc service
@@ -7,8 +7,8 @@
  * # wealthManagerData
  * Helper functions for wealth manager
  */
-angular.module('wealthManagerApp')
-    .service('PortfolioCalcs', ['Helpers', function(Helpers) {
+angular.module("wealthManagerApp")
+    .service("PortfolioCalcs", ["Helpers", function(Helpers) {
         var DEBUG = true;
         //take an array of asset data and calculate the total
         this.totalCalc = function (data, objValueName){
@@ -23,16 +23,16 @@ angular.module('wealthManagerApp')
 
         //data: array of portfolio data
         //typeName: name of the type in the data object we should be calculating the total for
-        //returns: array of {type: <value>, total: 'value'}
+        //returns: array of {type: <value>, total: "value"}
         this.perTypeTotalCalc = function(data, objTypeName, objValueName){
             var typeTotals = [];
 
             for (var i = 0; i < data.length; i++){
                 //search for this class name in the 2-D array, where the first index is class, second is total
-                var index = Helpers.search2DArray(data[i][objTypeName], typeTotals, 'type');
+                var index = Helpers.searchObjectArray(data[i][objTypeName], typeTotals, "type");
 
                 if (index === -1){
-                    typeTotals.push({'type': data[i][objTypeName], 'total': data[i][objValueName]});
+                    typeTotals.push({"type": data[i][objTypeName], "total": data[i][objValueName]});
                 } else {
                     var newTotal = typeTotals[index].total + data[i][objValueName];
                     typeTotals[index].total = newTotal;
@@ -56,8 +56,8 @@ angular.module('wealthManagerApp')
             var typeTotals = [];
             var total = this.totalCalc (data, objValueName);
             for (var i = 0; i < data.length; i++){
-
-                var index = Helpers.searchObjectArray(data[i][objTypeName], typeTotals, 'type');
+                //search the existing array of types and totals to see if we should create a new type or add to an existing value
+                var index = Helpers.searchObjectArray(data[i][objTypeName], typeTotals, "type");
                  console.log (data[i][objTypeName] + " index: " + index);
                 //first of this class encountered, just use amount as total
                 if (index === -1){

@@ -16,7 +16,6 @@ describe('Service: PortfolioCalcs', function () {
     PortfolioCalcsMock = _PortfolioCalcsMockData_;
   }));
 
-  // A simple test to verify the Users factory exists
   it('should exist', function() {
     expect(PortfolioCalcs).toBeDefined();
   });

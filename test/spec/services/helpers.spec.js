@@ -17,7 +17,6 @@ describe("Service: Helpers", function () {
     PortfolioCalcsMock = _PortfolioCalcsMockData_;
   }));
 
-  // A simple test to verify the Users factory exists
   it("Helpers service should exist", function() {
     expect(Helpers).toBeDefined();
   });

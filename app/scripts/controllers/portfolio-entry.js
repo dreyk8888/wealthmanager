@@ -9,8 +9,8 @@
  */
 
  /*todo
- - filter out the N/A values in the grid
  - diversification by region
+ - default asset type in drop down
  - how to make a net worth trend?
  - API unit tests -> how to test API calls?
  */
@@ -51,16 +51,17 @@ angular.module("wealthManagerApp")
 ///////////////////////////////////////////////////////////////////////////
 //Pie Chart
     vm.typeChartData = [];
-    vm.typeChartConfig = PortfolioChartConfig.portfolioPieConfig(vm.typeChartData);
-
+    vm.typeChartConfig = PortfolioChartConfig.portfolioSAssetClassPieConfig(vm.typeChartData);
+    vm.locationChartData = [];
+    vm.locationChartConfig = PortfolioChartConfig.portfolioAssetLocationPieConfig(vm.locationChartData);
 
 //////////////////////////////////////////////////////////////////////////////
 //ui-grid setup to display assets
-
+    vm.assetGridColDef = PortfolioGridColumnDefs.assetColDefGroupByClass; //group by class by default
     vm.assetData = [];  //container for asset table
     vm.assetGridOptions = {
             enableSorting: true,
-            columnDefs: PortfolioGridColumnDefs.assetColDef,
+            columnDefs: vm.assetGridColDef,
             enableFiltering: false,
             showTreeExpandNoChildren: true,
             treeRowHeaderAlwaysVisible: false,
@@ -126,19 +127,27 @@ angular.module("wealthManagerApp")
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
         vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData, "amount");
-        vm.assetTotals = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "class", "amount");
+        vm.assetTotalsPerClass = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "class", "amount");
+        vm.assetTotalsPerLocation = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "location", "amount");
         vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData, "amount");
-        vm.debtTotals = PortfolioCalcs.perTypeTotalCalc(vm.debtData, "term", "amount");
-        vm.updateTypeChartData();
+        vm.debtTotalsPerType = PortfolioCalcs.perTypeTotalCalc(vm.debtData, "term", "amount");
+        vm.updateChartData();
     };
 
-     vm.updateTypeChartData = function(){
+     vm.updateChartData = function(){
          vm.typeChartData = [];
-         for (var i = 0; i < vm.assetTotals.length; i++){
-            vm.typeChartData.push([vm.assetTotals[i].type, vm.assetTotals[i].total]);
+         vm.locationChartData = [];
+         for (var i = 0; i < vm.assetTotalsPerClass.length; i++){
+            vm.typeChartData.push([vm.assetTotalsPerClass[i].type, vm.assetTotalsPerClass[i].total]);
+         }
+
+         for (var i = 0; i < vm.assetTotalsPerLocation.length; i++){
+            vm.locationChartData.push([vm.assetTotalsPerLocation[i].type, vm.assetTotalsPerLocation[i].total]);
          }
          vm.typeChartConfig.series[0].data = vm.typeChartData;  //refresh data in chart config
+         vm.locationChartConfig.series[0].data = vm.locationChartData;
     };
+
 ////////////////////////////////////////////////////////////////////////////
 //Data retrieval and updating
 

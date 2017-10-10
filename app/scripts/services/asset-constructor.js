@@ -10,8 +10,24 @@
  */
 angular.module('wealthManagerApp')
     .service('Asset', ['GlobalConstants', function(GlobalConstants) {
-        //set of asset classes
+        //set of supported asset classes
         this.ASSETCLASSES = [GlobalConstants.CASH, GlobalConstants.EQUITIES, GlobalConstants.FIXEDINCOME, GlobalConstants.FIXEDASSETS,GlobalConstants.FOREIGNCURR];
+
+        //supported asset allocations
+        this.ASSETLOCATIONS = [
+            GlobalConstants.DOMESTIC,
+            GlobalConstants.CAN,
+            GlobalConstants.US,
+            GlobalConstants.INTL,
+            GlobalConstants.EMRG,
+            GlobalConstants.EUR,
+            GlobalConstants.JPN,
+            GlobalConstants.CHN,
+            GlobalConstants.ASIA,
+            GlobalConstants.SAMER,
+            GlobalConstants.FRONTIER
+        ];
+
         //return a clean Asset object
         this.init = function(){
             var asset = {

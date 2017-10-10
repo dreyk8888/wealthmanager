@@ -19,6 +19,31 @@
         FIXEDINCOME: 'Fixed Income',
         FIXEDASSETS: 'Fixed Assets',
         FOREIGNCURR: 'Foreign Currency',
+        //asset locations
+        DOMESTIC: 'Domestic',
+        CAN: 'Canadian',
+        US: 'United States',
+        INTL: 'International',
+        EMRG: 'Emerging Markets',
+        EUR: 'Eurozone',
+        JPN: 'Japan',
+        CHN: 'China',
+        ASIA: 'Asia/Pacific',
+        SAMER: 'South Americas',
+        FRONTIER: 'Frontier Markets',
+
+        //currencies
+        CAD: 'Canadian Dollar',
+        USD: 'US Dollar',
+        EURO: 'Euro',
+        BP: 'British Pound',
+        YEN: 'Japanese Yen',
+        YUAN: 'Chinese Yuan',
+        FRANC: 'Swiss Francs',
+        INR: 'Indian Rupee',
+        AUD: 'Australian Dollar',
+        DOM: 'Domestic Currency',
+        //debt types
         SHORT_TERM: 'Short Term',
         LONG_TERM: 'Long Term'
 });

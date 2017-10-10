@@ -1,21 +1,21 @@
 
-#diversification {
+.diversification {
 	width: 100%;
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 1.2em;
     border-collapse: collapse;
 }
 
-#diversification td, #diversification th {
+.diversification td, .diversification th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#diversification tr:nth-child(even){background-color: #f2f2f2;}
+.diversification tr:nth-child(even){background-color: #f2f2f2;}
 
-#diversification tr:hover {background-color: #ddd;}
+.diversification tr:hover {background-color: #ddd;}
 
-#diversification th {
+.diversification th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -29,4 +29,28 @@
 .div-all-total {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-weight: bold;
+}
+
+
+h3.horizontal-divider{
+  overflow: hidden;
+  text-align: center;
+}
+h3.horizontal-divider:before,
+h3.horizontal-divider:after {
+    background-color: #000;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 90%;
+}
+h3.horizontal-divider:before {
+    right: 0.5em;
+    margin-left: -98%;
+}
+h3.horizontal-divider:after {
+    left: 0.5em;
+    margin-right: -2%;
 }

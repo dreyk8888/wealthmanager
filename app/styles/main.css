@@ -67,26 +67,3 @@ body {
     height: 100%;
     font-size: 1.3em;
 }
-
-h3.horizontal-divider{
-  overflow: hidden;
-  text-align: center;
-}
-h3.horizontal-divider:before,
-h3.horizontal-divider:after {
-    background-color: #000;
-    content: "";
-    display: inline-block;
-    height: 1px;
-    position: relative;
-    vertical-align: middle;
-    width: 90%;
-}
-h3.horizontal-divider:before {
-    right: 0.5em;
-    margin-left: -98%;
-}
-h3.horizontal-divider:after {
-    left: 0.5em;
-    margin-right: -2%;
-}

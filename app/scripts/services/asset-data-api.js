@@ -10,7 +10,6 @@
 angular.module('wealthManagerApp')
     .service('AssetDataAPI', ['$http', 'GlobalConstants', function($http, GlobalConstants) {
         var apiURL = GlobalConstants.API_URL_LOCAL + '/assetentry';
-        //can put additional code here
         this.getData = function(successHandler, failureHandler) {
             $http.get(apiURL)
             .then(function(response){
@@ -18,6 +17,8 @@ angular.module('wealthManagerApp')
             }, function(error) {
                 failureHandler(error);
             });
+
+            return this;
         };
 
         this.deleteData = function(successHandler, failureHandler, id){
@@ -28,6 +29,8 @@ angular.module('wealthManagerApp')
             }, function(error) {
                 failureHandler(error);
             });
+
+            return this;
         };
 
         this.postData = function(successHandler, failureHandler, data){
@@ -37,6 +40,7 @@ angular.module('wealthManagerApp')
             }, function(error){
                 failureHandler(error);
             });
+            return this;
         };
 
         this.updateData = function(successHandler, failureHandler, data, id){
@@ -46,5 +50,6 @@ angular.module('wealthManagerApp')
             }, function(error){
                 failureHandler(error);
             });
+            return this;
         };
 }]);

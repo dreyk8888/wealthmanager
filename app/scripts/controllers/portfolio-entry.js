@@ -9,10 +9,10 @@
  */
 
  /*todo
- - diversification by region
  - default asset type in drop down
- - how to make a net worth trend?
- - API unit tests -> how to test API calls?
+ - start a second page for projected annual return
+ - graph of projected net worth trend
+ - graph of historical net worth trend put on top
  */
 
 
@@ -57,11 +57,10 @@ angular.module("wealthManagerApp")
 
 //////////////////////////////////////////////////////////////////////////////
 //ui-grid setup to display assets
-    vm.assetGridColDef = PortfolioGridColumnDefs.assetColDefGroupByClass; //group by class by default
     vm.assetData = [];  //container for asset table
     vm.assetGridOptions = {
             enableSorting: true,
-            columnDefs: vm.assetGridColDef,
+            columnDefs: PortfolioGridColumnDefs.assetColDef,
             enableFiltering: false,
             showTreeExpandNoChildren: true,
             treeRowHeaderAlwaysVisible: false,
@@ -130,7 +129,7 @@ angular.module("wealthManagerApp")
         vm.assetTotalsPerClass = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "class", "amount");
         vm.assetTotalsPerLocation = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "location", "amount");
         vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData, "amount");
-        vm.debtTotalsPerType = PortfolioCalcs.perTypeTotalCalc(vm.debtData, "term", "amount");
+        vm.debtTotalsPerType = PortfolioCalcs.perTypeTotalPercentCalc(vm.debtData, "term", "amount");
         vm.updateChartData();
     };
 

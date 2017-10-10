@@ -11,6 +11,8 @@
 
  angular.module('wealthManagerApp')
  .service ('AssetSchema', function() {
+    //asset class is selected in the view because we need to dynamically display a different form
+    //depending on class selected
     this.schema = {
         type: 'object',
         title: 'Asset Entry Form',

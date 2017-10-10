@@ -18,6 +18,7 @@ angular.module('wealthManagerApp')
             }, function(error) {
                 failureHandler(error);
             });
+            return this;
         };
 
         this.deleteData = function(successHandler, failureHandler, id){
@@ -28,6 +29,7 @@ angular.module('wealthManagerApp')
             }, function(error) {
                 failureHandler(error);
             });
+            return this;
         };
 
         this.postData = function(successHandler, failureHandler, data){
@@ -37,6 +39,7 @@ angular.module('wealthManagerApp')
             }, function(error){
                 failureHandler(error);
             });
+            return this;
         };
 
         this.updateData = function(successHandler, failureHandler, data, id){
@@ -46,5 +49,6 @@ angular.module('wealthManagerApp')
             }, function(error){
                 failureHandler(error);
             });
+            return this;
         };
 }]);

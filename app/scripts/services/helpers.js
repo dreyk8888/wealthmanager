@@ -42,4 +42,14 @@ angular.module("wealthManagerApp")
             return false;
         };
 
+        //build a schema form title map from an array of strings
+        //title map should be an array of objects of the form {value: "", name: ""}
+        this.buildTitleMap = function (array){
+            var titleMap = [];
+            for (var i = 0; i < array.length; i++){
+                titleMap.push({"value": array[i], "name": array[i]});
+            }
+            return titleMap;
+        };
+
 });

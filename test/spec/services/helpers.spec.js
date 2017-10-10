@@ -33,6 +33,10 @@ describe("Service: Helpers", function () {
     expect(Helpers.toTitleCase("")).toBeDefined();
   });
 
+  it("buildTitleMap() should exist", function () {
+    expect(Helpers.buildTitleMap("")).toBeDefined();
+  });
+
   it("toTitleCase() takes lower case sentence and converts to title case", function () {
     expect(Helpers.toTitleCase("hello how are you?")).toEqual("Hello How Are You?");
   });
@@ -65,4 +69,9 @@ describe("Service: Helpers", function () {
     expect(Helpers.searchObjectArray("CASHES", PortfolioCalcsMock.mockAssetDataFloat, "class")).toEqual(-1);
   });
 
+  var array = ["abc", "def", "ghi", "jkl"];
+  var expected = [{"value": "abc", "name": "abc"}, {"value":"def", "name":"def"}, {"value":"ghi", "name":"ghi"}, {"value":"jkl", "name":"jkl"}];
+  it("buildTitleMap() returns a title map from an array of form [{value: <value>, name: <name>}, ...]", function () {
+    expect(Helpers.buildTitleMap(array)).toEqual(expected);
+  });
 });

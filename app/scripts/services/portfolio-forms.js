@@ -8,8 +8,13 @@
  * Portfolio input form to display based on the input object type
  */
 angular.module('wealthManagerApp')
-    .service('PortfolioForms', ['GlobalConstants', function(GlobalConstants) {
+    .service('PortfolioForms', ['GlobalConstants', 'Asset', 'Debt', 'Helpers', 'Currency', function(GlobalConstants, Asset, Debt, Helpers, Currency) {
+        //asset class is selected in the view because we need to dynamically display a different form
+        //depending on class selected
         //send the right type of schema form to use given the asset class
+        var assetLocationTitleMap = Helpers.buildTitleMap(Asset.ASSETLOCATIONS);
+        var currencyTitleMap = Helpers.buildTitleMap(Currency.CURRENCYSUPPORTED);
+        var debtTypeTitleMap = Helpers.buildTitleMap(Debt.DEBTTERMS);
         this.getAssetForm = function (assetClass){
             var form = [];
             if (assetClass === GlobalConstants.CASH){
@@ -19,7 +24,12 @@ angular.module('wealthManagerApp')
                         'key': 'amount',
                         'validationMessage': 'Enter 1 or more'
                     },
-                    'currency'
+                    {
+                        'key': 'currency',
+                        'type': 'select',
+                        'description': 'Select currency',
+                        'titleMap': currencyTitleMap
+                    }
                 ];
             } else if (assetClass === GlobalConstants.FIXEDINCOME){
                  form = [
@@ -32,23 +42,43 @@ angular.module('wealthManagerApp')
                         'key': 'unitCost',
                         'validationMessage': 'Enter 1 or more'
                     },
-                    'location',
+                    {
+                        'key': 'location',
+                        'type': 'select',
+                        'description': 'Select location',
+                        'titleMap': assetLocationTitleMap
+                    },
                     {
                         'key': 'date_purchased',
                         'validationMessage': 'Enter as mm/dd/yyyy'
                     },
-                    'currency'
+                    {
+                        'key': 'currency',
+                        'type': 'select',
+                        'description': 'Select currency',
+                        'titleMap': currencyTitleMap
+                    }
                 ];
             } else if (assetClass === GlobalConstants.FIXEDASSETS){
                  form = [
                     'name',
                     'amount',
-                    'location',
+                    {
+                       'key': 'location',
+                        'type': 'select',
+                        'description': 'Select location',
+                        'titleMap': assetLocationTitleMap
+                    },
                     {
                         'key': 'date_purchased',
                         'validationMessage': 'Enter as mm/dd/yyyy'
                     },
-                    'currency'
+                    {
+                        'key': 'currency',
+                        'type': 'select',
+                        'description': 'Select currency',
+                        'titleMap': currencyTitleMap
+                    }
                 ];
             } else if (assetClass === GlobalConstants.FOREIGNCURR){
                  form = [
@@ -61,7 +91,12 @@ angular.module('wealthManagerApp')
                         'key': 'date_purchased',
                         'validationMessage': 'Enter as mm/dd/yyyy'
                     },
-                    'currency'
+                    {
+                        'key': 'currency',
+                        'type': 'select',
+                        'description': 'Select currency',
+                        'titleMap': currencyTitleMap
+                    }
                 ];
             } else {
                  form = [
@@ -74,12 +109,22 @@ angular.module('wealthManagerApp')
                         'key': 'unitCost',
                         'validationMessage': 'Enter 1 or more'
                     },
-                    'location',
+                    {
+                       'key': 'location',
+                        'type': 'select',
+                        'description': 'Select location',
+                        'titleMap': assetLocationTitleMap
+                    },
                     {
                         'key': 'date_purchased',
                         'validationMessage': 'Enter as mm/dd/yyyy'
                     },
-                    'currency'
+                    {
+                        'key': 'currency',
+                        'type': 'select',
+                        'description': 'Select currency',
+                        'titleMap': currencyTitleMap
+                    }
                 ];
             }
         return form;
@@ -92,10 +137,7 @@ angular.module('wealthManagerApp')
                 'key': 'term',
                 'type': 'select',
                 'description': 'Select liability type',
-                'titleMap': [
-                    { value: GlobalConstants.SHORT_TERM, name: "Short term liability" },
-                    { value: GlobalConstants.LONG_TERM, name: "Long term liability" }
-                ]
+                'titleMap': debtTypeTitleMap
             },
             'name',
             {

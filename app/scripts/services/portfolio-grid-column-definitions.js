@@ -35,11 +35,11 @@ angular.module("wealthManagerApp")
 .service("PortfolioGridColumnDefs", function() {
     this.assetColDef = [
         { name: "ID", field: "_id", width: "0%", visible: false },
-        { name: "Asset Class", field: "class", width: "20%", grouping: { groupPriority: 0 }, sort: { priority: 0, direction: "asc" }, cellTemplate: "views/portfolioentry-grid-grouping-template.html" },
-        { name: "Geographical Location", field: "location", width: "10%"},
+        { name: "Asset Class", field: "class", width: "15%", grouping: { groupPriority: 0 }, sort: { priority: 0, direction: "asc" }, cellTemplate: "views/portfolioentry-grid-grouping-template.html" },
+        { name: "Location", field: "location", width: "18%"},
         { name: "Name/Ticker", field: "name", width: "20%" },
-        { name: "Units Held", field: "units", type: "number", width: "10%", cellFilter: "GridUnitsFilter:row.entity"},
-        { name: "Unit Cost", field: "unitCost", type: "number", width: "10%", cellFilter: "GridUnitCostFilter:row.entity"},
+        { name: "Units Held", field: "units", type: "number", width: "8%", cellFilter: "GridUnitsFilter:row.entity"},
+        { name: "Unit Cost", field: "unitCost", type: "number", width: "9%", cellFilter: "GridUnitCostFilter:row.entity"},
         { name: "Amount", field: "amount", type: "number", width: "10%", enableCellEdit: false, cellFilter: "currency" },
         { name: "Date Purchased (MM-DD-YYYY)", field: "date_purchased", type: "date", width: "10%", cellFilter: 'date:"MM-dd-yyyy"'},
         { name: "Actions",

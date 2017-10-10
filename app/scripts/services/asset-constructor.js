@@ -68,12 +68,13 @@ angular.module('wealthManagerApp')
             return asset;
         };
 
+        //this will be used if we ever allow changing of asset classes in row edit
         //return the Asset object parameter populated with parameterized values and calculated amount
         //keep track of _id for API posting purposes
         this.populate = function (asset, _id, assetClass, name, units, unitCost, amount, location, date_purchased, currency){
             asset._id = _id;
 
-            if (asset.class === GlobalConstants.CASH){
+            if (assetClass === GlobalConstants.CASH){
                 asset.class = assetClass;
                 asset.name = name;
                 asset.units = GlobalConstants.UNDEFNUM;
@@ -82,7 +83,7 @@ angular.module('wealthManagerApp')
                 asset.location = GlobalConstants.UNDEFSTR;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
                 asset.currency = currency;
-            } else if (asset.class === GlobalConstants.FIXEDASSETS || asset.class === GlobalConstants.FOREIGNCURR){
+            } else if (assetClass === GlobalConstants.FIXEDASSETS || assetClass === GlobalConstants.FOREIGNCURR){
                 asset.class = assetClass;
                 asset.name = name;
                 asset.units = GlobalConstants.UNDEFNUM;

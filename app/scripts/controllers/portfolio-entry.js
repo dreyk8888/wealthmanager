@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name wealthManagerApp.controller:PortfolioentryCtrl
+ * @name wealthManagerApp.controller:PortfolioEntryCtrl
  * @description
- * # PortfolioentryCtrl
- * Controller of the wealthManagerApp
+ * # PortfolioEntryCtrl
+ * Controller of the wealthManagerApp Portfolio View
  */
 
  /*todo
@@ -140,7 +140,7 @@ angular.module("wealthManagerApp")
             vm.typeChartData.push([vm.assetTotalsPerClass[i].type, vm.assetTotalsPerClass[i].total]);
          }
 
-         for (var i = 0; i < vm.assetTotalsPerLocation.length; i++){
+         for (i=0; i < vm.assetTotalsPerLocation.length; i++){
             vm.locationChartData.push([vm.assetTotalsPerLocation[i].type, vm.assetTotalsPerLocation[i].total]);
          }
          vm.typeChartConfig.series[0].data = vm.typeChartData;  //refresh data in chart config

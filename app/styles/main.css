@@ -32,6 +32,11 @@ body {
   padding-bottom: 19px;
 }
 
+.navbar-header {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 1.3em;
+}
+
 /* Custom page footer */
 .footer {
   padding-top: 19px;

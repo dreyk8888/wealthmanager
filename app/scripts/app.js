@@ -21,4 +21,23 @@ angular
         'ui.bootstrap',
         'schemaForm',
         'highcharts-ng'
-    ]);
+    ])
+
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+    // For any unmatched url, send to /business
+    $urlRouterProvider.otherwise("/portfolio");
+
+    $stateProvider
+        .state('home', {
+            url: "/home",
+            templateUrl: "views/dashboard.html"
+        })
+        .state('portfolio', {
+            url: "/portfolio",
+            templateUrl: "views/portfolio-entry.html"
+        })
+        .state('firecalc', {
+            url: "/firecalc",
+            templateUrl: "views/fire-calc.html"
+        })
+}]);

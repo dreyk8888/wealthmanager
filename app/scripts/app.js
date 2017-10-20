@@ -39,5 +39,5 @@ angular
         .state('firecalc', {
             url: "/firecalc",
             templateUrl: "views/fire-calc.html"
-        })
+        });
 }]);

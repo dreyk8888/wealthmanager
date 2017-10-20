@@ -23,7 +23,7 @@ angular.module("wealthManagerApp")
         var income = incomePerYear;
 
         if (numberOfYears === 0){
-            netWorthTrend.push(netWorthStart.toFixed(2)); //handle the case where number of periods is 0 and loop never runs
+            netWorthTrend.push(Number(netWorthStart.toFixed(2))); //handle the case where number of periods is 0 and loop never runs
         }
 
         if (compoundMonthly){
@@ -43,12 +43,12 @@ angular.module("wealthManagerApp")
                 if (n % 12 === 0 &&  year > 0){
                     //this period falls on year end, and it is not the first year, so add the income
                     netWorth = netWorth + income * Math.pow(incomeInterest, year - 1);
-                    netWorthTrend.push(netWorth.toFixed(2));
+                    netWorthTrend.push(Number(netWorth.toFixed(2)));
                 }
             }
             else {
                 netWorth = netWorth + income * Math.pow(incomeInterest, n - 1);
-                netWorthTrend.push(netWorth.toFixed(2));
+                netWorthTrend.push(Number(netWorth.toFixed(2)));
             }
 
             if (DEBUG){ console.log ("interest rate = " + interest + " n = " + n + " income= " + income + " netWorth = " + netWorth ); }

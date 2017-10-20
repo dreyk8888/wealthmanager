@@ -9,7 +9,7 @@
  */
 angular.module("wealthManagerApp")
     .service("PortfolioCalcs", ["Helpers", function(Helpers) {
-        var DEBUG = true;
+        var DEBUG = false;
         //take an array of asset data and calculate the total
         this.totalCalc = function (data, objValueName){
             var total = 0;

@@ -8,17 +8,18 @@
  * Helper functions for wealth manager
  */
 angular.module("wealthManagerApp")
-    .service("FIRECalcHelper", ["GlobalConstants", function(GlobalConstants) {
+    .service("FIRECalcHelper", function() {
     var DEBUG = true;
 
     //calculate the future value of netWorthStart and returns a double
     //annualReturn - expected annual return in percentage (eg. 7)
-    //principlePerYear - how much is being added/saved each year
-    this.netWorthCalc = function (netWorthStart, annualReturn, principlePerYear, numberOfYears, compoundMonthly){
+    //incomePerYear - how much is being added/saved each year
+    this.netWorthCalc = function (netWorthStart, annualReturn, incomePerYear, incomeGrowth, numberOfYears, compoundMonthly){
         var netWorth = netWorthStart;
         var interest = annualReturn/100 + 1;    //default compound yearly
+        var incomeInterest = incomeGrowth/100 + 1;
         var numPeriods = numberOfYears;         //default number of compounding periods is number of years
-        var principle = principlePerYear;
+        var income = incomePerYear;
 
         if (compoundMonthly){
             interest = annualReturn/12/100 + 1; //return per month is monthly interest
@@ -27,26 +28,27 @@ angular.module("wealthManagerApp")
 
         for (var n = 1; n <= numPeriods; n++){
             if (netWorth > 0){
-                //handle negative net worth case. Ignore compounding on negative net worth until principle puts it in positive.
+                //handle negative net worth case. Ignore compounding on negative net worth until income puts it in positive.
                 netWorth = netWorth * interest;
             }
+
+            //if compounding monthly, only add income once a year, and only after 1 year
             if (compoundMonthly){
-                if (n % 12 === 0 && Math.ceil(n/12) >= 1){
-                    //this period falls on year end, and it is not the first year, so add the principle
-                    netWorth = netWorth + principle;
+                var year = Math.floor(n/12);    //what year are we in?
+                if (n % 12 === 0 &&  year > 0){
+                    //this period falls on year end, and it is not the first year, so add the income
+                    netWorth = netWorth + income * Math.pow(incomeInterest, year - 1);
                 }
             }
             else {
-                netWorth = netWorth + principle;
+                netWorth = netWorth + income * Math.pow(incomeInterest, n - 1);
             }
 
-            console.log ("interest rate = " + interest);
-            console.log ("n = " + n);
-            console.log ("netWorth = " + netWorth);
+            if (DEBUG){ console.log ("interest rate = " + interest + " n = " + n + " income= " + income + " netWorth = " + netWorth ); }
         }
 
         return netWorth.toFixed(2);
 
     };
-}]);
+});
 

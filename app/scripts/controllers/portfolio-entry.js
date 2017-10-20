@@ -51,7 +51,7 @@ angular.module("wealthManagerApp")
 ///////////////////////////////////////////////////////////////////////////
 //Pie Chart
     vm.typeChartData = [];
-    vm.typeChartConfig = PortfolioChartConfig.portfolioSAssetClassPieConfig(vm.typeChartData);
+    vm.typeChartConfig = PortfolioChartConfig.portfolioAssetClassPieConfig(vm.typeChartData);
     vm.locationChartData = [];
     vm.locationChartConfig = PortfolioChartConfig.portfolioAssetLocationPieConfig(vm.locationChartData);
 

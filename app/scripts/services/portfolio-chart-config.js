@@ -9,7 +9,7 @@
  */
 angular.module('wealthManagerApp')
     .service('PortfolioChartConfig', function() {
-        this.portfolioSAssetClassPieConfig = function(data){
+        this.portfolioAssetClassPieConfig = function(data){
             var chartConfig = {
                 chart: {
                     type: 'pie'

@@ -116,14 +116,16 @@
   <div id="assetGrid" ui-grid="vm.assetGridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
   <br/>
   <div id="expand-input-button">
-      <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNew = !addNew"><span class="glyphicon glyphicon-plus"></span></button></h3>
+      <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNewAsset = !addNewAsset"><span class="glyphicon glyphicon-plus"></span></button></h3>
   </div>
   <div class="row" id="asset-input-form">
     <div class="col-md-6">
-      <div id="assetInputForm" ng-submit="vm.submitAssets()" ng-hide="addNew">
+      <div id="assetInputForm" ng-submit="vm.submitAssets()" ng-hide="addNewAsset">
+      <h3><strong>Enter new asset</strong></h3>
       <br/>
       <!--asset class is selected in the view because we need to dynamically display a different form depending on class selected-->
-        <div class="dropdown">Asset type:
+
+        <div class="dropdown">Select asset type:
           <button class="btn btn-default dropdown-toggle" type="button" id="assetclassdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 {{vm.assetEntry.class}}
                 <span class="caret"></span>
@@ -134,9 +136,8 @@
         </div>
         <br/>
         <form name="assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity"></form>
-        <button class="btn btn-success" ng-click="vm.submitAssets(assetInputForm)">Submit</button>
+        <button class="btn btn-success" ng-click="vm.submitAssets(assetInputForm); assetSubmitted=true">Submit</button>
         <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
-        <p>{{vm.assetEntry.class}}</p>
     </div>
     <br/>
     <br/>
@@ -150,9 +151,14 @@
   <div id="debtGrid" ui-grid="vm.debtGridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
   <br/>
   <br/>
+    <div id="expand-input-button">
+      <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNewDebt = !addNewDebt"><span class="glyphicon glyphicon-plus"></span></button></h3>
+  </div>
   <div class="row" id="debt-input-form">
     <div class="col-md-6">
-      <form name="debtInputForm" sf-schema="vm.debtschema" sf-form="vm.debtform" sf-model="vm.debtentity"></form>
+      <h3><strong>Enter new liability</strong></h3>
+      <div id="debtInputForm" ng-hide="addNewDebt">
+        <form name="debtInputForm" sf-schema="vm.debtschema" sf-form="vm.debtform" sf-model="vm.debtentity"></form>
         <button class="btn btn-success" ng-click="vm.submitDebt(debtInputForm)">Submit</button>
         <button class="btn btn-danger" ng-click="vm.cancelDebtEntry()">Cancel</button>
       </div>

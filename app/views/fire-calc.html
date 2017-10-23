@@ -1,14 +1,13 @@
 <div ng-controller="FIRECalcCtrl as vm" id="firecalc-view-container" class="container">
   <div class="row">
     <p>This is the fire calculator page!</p>
-    <form ng-submit="vm.calculateNetWorth()" ng-controller="FIRECalcCtrl">
-      <p>Current Net Worth: <input type="text" value="Net worth" ng-model="vm.netWorth"></p>
-      <p>Expected Annual Return: <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn"></p>
-      <p>Expected Annual Income: <input type="text" value="Income" ng-model="vm.incomePerYear"></p>
-      <p>Expected Annual Income Growth: <input type="text" value="Income Growth" ng-model="vm.incomeGrowth"></p>
-      <p>Years to FI: <input type="text" value="Years" ng-model="vm.numberOfYears"></p>
-      <input type="submit" value="submit">
-    </form>
+      <p>Current Net Worth: <input type="text" value="Net worth" ng-model="vm.netWorth" ng-change="vm.calculateNetWorth()"></p>
+      <p>Expected Annual Return: <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.calculateNetWorth()"></p>
+      <p>Expected Annual Income: <input type="text" value="Income" ng-model="vm.incomePerYear" ng-change="vm.calculateNetWorth()"></p>
+      <p>Expected Annual Income Growth: <input type="text" value="Income Growth" ng-model="vm.incomeGrowth" ng-change="vm.calculateNetWorth()"></p>
+      <p>Expected Monthly Expense: <input type="text" value="Expense" ng-model="vm.expensePerMonth" ng-change="vm.calculateNetWorth()"></p>
+      <p>Expected Annual Expense Growth (inflation + spending growth): <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.calculateNetWorth()"></p>
+      <p>Years to FI: <input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.calculateNetWorth()"></p>
     <br/>
     <p>Your future net worth: </p><p>{{vm.futureNetWorth}}</p>
   </div>

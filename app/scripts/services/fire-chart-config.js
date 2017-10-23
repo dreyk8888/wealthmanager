@@ -20,7 +20,14 @@ angular.module('wealthManagerApp')
                 series: [{
                     name: 'Net Worth (End of Year)',
                     data: data
-                }]
+                }],
+                xAxis: {
+                    labels: {
+                      formatter: function () {
+                        return this.value + 1;
+                      }
+                    }
+                }
             };
 
             return chartConfig;

@@ -7,6 +7,7 @@
  * # FIRECalcCtrl
  * Controller of the wealthManagerApp Financial independent calculator
  */
+
 // use saved values for net worth
 // save net worth trend
 angular.module("wealthManagerApp")
@@ -18,6 +19,7 @@ angular.module("wealthManagerApp")
     vm.incomePerYear = 50000;
     vm.incomeGrowth = 2;
     vm.expensePerMonth = 2000;
+    vm.expenseGrowth = 2;
     vm.numberOfYears = 20;
     vm.compoundMonthly = false;
 
@@ -25,7 +27,7 @@ angular.module("wealthManagerApp")
 
     vm.calculateNetWorth = function(){
         vm.netWorthData = FIRECalcHelper.netWorthCalc(vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth,
-            vm.numberOfYears, vm.compoundMonthly);
+            vm.expensePerMonth, vm.expenseGrowth, vm.numberOfYears, vm.compoundMonthly);
         vm.futureNetWorth = vm.netWorthData[vm.netWorthData.length - 1];
 
         for (var i=0; i < vm.netWorthData.length; i++){

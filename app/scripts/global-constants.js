@@ -20,7 +20,7 @@
         FIXEDASSETS: "Fixed Assets",
         FOREIGNCURR: "Foreign Currency",
         //asset locations
-        DOMESTIC: "Domestic",
+        DOMESTIC: "Domestic",   //default value for assetentry:location in DB
         CAN: "Canadian",
         US: "United States",
         INTL: "International",
@@ -32,17 +32,17 @@
         SAMER: "South Americas",
         FRONTIER: "Frontier Markets",
 
-        //currencies
-        CAD: "Canadian Dollar",
-        USD: "US Dollar",
-        EURO: "Euro",
-        BP: "British Pound",
-        YEN: "Japanese Yen",
-        YUAN: "Chinese Yuan",
-        FRANC: "Swiss Francs",
-        INR: "Indian Rupee",
-        AUD: "Australian Dollar",
-        DOM: "Domestic Currency",
+        //currencies, these are hardcoded as defaults in DB, don't change without changing DB!
+        CAD: "CAD",
+        USD: "USD",
+        EURO: "EUR",
+        GBP: "GBP",
+        YEN: "JPY",
+        YUAN: "CNY",
+        FRANC: "CHF",
+        RUPEE: "INR",
+        AUD: "AUD",
+        DOM: "Local",
         //debt types
         SHORT_TERM: "Short Term",
         LONG_TERM: "Long Term",

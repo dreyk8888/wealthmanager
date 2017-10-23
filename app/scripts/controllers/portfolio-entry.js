@@ -10,9 +10,10 @@
 
  /*todo
  - default asset type in drop down
- - start a second page for projected annual return
- - graph of projected net worth trend
+ - net worth api
+ - save net worth every time asset or liability is added
  - graph of historical net worth trend put on top
+ - total assets and debts need to account for currency settings and convert to the "local" currrency
  */
 
 
@@ -21,10 +22,12 @@ angular.module("wealthManagerApp")
         ["$scope",
         "$http",
         "uiGridConstants",
+        "GlobalConstants",
         "Asset",
         "Debt",
         "AssetDataAPI",
         "DebtDataAPI",
+        "NetWorthDataAPI",
         "APIResponseHandlersCommon",
         "Helpers",
         "PortfolioGridColumnDefs",
@@ -34,7 +37,7 @@ angular.module("wealthManagerApp")
         "AssetSchema",
         "DebtSchema",
         "PortfolioForms",
-        function ($scope, $http, uiGridConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Helpers,
+        function ($scope, $http, uiGridConstants, GlobalConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, NetWorthDataAPI, APIResponseHandlersCommon, Helpers,
             PortfolioGridColumnDefs, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
     var DEBUG = true;
@@ -48,6 +51,8 @@ angular.module("wealthManagerApp")
     vm.debtEntry = Debt.init();
     vm.totalDebt = 0;
     vm.debtTotals = [];
+
+    vm.localCurrency = GlobalConstants.USD; //use USD as the default local currency for now
 ///////////////////////////////////////////////////////////////////////////
 //Pie Chart
     vm.typeChartData = [];
@@ -147,6 +152,18 @@ angular.module("wealthManagerApp")
          vm.locationChartConfig.series[0].data = vm.locationChartData;
     };
 
+    vm.updateNetWorth = function(assetTotal, debtTotal, myCurrency){
+        var currentDate = moment().format();
+        var net = assetTotal - debtTotal;
+        var netWorth = {
+            net_worth: net,
+            date: currentDate, //today's date,
+            currency: myCurrency
+        };
+
+        NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
+    }
+
 ////////////////////////////////////////////////////////////////////////////
 //Data retrieval and updating
 
@@ -165,6 +182,7 @@ angular.module("wealthManagerApp")
             AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
             vm.assetData.push(temp);
             vm.recalculate();
+            vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
         }
         return true;
     };
@@ -181,6 +199,7 @@ angular.module("wealthManagerApp")
             DebtDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, vm.debtEntry);
             vm.debtData.push(vm.debtEntry);
             vm.recalculate();
+            vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
         }
         return true;
     };
@@ -196,11 +215,14 @@ angular.module("wealthManagerApp")
         vm.assetData.splice(vm.assetData.findIndex(obj => obj._id === id), 1); //remove item from local list of assets
         vm.assetGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
         vm.recalculate();
+        vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
     };
 
     vm.deleteDebt = function(id){
         DebtDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
         vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
+        vm.recalculate();
+        vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
     };
 
     vm.cancelAssetEntry = function (){

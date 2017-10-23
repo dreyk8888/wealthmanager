@@ -39,8 +39,10 @@ angular.module('wealthManagerApp')
                         //update grid
                         grid.appScope.assetData[grid.appScope.assetData.findIndex(x => x._id === updateData._id)] = updateData;
 
-                        //assetData was never updated. That's why recalculate doesn't work
+                        //update the totals, and pie charts
                         grid.appScope.recalculate();
+                        //save net worth to net worth history
+                        grid.appScope.updateNetWorth(grid.appScope.totalAssets, grid.appScope.totalDebt, grid.appScope.localCurrency);
 
                         //close modal
                         $uibModalInstance.close(row.entity);

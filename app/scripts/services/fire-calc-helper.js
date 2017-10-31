@@ -61,5 +61,19 @@ angular.module("wealthManagerApp")
         return netWorthTrend;
 
     };
+
+    //determine the rate of annual growth based on a starting net worth and an ending net worth, and how long it's been invested
+    this.calculateROI = function(netWorthStart, netWorthEnd, numberOfYears){
+        var ROI = 0;
+        if (netWorthEnd <= netWorthStart){
+            ROI = 1;
+        }else{
+            ROI = Math.pow(netWorthEnd/netWorthStart, 1/numberOfYears);
+        }
+
+        var ROIAsPercent = (ROI - 1)*100;
+        ROIAsPercent = Number(ROIAsPercent.toFixed(2));
+        return ROIAsPercent;
+    };
 });
 

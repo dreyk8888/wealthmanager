@@ -112,4 +112,28 @@ describe("Service: FIRECalcHelper", function () {
   it("netWorthCalc() negative net worth expense exceeding income, with growth, compounded annually", function () {
     expect(FIRECalcHelper.netWorthCalc(-100000, 7, 40000, 3, 5000, 2, 5, true)).toEqual([-120000,-140000,-159988,-179951.4,-199876.98]);
   });
+
+  it("calculateROI() should exist", function () {
+    expect(FIRECalcHelper.calculateROI(0,0,0)).toBeDefined();
+  });
+
+  it("calculateROI() should return 5 percent for start of 100, end of 105, 1 year", function () {
+    expect(FIRECalcHelper.calculateROI(100,105,1)).toEqual(5);
+  });
+
+  it("calculateROI() should return 0 percent for start of 100, end of 100, 10 years", function () {
+    expect(FIRECalcHelper.calculateROI(100,100,10)).toEqual(0);
+  });
+
+  it("calculateROI() should return 1.45 percent for start of 100, end of 101.452, 10 years", function () {
+    expect(FIRECalcHelper.calculateROI(100,101.452,1)).toEqual(1.45);
+  });
+
+  it("calculateROI() should return 1.09 percent for start of 100, end of 111.452, 10 years", function () {
+    expect(FIRECalcHelper.calculateROI(100,111.452,10)).toEqual(1.09);
+  });
+
+  it("calculateROI() should return 1.06 percent for start of 100, end of 123.452, 20 years", function () {
+    expect(FIRECalcHelper.calculateROI(100,123.452,20)).toEqual(1.06);
+  });
 });

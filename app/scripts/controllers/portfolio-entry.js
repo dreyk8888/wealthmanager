@@ -9,10 +9,8 @@
  */
 
  /*todo
- - default asset type in drop down
- - net worth api
- - save net worth every time asset or liability is added
  - graph of historical net worth trend put on top
+ ---- which number to take in the graph? And there are multiple entries per day.
  - total assets and debts need to account for currency settings and convert to the "local" currrency
  */
 
@@ -162,7 +160,7 @@ angular.module("wealthManagerApp")
         };
 
         NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
-    }
+    };
 
 ////////////////////////////////////////////////////////////////////////////
 //Data retrieval and updating

@@ -65,7 +65,7 @@ angular.module("wealthManagerApp")
                     if (data[i][objValueName] > 0 && total > 0){
                         percentOfTotal = (data[i][objValueName]/total * 100).toFixed(2);
                     }
-                    typeTotals.push({type: data[i][objTypeName], total: data[i][objValueName], percentage: percentOfTotal} );
+                    typeTotals.push({"type": data[i][objTypeName], "total": data[i][objValueName], "percentage": percentOfTotal} );
 
                     if (DEBUG){ console.log ("Calculating amount per asset class: " + typeTotals); }
 

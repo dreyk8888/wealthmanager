@@ -85,6 +85,10 @@ describe("Service: FIRECalcHelper", function () {
    expect(FIRECalcHelper.netWorthCalc(-100000, 7, 40000, 0, 0, 0, 5, false)).toEqual([-60000,-20000,20000,61400,105698]);
   });
 
+  it("netWorthCalc() negative income will return 0 net worth - IGNORING THIS CASE FOR NOW", function () {
+    expect(FIRECalcHelper.netWorthCalc(100000, -10, 0, 3, 0, 0, 0, false)).toEqual([0]);
+  });
+
   it("netWorthCalc() should handle zero income but non-zero growth", function () {
     expect(FIRECalcHelper.netWorthCalc(100000, 0, 0, 3, 0, 0, 0, false)).toEqual([100000]);
   });

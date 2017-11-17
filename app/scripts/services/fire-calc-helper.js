@@ -16,7 +16,19 @@ angular.module("wealthManagerApp")
     //incomePerYear - how much is being added/saved each year
     this.netWorthCalc = function (netWorthStart, annualReturn, incomePerYear, incomeGrowth, expensePerMonth, expenseGrowth, numberOfYears, compoundMonthly){
         var netWorthTrend = []; //annual net worth values
+        if (annualReturn < 0){
+            //TODO actually handle this case with income per year
+            netWorthTrend.push(0); //if your annual return is 0, you will eventually have no money
+            return netWorthTrend;
+        }
+
+        if (numberOfYears === 0){
+            netWorthTrend.push(Number(netWorthStart.toFixed(2))); //handle the case where number of periods is 0 and loop never runs
+            return netWorthTrend;
+        }
+
         var netWorth = netWorthStart;
+
         var interest = annualReturn/100 + 1;    //default compound yearly
         var incomeInterest = incomeGrowth/100 + 1;
         var expenseInterest = expenseGrowth/100 + 1;
@@ -24,9 +36,7 @@ angular.module("wealthManagerApp")
         var income = incomePerYear;
         var expense = expensePerMonth*12; //use expense per year for calculations
 
-        if (numberOfYears === 0){
-            netWorthTrend.push(Number(netWorthStart.toFixed(2))); //handle the case where number of periods is 0 and loop never runs
-        }
+
 
         if (compoundMonthly){
             interest = annualReturn/12/100 + 1; //return per month is monthly interest

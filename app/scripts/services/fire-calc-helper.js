@@ -65,15 +65,18 @@ angular.module("wealthManagerApp")
     //determine the rate of annual growth based on a starting net worth and an ending net worth, and how long it's been invested
     this.calculateROI = function(netWorthStart, netWorthEnd, numberOfYears){
         var ROI = 0;
-        if (netWorthEnd <= netWorthStart){
-            ROI = 1;
+        if (numberOfYears <= 0){
+            ROI = 0;
+        }else if (netWorthEnd === netWorthStart){
+            ROI = 0;
+        }else if (netWorthEnd < netWorthStart || netWorthEnd < 0 || netWorthStart < 0){
+            ROI = ((netWorthEnd - netWorthStart)/Math.abs(netWorthStart))/numberOfYears*100;
         }else{
-            ROI = Math.pow(netWorthEnd/netWorthStart, 1/numberOfYears);
+            ROI = (Math.pow(netWorthEnd/netWorthStart, 1/numberOfYears) - 1)*100;
         }
 
-        var ROIAsPercent = (ROI - 1)*100;
-        ROIAsPercent = Number(ROIAsPercent.toFixed(2));
-        return ROIAsPercent;
+        ROI = Number(ROI.toFixed(2));
+        return ROI;
     };
 
     //take the series of historical data from all dates and create a series with just one value per year on the specified year end date

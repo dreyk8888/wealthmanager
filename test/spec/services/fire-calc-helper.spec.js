@@ -82,7 +82,7 @@ describe("Service: FIRECalcHelper", function () {
   });
 
   it("netWorthCalc() should handle negative net worth with income by ignoring compounding until net worth positive", function () {
-    expect(FIRECalcHelper.netWorthCalc(-100000, 7, 40000, 0, 0, 0, 5, false)).toEqual([-60000,-20000,20000,61400,105698]);
+   expect(FIRECalcHelper.netWorthCalc(-100000, 7, 40000, 0, 0, 0, 5, false)).toEqual([-60000,-20000,20000,61400,105698]);
   });
 
   it("netWorthCalc() should handle zero income but non-zero growth", function () {
@@ -115,6 +115,34 @@ describe("Service: FIRECalcHelper", function () {
 
   it("calculateROI() should exist", function () {
     expect(FIRECalcHelper.calculateROI(0,0,0)).toBeDefined();
+  });
+
+  it("calculateROI() should return ROI of 0 if number of years is 0", function () {
+    expect(FIRECalcHelper.calculateROI(100,105,0)).toEqual(0);
+  });
+
+  it("calculateROI() should ROI of -0.87 if starting net worth = 115, end = 105, over 10 years", function () {
+    expect(FIRECalcHelper.calculateROI(115,105,10)).toEqual(-0.87);
+  });
+
+  it("calculateROI() should ROI of -10 if starting net worth is 20000, ending is 10000 over 5 years", function () {
+    expect(FIRECalcHelper.calculateROI(20000,10000,5)).toEqual(-10);
+  });
+
+  it("calculateROI() should return 89.5 percent for start of -1000, end of -105, 1 year", function () {
+    expect(FIRECalcHelper.calculateROI(-1000,-105,1)).toEqual(89.5);
+  });
+
+  it("calculateROI() should return 20 percent for start of -100, end of 100, 10 years", function () {
+    expect(FIRECalcHelper.calculateROI(-100,100,10)).toEqual(20);
+  });
+
+  it("calculateROI() should return 400 percent for start of 100, end of 100, 10 years", function () {
+    expect(FIRECalcHelper.calculateROI(-100,-500,10)).toEqual(-40);
+  });
+
+  it("calculateROI() should return 600 percent for start of 100, end of 100, 10 years", function () {
+    expect(FIRECalcHelper.calculateROI(100,-500,10)).toEqual(-60);
   });
 
   it("calculateROI() should return 5 percent for start of 100, end of 105, 1 year", function () {

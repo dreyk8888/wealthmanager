@@ -106,6 +106,6 @@ describe("Service: Helpers", function () {
   });
 
   it("object.sort(dynamicSort(date)) returns an array sorted by net worth", function () {
-    expect(testArray.sort(Helpers.dynamicSort("net_wroth"))).toEqual(resultArraybyNW);
+    expect(testArray.sort(Helpers.dynamicSort("net_worth"))).toEqual(resultArraybyNW);
   });
 });

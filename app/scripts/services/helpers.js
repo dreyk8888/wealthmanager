@@ -52,15 +52,6 @@ angular.module("wealthManagerApp")
             return titleMap;
         };
 
-        //compare 2 objects by a parameter, return -1 if a < b, 1 if a > b, 0 if equal
-        this.compare = function(a, b, param){
-            if (a[param] < b[param])
-                return -1;
-            if (a[param] > b[param])
-                return 1;
-            return 0;
-        }
-
         //comparison function to compare 2 objects by a parameter, to be used with built in JS sort
         //eg: object.sort(dynamicSort("date"))
         this.dynamicSort = function(param){

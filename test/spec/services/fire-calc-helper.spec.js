@@ -136,4 +136,61 @@ describe("Service: FIRECalcHelper", function () {
   it("calculateROI() should return 1.06 percent for start of 100, end of 123.452, 20 years", function () {
     expect(FIRECalcHelper.calculateROI(100,123.452,20)).toEqual(1.06);
   });
+
+  var testDateObj1 = {
+    net_worth: 1000,
+    date: "2017-10-23T21:09:08.000Z",
+    currency: "USD"
+  };
+
+  var testDateObj2 = {
+    net_worth: 965465,
+    date: "2014-01-28T21:09:18.000Z",
+    currency: "CAD"
+  };
+
+  var testDateObj3 = {
+    net_worth: 50,
+    date: "2017-04-23T21:09:18.000Z",
+    currency: "USD"
+  };
+
+  var testDateObj4 = {
+    net_worth: 150,
+    date: "2017-05-23T21:09:18.000Z",
+    currency: "USD"
+  };
+
+  var testData = [testDateObj1, testDateObj2, testDateObj3, testDateObj4];
+  var resultData = [
+      {
+        year: 2014,
+        net_worth: 965465,
+        currency: "CAD"
+      },
+      {
+        year: 2017,
+        net_worth: 150,
+        currency: "USD"
+      }
+    ];
+
+
+  it ("findObjClosestToEndDate() should return object that has date closer to end date - different year", function(){
+    expect(FIRECalcHelper.findObjClosestToEndDate(testDateObj2, testDateObj3, 5,15,2017)).toEqual(testDateObj3);
+  });
+
+  it ("findObjClosestToEndDate() should return object that has date closer to end date - days apart", function(){
+    expect(FIRECalcHelper.findObjClosestToEndDate(testDateObj4, testDateObj3, 5,15,2017)).toEqual(testDateObj4);
+  });
+
+  it ("cleanHistoricalData() should exist", function(){
+    expect(FIRECalcHelper.consolidateHistoricalData(testData, "","")).toBeDefined();
+  });
+
+  it ("cleanHistoricalData() return an array of year, net worth, currency objects", function(){
+    expect(FIRECalcHelper.consolidateHistoricalData(testData, 5, 15)).toEqual(resultData);
+  });
+
+
 });

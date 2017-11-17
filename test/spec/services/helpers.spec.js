@@ -77,7 +77,7 @@ describe("Service: Helpers", function () {
 
   var testObj1 = {
     net_worth: 999.9,
-    date: "2017-10-23T21:09:08.000Z",
+    date: "2019-10-23T21:09:08.000Z",
     currency: "CAD"
   };
   var testObj2 = {
@@ -86,25 +86,26 @@ describe("Service: Helpers", function () {
     currency: "USD"
   };
 
-  it("compare() returns -1 if a.date < b.date", function () {
-    expect(Helpers.compare(testObj1,testObj2,"date")).toEqual(-1);
+  var testObj3 = {
+    net_worth: 1.0000001,
+    date: "2018-10-23T21:09:07.000Z",
+    currency: "USD"
+  };
+
+  var testObj4 = {
+    net_worth: 1,
+    date: "2007-10-21T21:09:08.000Z",
+    currency: "USD"
+  };
+
+  var testArray = [testObj1, testObj2, testObj3, testObj4];
+  var resultArraybyDate = [testObj4, testObj3, testObj2, testObj1];
+  var resultArraybyNW = [testObj4, testObj3, testObj1, testObj2];
+  it("object.sort(dynamicSort(date)) returns an array sorted by date", function () {
+    expect(testArray.sort(Helpers.dynamicSort("date"))).toEqual(resultArraybyDate);
   });
-  it("compare() returns 0 if a.date === b.date", function () {
-    expect(Helpers.compare(testObj1,testObj1,"date")).toEqual(0);
-  });
-  it("compare() returns 0 if a.date > b.date", function () {
-    expect(Helpers.compare(testObj2,testObj1,"date")).toEqual(1);
-  });
-  it("compare() returns -1 if a.net_worth < b.net_worth", function () {
-    expect(Helpers.compare(testObj1,testObj2,"net_worth")).toEqual(-1);
-  });
-  it("compare() returns 0 if a.net_worth === b.net_worth", function () {
-    expect(Helpers.compare(testObj1,testObj1,"net_worth")).toEqual(0);
-  });
-  it("compare() returns 0 if a.net_worth > b.net_worth", function () {
-    expect(Helpers.compare(testObj2,testObj1,"net_worth")).toEqual(1);
-  });
-  it("compare() returns 1 if a.currency > b.currency", function () {
-    expect(Helpers.compare(testObj2,testObj1,"currency")).toEqual(1);
+
+  it("object.sort(dynamicSort(date)) returns an array sorted by net worth", function () {
+    expect(testArray.sort(Helpers.dynamicSort("net_wroth"))).toEqual(resultArraybyNW);
   });
 });

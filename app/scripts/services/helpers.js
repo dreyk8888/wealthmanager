@@ -52,12 +52,6 @@ angular.module("wealthManagerApp")
             return titleMap;
         };
 
-        //dynamic sort an array of objects by specified parameter
-        this.dynamicSort = function(array, param){
-
-
-        }
-
         //compare 2 objects by a parameter, return -1 if a < b, 1 if a > b, 0 if equal
         this.compare = function(a, b, param){
             if (a[param] < b[param])
@@ -67,4 +61,15 @@ angular.module("wealthManagerApp")
             return 0;
         }
 
+        //comparison function to compare 2 objects by a parameter, to be used with built in JS sort
+        //eg: object.sort(dynamicSort("date"))
+        this.dynamicSort = function(param){
+            return function(a,b){
+                if (a[param] < b[param])
+                    return -1;
+                if (a[param] > b[param])
+                    return 1;
+                return 0;
+            }
+        }
 });

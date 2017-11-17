@@ -115,6 +115,7 @@ angular.module("wealthManagerApp")
 
             for (var j = i+1; j < rawData.length; j++){
                 tempYear = new Date(rawData[j].date).getFullYear();
+
                 if (DEBUG){
                     console.log("tempyear: " + tempYear);
                     console.log("j: " + j);
@@ -174,8 +175,38 @@ angular.module("wealthManagerApp")
         return retVal;   //if equal, just return the first one
     };
 
+    //take 2 series of net worth data and combine them into one array of {year,networth} objects
+    //TODO: handle currency differences
     this.generateCombinedNetWorthPlotData = function(historicalData, netWorthData){
-        //take 2 series of net worth data and combine them into one
+        var returnData = [];
+        //var currentYear = 2017;
+        var currentYear = new Date().getFullYear();
+        var yearPtr = 0;
+        var dataPoint = {};
+
+        for (var i = 0; i < historicalData.length; i++){
+            dataPoint = [historicalData[i].year, historicalData[i].net_worth];
+            yearPtr = historicalData[i].year;
+            returnData.push(dataPoint);
+        }
+
+        if (yearPtr < currentYear){
+            //if there's a gap between historical data and current year, fill it with the same net worth value
+            var n = 1;
+            while (currentYear - yearPtr >= 0){
+                dataPoint = [yearPtr + n, historicalData[historicalData.length - 1].net_worth];
+                returnData.push (dataPoint);
+                n++;
+            }
+        }
+
+        for (var j = 0; j < netWorthData.length; j++){
+            yearPtr = currentYear + j + 1;  //calculated date starts from 1 year from current year
+            dataPoint = [yearPtr, netWorthData[j]];
+            returnData.push (dataPoint);
+        }
+
+        return returnData;
     };
 }]);
 

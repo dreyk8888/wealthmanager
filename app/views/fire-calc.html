@@ -1,15 +1,16 @@
 <div ng-controller="FIRECalcCtrl as vm" id="firecalc-view-container" class="container">
   <div class="row">
     <p>This is the fire calculator page!</p>
-      <p>Use historical data  <input type="checkbox" ng-model="vm.useCalculatedData" name="use-calculated-net-worth-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
+      <p>Prepend historical data  <input type="checkbox" ng-model="vm.useCalculatedData" name="use-calculated-net-worth-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
       <p>Current Net Worth: <input type="text" value="Net worth" ng-model="vm.netWorth" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Annual Return: <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.displayNetWorth()"></p>
+      <p>Compound monthly?  <input type="checkbox" ng-model="vm.compoundMonthly" name="compound-monthly-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
+      <p>Use historical ROI <input type="checkbox" ng-model="vm.useHistoricalROI" name="use-historical-ROI-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Annual Income: <input type="text" value="Income" ng-model="vm.incomePerYear" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Annual Income Growth: <input type="text" value="Income Growth" ng-model="vm.incomeGrowth" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Monthly Expense: <input type="text" value="Expense" ng-model="vm.expensePerMonth" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Annual Expense Growth (inflation + spending growth): <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()"></p>
-      <p>Current Net Worth: <input type="text" value="Net worth" ng-model="vm.netWorth" ng-change="vm.displayNetWorth()"></p>
-      <p>Year End Month:<input type="text" value="Month" ng-model="vm.yearEndMonth">  Day: <input type="text" value="Day" ng-model="vm.yearEndDay" ng-change="vm.displayNetWorth()"></p>
+       <p>Year End Month:<input type="text" value="Month" ng-model="vm.yearEndMonth">  Day: <input type="text" value="Day" ng-model="vm.yearEndDay" ng-change="vm.displayNetWorth()"></p>
       <p>Years to FI: <input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.displayNetWorth()"></p>
     <br/>
     <p>Your future net worth: </p><p>{{vm.futureNetWorth}}</p>

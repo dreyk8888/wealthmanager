@@ -138,7 +138,7 @@ angular.module("wealthManagerApp")
             if (DEBUG){
                 console.log("i: " + i);
                 for (var x = 0; x < returnData.length; x++){
-                    console.log("returnData: " + returnData[x].year+ " " + returnData[x].net_worth);
+                    console.log("returnData: " + returnData[x].year + " " + returnData[x].net_worth);
                 }
             }
 
@@ -188,6 +188,8 @@ angular.module("wealthManagerApp")
             dataPoint = [historicalData[i].year, historicalData[i].net_worth];
             yearPtr = historicalData[i].year;
             returnData.push(dataPoint);
+
+            if (DEBUG){console.log("Add data point: " + dataPoint.net_worth);}
         }
 
         if (yearPtr < currentYear){

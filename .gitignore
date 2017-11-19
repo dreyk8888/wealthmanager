@@ -47,3 +47,6 @@ jspm_packages
 .yarn-integrity
 
 .tmp
+.tmp/styles/main.css
+bower.json
+~$FICalculator.xlsx

@@ -299,6 +299,15 @@ describe("Service: FIRECalcHelper", function () {
     {"year": 2017,"net_worth": 400000,"currency":"CAD"}
   ];
 
+  var testNWDataHist2 = [
+    {"year": 2010,"net_worth": 15002,"currency":"CAD"},
+    {"year": 2011,"net_worth": 15902,"currency":"USD"},
+    {"year": 2012,"net_worth": 15902,"currency":"CAD"},
+    {"year": 2013,"net_worth": 51902,"currency":"JPY"},
+    {"year": 2014,"net_worth": 101902,"currency":"JPY"},
+    {"year": 2015,"net_worth": 161902,"currency":"CAD"}
+  ];
+
   var testNWDataCalc = [500000,458034,700000,710215.12,812345];
 
   var combinedNWData = [
@@ -317,8 +326,28 @@ describe("Service: FIRECalcHelper", function () {
     [2022, 812345]
   ];
 
+  var combinedNWData2 = [
+    [2010, 15002],
+    [2011, 15902],
+    [2012, 15902],
+    [2013, 51902],
+    [2014, 101902],
+    [2015, 161902],
+    [2016, 161902],
+    [2017, 161902],
+    [2018, 500000],
+    [2019, 458034],
+    [2020, 700000],
+    [2021, 710215.12],
+    [2022, 812345]
+  ];
+
   it ("generateCombinedNetWorthPlotData() should return a combined array from historical and calculated data", function(){
     expect(FIRECalcHelper.generateCombinedNetWorthPlotData(testNWDataHist,testNWDataCalc)).toEqual(combinedNWData);
+  });
+
+  it ("generateCombinedNetWorthPlotData() should return a combined array from historical and calculated data", function(){
+    expect(FIRECalcHelper.generateCombinedNetWorthPlotData(testNWDataHist2,testNWDataCalc)).toEqual(combinedNWData2);
   });
 
 });

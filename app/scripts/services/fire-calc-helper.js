@@ -189,16 +189,19 @@ angular.module("wealthManagerApp")
             yearPtr = historicalData[i].year;
             returnData.push(dataPoint);
 
-            if (DEBUG){console.log("Add data point: " + dataPoint.net_worth);}
+            if (DEBUG){console.log("Add hist data point: " + dataPoint);}
         }
+
 
         if (yearPtr < currentYear){
             //if there's a gap between historical data and current year, fill it with the same net worth value
             var n = 1;
-            while (currentYear - yearPtr >= 0){
+            while ((currentYear - (yearPtr + n)) >= 0){
                 dataPoint = [yearPtr + n, historicalData[historicalData.length - 1].net_worth];
                 returnData.push (dataPoint);
                 n++;
+
+                if (DEBUG){console.log("Add gap data point: " + dataPoint);}
             }
         }
 
@@ -206,6 +209,8 @@ angular.module("wealthManagerApp")
             yearPtr = currentYear + j + 1;  //calculated date starts from 1 year from current year
             dataPoint = [yearPtr, netWorthData[j]];
             returnData.push (dataPoint);
+
+            if (DEBUG){console.log("Add future data point: " + dataPoint);}
         }
 
         return returnData;

@@ -7,7 +7,8 @@
  * # FIRECalcCtrl
  * Controller of the wealthManagerApp Financial independent calculator
  */
-//use promises for data fetches and calculations
+//test historical data with more realistic date, historical ROI, longer number of years
+//graph does not refresh until you click on another text box
 angular.module("wealthManagerApp")
 .controller("FIRECalcCtrl", ["$http","FIRECalcHelper","FIREChartConfig", "NetWorthDataAPI", "APIResponseHandlersCommon", function ($http,FIRECalcHelper, FIREChartConfig, NetWorthDataAPI, APIResponseHandlersCommon){
     var DEBUG = true;
@@ -34,6 +35,7 @@ angular.module("wealthManagerApp")
 
     //dislay historical data vs calculation to plot trend
     vm.displayNetWorth = function(){
+
         if (vm.useCalculatedData === true){
             NetWorthDataAPI.getDataWithPromise()
                 .then(data => {
@@ -48,6 +50,7 @@ angular.module("wealthManagerApp")
                         vm.numberOfYears, vm.compoundMonthly);
 
                     vm.netWorthChartConfig.series[0].data = vm.combinedData;
+                    vm.netWorthChartConfig = angular.copy(vm.netWorthChartConfig);
                 })
                 .catch(error => console.log(error));
 

@@ -46,7 +46,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <highchart id="assetClassChart" config="vm.typeChartConfig" ></highchart>
       </div>
     </div>
@@ -113,7 +113,11 @@
 </div>
   <br/>
 
-  <div id="assetGrid" ui-grid="vm.assetGridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
+  <div class="row" id="asset-grid" >
+    <div class="col-md-10">
+      <div id="assetGrid" ui-grid="vm.assetGridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
+    </div>
+  </div>
   <br/>
   <div id="expand-input-button">
       <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNewAsset = !addNewAsset"><span class="glyphicon glyphicon-plus"></span></button></h3>
@@ -148,7 +152,11 @@
       <span id="debt-label"><h2>Liabilities Data</h2></span>
     </div>
   </div>
-  <div id="debtGrid" ui-grid="vm.debtGridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
+  <div class="row" id="debt-grid" >
+    <div class="col-md-10">
+      <div id="debtGrid" ui-grid="vm.debtGridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
+    </div>
+  </div>
   <br/>
   <br/>
     <div id="expand-input-button">

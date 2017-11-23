@@ -9,7 +9,7 @@
  */
 angular.module("wealthManagerApp")
     .service("FIRECalcHelper", ["Helpers", function(Helpers) {
-    var DEBUG = true;
+    var DEBUG = false;
 
     //calculate the future value of netWorthStart and returns a double
     //annualReturn - expected annual return in percentage (eg. 7)

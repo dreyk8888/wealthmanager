@@ -1,20 +1,49 @@
 <div ng-controller="FIRECalcCtrl as vm" id="firecalc-view-container" class="container">
   <div class="row">
-    <p>This is the fire calculator page!</p>
-      <p>Prepend historical data  <input type="checkbox" ng-model="vm.useCalculatedData" name="use-calculated-net-worth-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
+    <div class="container">
+      <highchart id="netWorthTrend" config="vm.netWorthChartConfig" ></highchart>
+    </div>
+    <div class="col-md-3">
+      <p>Your future net worth:  {{vm.futureNetWorth}}</p>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-md-6">
       <p>Current Net Worth: <input type="text" value="Net worth" ng-model="vm.netWorth" ng-change="vm.displayNetWorth()"></p>
-      <p>Expected Annual Return: <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.displayNetWorth()"></p>
-      <p>Compound monthly?  <input type="checkbox" ng-model="vm.compoundMonthly" name="compound-monthly-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
-      <p>Use historical ROI <input type="checkbox" ng-model="vm.useHistoricalROI" name="use-historical-ROI-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
+      <p>Years to FI: <input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.displayNetWorth()"></p>
+      <p>Projected Annual Return: <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Annual Income: <input type="text" value="Income" ng-model="vm.incomePerYear" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Annual Income Growth: <input type="text" value="Income Growth" ng-model="vm.incomeGrowth" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Monthly Expense: <input type="text" value="Expense" ng-model="vm.expensePerMonth" ng-change="vm.displayNetWorth()"></p>
       <p>Expected Annual Expense Growth (inflation + spending growth): <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()"></p>
-       <p>Year End Month:<input type="text" value="Month" ng-model="vm.yearEndMonth">  Day: <input type="text" value="Day" ng-model="vm.yearEndDay" ng-change="vm.displayNetWorth()"></p>
-      <p>Years to FI: <input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.displayNetWorth()"></p>
-    <br/>
-    <p>Your future net worth: </p><p>{{vm.futureNetWorth}}</p>
+      <p>Compound monthly?  <input type="checkbox" ng-model="vm.compoundMonthly" name="compound-monthly-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label><p>
+        <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>    Historical data</p>
+      </div>
+      <br/>
+      <br/>
+      <div class="btn-group">
+        <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label><p>
+        <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>    Historical ROI</p>
+      </div>
+      <br/>
+      <br/>
+      <div class="row">
+        <div class="col-md-6">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.yearEndDate" is-open="vm.popup1.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click=" vm.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p><p>  Fiscal year end</p>
+        </div>
+      </div>
+    </div>
   </div>
-       <highchart id="netWorthTrend" config="vm.netWorthChartConfig" ></highchart>
 
 </div>

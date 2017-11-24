@@ -9,11 +9,13 @@
  */
 //test historical data with more realistic date, historical ROI, longer number of years
 //graph does not refresh until you click on another text box
+//make graph bigger
 angular.module("wealthManagerApp")
-.controller("FIRECalcCtrl", ["$http","FIRECalcHelper","FIREChartConfig", "NetWorthDataAPI", "APIResponseHandlersCommon", function ($http,FIRECalcHelper, FIREChartConfig, NetWorthDataAPI, APIResponseHandlersCommon){
+.controller("FIRECalcCtrl", ["FIRECalcHelper","FIREChartConfig", "NetWorthDataAPI", "APIResponseHandlersCommon", function (FIRECalcHelper, FIREChartConfig, NetWorthDataAPI, APIResponseHandlersCommon){
     var DEBUG = true;
 
     var vm = this;
+
     vm.useCalculatedData = false;
     vm.useHistoricalROI = false;
     vm.annualReturn = 7;
@@ -23,8 +25,6 @@ angular.module("wealthManagerApp")
     vm.expensePerMonth = 2000;
     vm.expenseGrowth = 2;
     vm.numberOfYears = 5;
-    vm.yearEndDay = 1;
-    vm.yearEndMonth = 1;    //which day should be considered the "year end" where we calculate net worth?
     vm.compoundMonthly = false;
 
     vm.netWorthData = [];
@@ -33,9 +33,28 @@ angular.module("wealthManagerApp")
 
     vm.netWorthChartConfig = FIREChartConfig.NetWorthTrendConfig(vm.netWorthData);
 
+    //date picker functions
+    vm.yearEndDate = null;  //what date to consider as year end?
+    vm.dateOptions = {
+        dateDisabled: "",
+        formatYear: 'yy',
+        maxDate: new Date(2100, 5, 22),
+        minDate: new Date(1900,5,22),
+        initDate: new Date(),
+        maxMode: "month",
+        startingDay: 1
+    };
+    vm.format = 'dd-MM-yyyy';
+    vm.popup1 = {
+        opened: false
+    };
+    vm.open1 = function() {
+        vm.popup1.opened = true;
+    };
+
+
     //dislay historical data vs calculation to plot trend
     vm.displayNetWorth = function(){
-
         if (vm.useCalculatedData === true){
             NetWorthDataAPI.getDataWithPromise()
                 .then(data => {
@@ -46,7 +65,10 @@ angular.module("wealthManagerApp")
                             console.log ("Data returned from API: " + vm.loadedHistoricalData[i].net_worth + " " + vm.loadedHistoricalData[i].date);
                         }
                     }
-                    vm.combinedData = useHistoricalNetWorth(vm.loadedHistoricalData, vm.useHistoricalROI, vm.yearEndMonth, vm.yearEndDay, vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth, vm.expensePerMonth, vm.expenseGrowth,
+
+                    var yearEndMonth = vm.yearEndDate.getMonth();
+                    var yearEndDay = vm.yearEndDate.getDay();
+                    vm.combinedData = useHistoricalNetWorth(vm.loadedHistoricalData, vm.useHistoricalROI, yearEndMonth, yearEndDay, vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth, vm.expensePerMonth, vm.expenseGrowth,
                         vm.numberOfYears, vm.compoundMonthly);
 
                     vm.netWorthChartConfig.series[0].data = vm.combinedData;

@@ -10,6 +10,8 @@
 //test historical data with more realistic date, historical ROI, longer number of years
 //graph does not refresh until you click on another text box
 //make graph bigger
+
+
 angular.module("wealthManagerApp")
 .controller("FIRECalcCtrl", ["FIRECalcHelper","FIREChartConfig", "NetWorthDataAPI", "APIResponseHandlersCommon", function (FIRECalcHelper, FIREChartConfig, NetWorthDataAPI, APIResponseHandlersCommon){
     var DEBUG = true;
@@ -31,8 +33,6 @@ angular.module("wealthManagerApp")
     vm.loadedHistoricalData = [];
     vm.futureNetWorth = 0;
 
-    vm.netWorthChartConfig = FIREChartConfig.NetWorthTrendConfig(vm.netWorthData);
-
     //date picker functions
     vm.yearEndDate = null;  //what date to consider as year end?
     vm.dateOptions = {
@@ -51,8 +51,19 @@ angular.module("wealthManagerApp")
     vm.open1 = function() {
         vm.popup1.opened = true;
     };
+/*
+    $(window).resize(function()
+    {
+        vm.chart.setSize(
+       $(document).width(),
+       $(document).height()/2,
+       false
+        );
+    });
+*/
 
-
+    vm.chart = FIREChartConfig.nwChartConfig(vm.netWorthData);
+    //vm.chart = new Highcharts.chart("static-chart", this.netWorthChartConfig);
     //dislay historical data vs calculation to plot trend
     vm.displayNetWorth = function(){
         if (vm.useCalculatedData === true){
@@ -71,8 +82,9 @@ angular.module("wealthManagerApp")
                     vm.combinedData = useHistoricalNetWorth(vm.loadedHistoricalData, vm.useHistoricalROI, yearEndMonth, yearEndDay, vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth, vm.expensePerMonth, vm.expenseGrowth,
                         vm.numberOfYears, vm.compoundMonthly);
 
-                    vm.netWorthChartConfig.series[0].data = vm.combinedData;
-                    vm.netWorthChartConfig = angular.copy(vm.netWorthChartConfig);
+                    //vm.chart.series[0].data.push(vm.combinedData);
+                    vm.chart.series[0].data = vm.combinedData;
+                    //vm.netWorthChartConfig = angular.copy(vm.netWorthChartConfig);
                 })
                 .catch(error => console.log(error));
 
@@ -86,7 +98,8 @@ angular.module("wealthManagerApp")
                 console.log("Use calculated data? " + vm.useCalculatedData);
             }
 
-            vm.netWorthChartConfig.series[0].data = vm.netWorthData;
+            vm.chart.series[0].data = vm.netWorthData;
+            //vm.chart.series[0].data.push(vm.netWorthData);
         }
 
     };

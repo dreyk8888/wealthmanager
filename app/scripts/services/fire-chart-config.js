@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc service
@@ -7,18 +7,20 @@
  * # wealthManagerData
  * Helper functions for wealth manager
  */
-angular.module('wealthManagerApp')
-    .service('FIREChartConfig', function() {
-        this.NetWorthTrendConfig = function(data){
+angular.module("wealthManagerApp")
+    .service("FIREChartConfig", function() {
+        this.nwChartConfig = function(data){
             var chartConfig = {
                 chart: {
-                    type: 'column'
+                    type: "column",
+                    height: 90 + "%",
+                    width: 900
                 },
                 title: {
-                    text: 'Net Worth Growth'
+                    text: "Net Worth Growth"
                 },
                 series: [{
-                    name: 'Net Worth (End of Year)',
+                    name: "Net Worth (End of Year)",
                     data: data
                 }],
                 xAxis: {
@@ -32,4 +34,5 @@ angular.module('wealthManagerApp')
 
             return chartConfig;
         };
+
 });

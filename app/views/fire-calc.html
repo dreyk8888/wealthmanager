@@ -1,8 +1,8 @@
 <div ng-controller="FIRECalcCtrl as vm" id="firecalc-view-container" class="container">
   <div class="row">
-    <div class="container">
-      <highchart id="netWorthTrend" config="vm.netWorthChartConfig" ></highchart>
-    </div>
+    <highchart id="nw-chart1" config="vm.chart"></highchart>
+  </div>
+    <div class="row">
     <div class="col-md-3">
       <p>Your future net worth:  {{vm.futureNetWorth}}</p>
     </div>
@@ -11,36 +11,44 @@
   <br/>
   <div class="row">
     <div class="col-md-6">
-      <p>Current Net Worth: <input type="text" value="Net worth" ng-model="vm.netWorth" ng-change="vm.displayNetWorth()"></p>
-      <p>Years to FI: <input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.displayNetWorth()"></p>
-      <p>Projected Annual Return: <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.displayNetWorth()"></p>
-      <p>Expected Annual Income: <input type="text" value="Income" ng-model="vm.incomePerYear" ng-change="vm.displayNetWorth()"></p>
-      <p>Expected Annual Income Growth: <input type="text" value="Income Growth" ng-model="vm.incomeGrowth" ng-change="vm.displayNetWorth()"></p>
-      <p>Expected Monthly Expense: <input type="text" value="Expense" ng-model="vm.expensePerMonth" ng-change="vm.displayNetWorth()"></p>
-      <p>Expected Annual Expense Growth (inflation + spending growth): <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()"></p>
-      <p>Compound monthly?  <input type="checkbox" ng-model="vm.compoundMonthly" name="compound-monthly-checkbox" ng-true-value="true" ng-false-value="false" ng-change="vm.displayNetWorth()"></p>
+      <p>Current Net Worth <input type="text" value="Net worth" ng-model="vm.netWorth" ng-change="vm.displayNetWorth()" class="pull-right"></p>
+      <p>Years to financial independence<input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.displayNetWorth()" class="pull-right"></p>
+      <p>Projected Annual Return <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.displayNetWorth()" class="pull-right"></p>
+      <p>Expected Annual Income <input type="text" value="Income" ng-model="vm.incomePerYear" ng-change="vm.displayNetWorth()" class="pull-right"></p>
+      <p>Expected Annual Income Growth <input type="text" value="Income Growth" ng-model="vm.incomeGrowth" ng-change="vm.displayNetWorth()" class="pull-right"></p>
+      <p>Expected Monthly Expense <input type="text" value="Expense" ng-model="vm.expensePerMonth" ng-change="vm.displayNetWorth()" class="pull-right"></p>
+      <p>Expected Annual Expense Growth  <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()" class="pull-right"></p>
+      <p style="font-size:0.7em;">Inflation + spending growth</p>
+
+      <div class="btn-group" id="compound-monthly-toggle">
+        <label class="btn btn-primary" ng-model="vm.compoundMonthly" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
+        <label class="btn btn-primary" ng-model="vm.compoundMonthly" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>
+        <span class="toggle-text">Compound monthly</span>
+      </div>
     </div>
-    <div class="col-md-4">
-      <div class="btn-group">
-        <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label><p>
-        <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>    Historical data</p>
+    <div class="col-md-3">
+      <div class="btn-group" id="hist-data-toggle">
+        <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
+        <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>
+        <span class="toggle-text">Historical data</span>
       </div>
       <br/>
       <br/>
-      <div class="btn-group">
-        <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label><p>
-        <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>    Historical ROI</p>
+      <div class="btn-group" id="hist-roi-toggle">
+        <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
+        <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>
+        <span class="toggle-text">Historical ROI</span>
       </div>
       <br/>
       <br/>
       <div class="row">
         <div class="col-md-6">
           <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.yearEndDate" is-open="vm.popup1.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <input id="datepicker" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.yearEndDate" is-open="vm.popup1.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click=" vm.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
-          </p><p>  Fiscal year end</p>
+          </p><p class="toggle-text" >Fiscal year end</p>
         </div>
       </div>
     </div>

@@ -7,9 +7,11 @@
  * # FIRECalcCtrl
  * Controller of the wealthManagerApp Financial independent calculator
  */
-//test historical data with more realistic date, historical ROI, longer number of years
 //graph does not refresh until you click on another text box
-//make graph bigger
+//test historical data with more realistic date, historical ROI, longer number of years
+
+
+//make graph bigger - need to make this dynamic width, but refuses to work. Do later
 
 
 angular.module("wealthManagerApp")
@@ -34,7 +36,7 @@ angular.module("wealthManagerApp")
     vm.futureNetWorth = 0;
 
     //date picker functions
-    vm.yearEndDate = null;  //what date to consider as year end?
+    vm.yearEndDate = new Date();  //what date to consider as year end?
     vm.dateOptions = {
         dateDisabled: "",
         formatYear: 'yy',

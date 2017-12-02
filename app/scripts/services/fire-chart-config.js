@@ -13,7 +13,7 @@ angular.module("wealthManagerApp")
             var chartConfig = {
                 chart: {
                     type: "column",
-                    height: 90 + "%",
+                    height: 60 + "%",
                     width: 900
                 },
                 title: {

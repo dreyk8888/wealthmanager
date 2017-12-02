@@ -9,11 +9,11 @@ body {
   padding: 0px;
   padding-left: 10%;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 2.0em;
+  font-size: 1.5em;
 }
-.container { 
-  width: auto; /* set so that container uses full width of screen*/  
-} 
+.container {
+  width: auto; /* set so that container uses full width of screen*/
+}
 
 .header,
 .marketing,
@@ -37,7 +37,7 @@ body {
 
 .navbar-header {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 1.3em;  
+  font-size: 1.3em;
 }
 
 /* Custom page footer */

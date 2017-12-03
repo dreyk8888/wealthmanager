@@ -8,6 +8,9 @@
  * Controller of the wealthManagerApp Financial independent calculator
  */
 //graph does not refresh until you click on another text box
+//graph should draw the default data until it's changed
+// sliders
+// color theme
 //test historical data with more realistic date, historical ROI, longer number of years
 
 
@@ -20,22 +23,79 @@ angular.module("wealthManagerApp")
 
     var vm = this;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //Initial values
     vm.useCalculatedData = false;
     vm.useHistoricalROI = false;
     vm.annualReturn = 7;
     vm.netWorth = 100000;
     vm.incomePerYear = 50000;
     vm.incomeGrowth = 2;
-    vm.expensePerMonth = 2000;
+    vm.expensePerMonth = 3000;
     vm.expenseGrowth = 2;
-    vm.numberOfYears = 5;
+    vm.numberOfYears = 25;
     vm.compoundMonthly = false;
 
     vm.netWorthData = [];
     vm.loadedHistoricalData = [];
     vm.futureNetWorth = 0;
 
-    //date picker functions
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //On page controls
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //Sliders
+    vm.nwSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            floor: -1e6,
+            ceil: 1e9,
+            showSelectionBar: true,
+            translate: function(value) {
+                return "$" + value;
+            }
+        }
+    };
+    vm.genericSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            showSelectionBar: true,
+            floor: 0,
+            ceil: 100
+        }
+    };
+    vm.percentSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            floor: 0,
+            ceil: 1000,
+            showSelectionBar: true,
+            translate: function(value) {
+                return value + "%";
+            }
+        }
+    };
+    vm.annualSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            floor: 0,
+            ceil: 1e6,
+            showSelectionBar: true,
+            translate: function(value) {
+                return "$" + value;
+            }
+        }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //Date picker functions
     vm.yearEndDate = new Date();  //what date to consider as year end?
     vm.dateOptions = {
         dateDisabled: "",
@@ -63,10 +123,12 @@ angular.module("wealthManagerApp")
         );
     });
 */
-
+    //Initialize chart
     vm.chart = FIREChartConfig.nwChartConfig(vm.netWorthData);
     //vm.chart = new Highcharts.chart("static-chart", this.netWorthChartConfig);
     //dislay historical data vs calculation to plot trend
+
+    //Display graph based on data
     vm.displayNetWorth = function(){
         if (vm.useCalculatedData === true){
             NetWorthDataAPI.getDataWithPromise()
@@ -106,6 +168,7 @@ angular.module("wealthManagerApp")
 
     };
 
+    //calculate future value based on data
     var calculateFutureNetWorth = function(netWorthData){
         return netWorthData[netWorthData.length - 1];
     };

@@ -2,3 +2,26 @@
 .toggle-text {
 	padding-left: 10px;
 }
+input {
+    text-align: right;
+}
+.row {
+  padding-bottom: 3px;
+}
+
+.rzslider {
+  margin-top: 15px;
+  margin-bottom: 50px;
+}
+
+.rzslider span.rz-bar.rz-selection {
+  background-color: #eddc2a;
+}
+.rzslider span.rz-bubble {
+  top: 20px;
+}
+
+.rzslider span.rz-pointer-min {
+  background-color: #05416b;
+}
+W

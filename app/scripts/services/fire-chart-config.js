@@ -14,14 +14,20 @@ angular.module("wealthManagerApp")
                 chart: {
                     type: "column",
                     height: 60 + "%",
-                    width: 900
+                    width: 900,
+                    backgroundColor: "transparent",
+                    style: {
+                        font: '"Roboto Condensed", sans-serif',
+                        color: "#FFFFFF"
+                    }
                 },
                 title: {
                     text: "Net Worth Growth"
                 },
                 series: [{
                     name: "Net Worth (End of Year)",
-                    data: data
+                    data: data,
+                    color: "#35a04a"
                 }],
                 xAxis: {
                     labels: {

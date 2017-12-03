@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc service
@@ -7,32 +7,37 @@
  * # wealthManagerData
  * Helper functions for wealth manager
  */
-angular.module('wealthManagerApp')
-    .service('PortfolioChartConfig', function() {
+angular.module("wealthManagerApp")
+    .service("PortfolioChartConfig", function() {
         this.portfolioAssetClassPieConfig = function(data){
             var chartConfig = {
                 chart: {
-                    type: 'pie'
+                    type: "pie",
+                    backgroundColor: "transparent",
+                    style: {
+                        font: '"Roboto Condensed", sans-serif',
+                        color: "#FFFFFF"
+                    }
                 },
                 tooltip: {
-                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                    pointFormat: "<b>{point.percentage:.1f}%</b>"
                 },
                 plotOptions: {
                     pie: {
                         allowPointSelect: true,
-                        cursor: 'pointer',
+                        cursor: "pointer",
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            format: "<b>{point.name}</b>: {point.percentage:.1f} %",
 
                         }
                     }
                 },
                 title: {
-                    text: 'Asset Allocation by Type'
+                    text: "Asset Allocation by Type"
                 },
                 series: [{
-                    name: 'Asset Mix',
+                    name: "Asset Mix",
                     data: data
                 }]
             };
@@ -43,27 +48,32 @@ angular.module('wealthManagerApp')
         this.portfolioAssetLocationPieConfig = function(data){
             var chartConfig = {
                 chart: {
-                    type: 'pie'
+                    type: "pie",
+                    backgroundColor: "transparent",
+                    style: {
+                        font: '"Roboto Condensed", sans-serif',
+                        color: "#FFFFFF"
+                    }
                 },
                 tooltip: {
-                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                    pointFormat: "<b>{point.percentage:.1f}%</b>"
                 },
                 plotOptions: {
                     pie: {
                         allowPointSelect: true,
-                        cursor: 'pointer',
+                        cursor: "pointer",
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            format: "<b>{point.name}</b>: {point.percentage:.1f} %",
 
                         }
                     }
                 },
                 title: {
-                    text: 'Asset Allocation by Geography'
+                    text: "Asset Allocation by Geography"
                 },
                 series: [{
-                    name: 'Asset Allocation by Geography',
+                    name: "Asset Allocation by Geography",
                     data: data
                 }]
             };

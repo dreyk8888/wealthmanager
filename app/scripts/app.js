@@ -20,7 +20,8 @@ angular
         'ui.grid.autoResize',
         'ui.bootstrap',
         'schemaForm',
-        'highcharts-ng'
+        'highcharts-ng',
+        'rzModule'
     ])
 
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){

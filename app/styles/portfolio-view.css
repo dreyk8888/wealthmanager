@@ -1,9 +1,8 @@
-
 .diversification {
 	width: 100%;
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 1.2em;
+	font-size: 1.0em;
     border-collapse: collapse;
+    background-color: #eaeeef;
 }
 
 .diversification td, .diversification th {
@@ -11,15 +10,15 @@
     padding: 8px;
 }
 
-.diversification tr:nth-child(even){background-color: #f2f2f2;}
+/*.diversification tr:nth-child(even){background-color:#cccfd1;}*/
 
-.diversification tr:hover {background-color: #ddd;}
+.diversification tr:hover {background-color: #fff;}
 
 .diversification th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: #05416b;
     color: white;
 }
 
@@ -27,10 +26,9 @@
 	 text-align: right;
 }
 .div-all-total {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-weight: bold;
+    background-color: #bccbd6;
 }
-
 
 h3.horizontal-divider{
   overflow: hidden;
@@ -54,3 +52,12 @@ h3.horizontal-divider:after {
     left: 0.5em;
     margin-right: -2%;
 }
+
+/* UI-Grid */
+.grid {
+    width: 100%;
+    height: 100%;
+    font-size: 1.1em;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+

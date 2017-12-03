@@ -8,59 +8,69 @@
 body {
   padding: 0px;
   padding-left: 10%;
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 1.5em;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.75em;
+  color: #2d2d2d;
+  background-color: #36495e;
 }
 .container {
   width: auto; /* set so that container uses full width of screen*/
-}
-
-.header,
-.marketing,
-.footer {
+  margin-right: 10%;
   padding-left: 15px;
   padding-right: 15px;
+  background-color: #bed6dd;
 }
 
-/* Custom page header */
+
 .header {
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 3px solid #e5e5e5;
   margin-bottom: 10px;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+  background-color: #36495e;
+  color:#FFFFFF;
 }
 
-.navbar-header {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  font-size: 1.3em;
+#title-container {
+  width: auto; /* set so that container uses full width of screen*/
+  margin-right: 10%;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #36495e;
+}
+
+#title-container h1 {
+  font-weight: 700;
+}
+#title-container small {
+  color: #aeb5ba;
+}
+
+#navbar {
+  background-color: #36495e;
+  font-size: 1.2em;
+  color: #FFFFFF;
+}
+
+.navbar-header li:hover {
+  background-color: #5885a3;
+  color: #FFFFFF;
 }
 
 /* Custom page footer */
-.footer {
+#footer-container {
   padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+  background-color: #36495e;
+  border-top: 3px solid #e5e5e5;
+  width: auto; /* set so that container uses full width of screen*/
+  margin-right: 10%;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: #FFFFFF;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
-}
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
 }
 .marketing p + h4 {
   margin-top: 28px;
-}
-
-/* UI-Grid */
-.grid {
-    width: 100%;
-    height: 100%;
-    font-size: 1.3em;
 }

@@ -10,13 +10,15 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+    <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/portfolio-view.css">
-	<link rel="stylesheet" href="styles/net-worth-view.css">
+    <link rel="stylesheet" href="styles/net-worth-view.css">
     <!-- endbuild -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
   </head>
   <body>
 
@@ -26,14 +28,15 @@
 <body>
     <div class="header">
       <div class="page-header">
-       <div class="container">
-        <h1>Wealth Manager <small>Your tool to financial independence</small></h1>
+       <div id="title-container" class="container">
+        <h1><p>Wealth Manager       <small>Your tool to financial independence</small></p>	</h1>
        </div>
       </div>
-      <nav class="navbar navbar-default">
-        <div class="container">
+	  
+      <div id="navbar" class="container">
+		<nav class="navbar navbar-default">
           <div class="navbar-header">
-            <ul class="nav navbar-nav">
+            <ul id="navbar-items" class="nav navbar-nav">
               <li><a ui-sref="/"><span class="glyphicon glyphicon-menu-hamburger"></span></a></li>
               <li><a ui-sref="home">Home</a></li>
               <li><a ui-sref="portfolio">Portfolio</a></li>
@@ -47,7 +50,7 @@
     <div class="container" ui-view></div>
 
     <div class="footer">
-      <div class="container">
+      <div id="footer-container" class="container">
         <p><span class="glyphicon glyphicon-info-sign"></span><a ui-sref="#about"> About</p>
          <p><span class="glyphicon glyphicon-envelope"></span><a ui-sref="#contact"> Contact</p>
         <p><span class="glyphicon glyphicon-comment"></span><a ui-sref="#feedback"> Feedback</p>
@@ -84,6 +87,7 @@
     <script src="bower_components/highcharts/highcharts.js"></script>
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

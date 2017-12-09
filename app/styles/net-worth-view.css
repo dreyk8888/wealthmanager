@@ -24,4 +24,18 @@ input {
 .rzslider span.rz-pointer-min {
   background-color: #05416b;
 }
-W
+.custom-slider.rzslider .rz-pointer {
+  width: 16px;
+  height: 16px;
+  top: auto; /* to remove the default positioning */
+  bottom: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.custom-slider.rzslider .rz-pointer:selected {
+  display: none;
+  background-color: #05416b;
+}
+.custom-slider.rzslider .rz-pointer:after {
+  display: none;
+}

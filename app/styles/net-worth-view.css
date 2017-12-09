@@ -11,14 +11,15 @@ input {
 
 .rzslider {
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .rzslider span.rz-bar.rz-selection {
   background-color: #eddc2a;
 }
 .rzslider span.rz-bubble {
-  top: 20px;
+  top: 10px;
+  font-size: 12px;
 }
 
 .rzslider span.rz-pointer-min {

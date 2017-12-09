@@ -67,7 +67,7 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <p>Expected Income FI Income  <input type="text" value="Expense Growth" ng-model="vm.FIincome" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+      <p>FI Income  <input type="text" value="FI income" ng-model="vm.FIincome" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
     </div>
     <div class="col-md-6">
       <p>Expected Annual Expense Growth  <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
@@ -83,6 +83,9 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md-6">
+      <p>FI Withdrawal Rate  <input type="text" value="withdrawal rate" ng-model="vm.withdrawalRate" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
     <div class="col-md-3">
       <div class="btn-group" id="hist-data-toggle">
         <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
@@ -92,6 +95,9 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.withdrawalRate" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
+    </div>
     <div class="col-md-3">
       <div class="btn-group" id="hist-roi-toggle">
         <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>

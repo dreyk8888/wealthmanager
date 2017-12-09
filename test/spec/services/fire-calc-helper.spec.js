@@ -350,4 +350,31 @@ describe("Service: FIRECalcHelper", function () {
     expect(FIRECalcHelper.generateCombinedNetWorthPlotData(testNWDataHist2,testNWDataCalc)).toEqual(combinedNWData2);
   });
 
+  it ("calculateFIIncome() should exist", function(){
+    expect(FIRECalcHelper.calculateFIIncome(0, 8)).toBeDefined();
+  });
+
+  it ("calculateFIIncome() should return income of 0 if withdrawal rate is 0", function(){
+    expect(FIRECalcHelper.calculateFIIncome(1000, 0)).toEqual(0);
+  });
+
+  it ("calculateFIIncome() should return income of 0 if withdrawal rate is -10", function(){
+    expect(FIRECalcHelper.calculateFIIncome(1000, -10)).toEqual(0);
+  });
+
+  it ("calculateFIIncome() should return income of 0 if net worth is negative", function(){
+    expect(FIRECalcHelper.calculateFIIncome(-1000, 10)).toEqual(0);
+  });
+
+  it ("calculateFIIncome() should return income of 0 if net worth is 0", function(){
+    expect(FIRECalcHelper.calculateFIIncome(0, 5)).toEqual(0);
+  });
+
+  it ("calculateFIIncome() should return income of 5000 if withdrawal rate is 5% and net worth is 1000000", function(){
+    expect(FIRECalcHelper.calculateFIIncome(1000000, 5)).toEqual("50000.00");
+  });
+
+  it ("calculateFIIncome() should return income of 5000 if withdrawal rate is 5.5545878% and net worth is 1000000", function(){
+    expect(FIRECalcHelper.calculateFIIncome(1000000, 5.5545871)).toEqual("55545.87");
+  });
 });

@@ -215,5 +215,17 @@ angular.module("wealthManagerApp")
 
         return returnData;
     };
+
+    this.calculateFIIncome = function (netWorth, withdrawalRate){
+        var income = 0;
+        if (withdrawalRate <= 0 || netWorth <= 0){
+            return 0;
+        }
+
+        var rate = withdrawalRate/100;
+        income = netWorth * rate;
+        income = income.toFixed(2);
+        return income;
+    }
 }]);
 

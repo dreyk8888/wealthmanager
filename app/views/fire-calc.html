@@ -10,16 +10,79 @@
     <highchart id="nw-chart" config="vm.chart" ></highchart>
   </div>
     <div class="row">
-    <div class="col-md-4">
-      <p>Net Worth @ Retirement <input type="text" value="Future Net Worth" ng-model="vm.futureNetWorth" disabled class="pull-right" size="10"></p>
+    <div class="col-md-6">
+      <p>Net Worth @ Retirement <input type="text" value="Future Net Worth" ng-model="vm.futureNetWorth" disabled class="pull-right" size="15"></p>
     </div>
   </div>
   <br/>
   <br/>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <p>Current Net Worth <input type="text" value="Net worth" ng-model="vm.netWorth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
     </div>
+     <div class="col-md-6">
+      <p>Expected Annual Income <input type="text" value="Income" ng-model="vm.incomePerYear" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.netWorth" rz-slider-options="vm.nwSlider.options" class="custom-slider"></rzslider>
+    </div>
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.incomePerYear" rz-slider-options="vm.annualSlider.options" class="custom-slider"></rzslider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p>Years to Independence<input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
+    <div class="col-md-6">
+      <p>Expected Annual Income Growth <input type="text" value="Income Growth" ng-model="vm.incomeGrowth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.numberOfYears" rz-slider-options="vm.yearSlider.options" class="custom-slider"></rzslider>
+    </div>
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.incomeGrowth" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p>Projected Annual Return <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
+    <div class="col-md-6">
+      <p>Expected Monthly Expense <input type="text" value="Expense" ng-model="vm.expensePerMonth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <rzslider id="annual-return-slider" rz-slider-model="vm.annualReturn" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
+    </div>
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.expensePerMonth" rz-slider-options="vm.annualSlider.options" class="custom-slider"></rzslider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p>Expected Income FI Income  <input type="text" value="Expense Growth" ng-model="vm.FIincome" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
+    <div class="col-md-6">
+      <p>Expected Annual Expense Growth  <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+      <p style="font-size:0.7em;">Inflation + spending growth</p><!--this should be a tooltip -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.FIincome" rz-slider-options="vm.annualSlider.options" class="custom-slider"></rzslider>
+    </div>
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.expenseGrowth" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-3">
       <div class="btn-group" id="hist-data-toggle">
         <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
@@ -29,14 +92,6 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4">
-      <rzslider rz-slider-model="vm.netWorth" rz-slider-options="vm.nwSlider.options"></rzslider>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <p>Years to Independence<input type="text" value="Years" ng-model="vm.numberOfYears" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-    </div>
     <div class="col-md-3">
       <div class="btn-group" id="hist-roi-toggle">
         <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
@@ -47,86 +102,26 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <rzslider rz-slider-model="vm.numberOfYears" rz-slider-options="vm.genericSlider.options"></rzslider>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <p>Projected Annual Return <input type="text" value="Projected Annual Return" ng-model="vm.annualReturn" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-    </div>
-    <div class="col-md-3">
       <div class="btn-group" id="compound-monthly-toggle">
         <label class="btn btn-primary" ng-model="vm.compoundMonthly" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
         <label class="btn btn-primary" ng-model="vm.compoundMonthly" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>
         <span class="toggle-text">Compound monthly</span>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <rzslider rz-slider-model="vm.annualReturn" rz-slider-options="vm.percentSlider.options"></rzslider>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <p>Expected Annual Income <input type="text" value="Income" ng-model="vm.incomePerYear" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <rzslider rz-slider-model="vm.incomePerYear" rz-slider-options="vm.annualSlider.options"></rzslider>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <p>Expected Annual Income Growth <input type="text" value="Income Growth" ng-model="vm.incomeGrowth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <rzslider rz-slider-model="vm.incomeGrowth" rz-slider-options="vm.percentSlider.options"></rzslider>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <p>Expected Monthly Expense <input type="text" value="Expense" ng-model="vm.expensePerMonth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <rzslider rz-slider-model="vm.expensePerMonth" rz-slider-options="vm.annualSlider.options"></rzslider>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <p>Expected Annual Expense Growth  <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-      <p style="font-size:0.7em;">Inflation + spending growth</p>
-    </div>
+     </div>
+     <div class="col-md-2"></div>
     <div class="col-md-3">
       <p class="input-group">
-        <input id="datepicker" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.yearEndDate" is-open="vm.popup1.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+        <input id="datepicker" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.yearEndDate" is-open="vm.popup1.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats"/>
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click=" vm.open1()"><i class="glyphicon glyphicon-calendar" size="10"></i></button>
         </span>
       </p><p class="toggle-text" >Fiscal year end</p>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4">
-      <rzslider rz-slider-model="vm.expenseGrowth" rz-slider-options="vm.percentSlider.options"></rzslider>
-    </div>
-  </div>
-
-
 
       <br/>
       <br/>
-
       <br/>
-      <br/>
-      <div class="row">
-
-      </div>
     </div>
   </div>
 

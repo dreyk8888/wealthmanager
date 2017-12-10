@@ -7,13 +7,15 @@
  * # FIRECalcCtrl
  * Controller of the wealthManagerApp Financial independent calculator
  */
-//graph does not refresh until you click on another text box
-//graph should draw the default data until it's changed
-// sliders
-// color theme
+
+// format numbers with commas
+// income in FI calculation - the FI income number will be greyed out, displaying how much income will be based on net worth and withdrawal rate
+//add another number for withdrawal rate to calculate the income
+
+//graph does not refresh until you click on another text box when using historical data
+
 //test historical data with more realistic date, historical ROI, longer number of years
-
-
+// color theme
 //make graph bigger - need to make this dynamic width, but refuses to work. Do later
 
 
@@ -35,94 +37,15 @@ angular.module("wealthManagerApp")
     vm.expenseGrowth = 2;
     vm.numberOfYears = 25;
     vm.compoundMonthly = false;
-
+    vm.FIincome = 0;
+    vm.withdrawalRate = 3.5;
     vm.netWorthData = [];
     vm.loadedHistoricalData = [];
     vm.futureNetWorth = 0;
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    //On page controls
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    //Sliders
-    vm.nwSlider = {
-        options:
-        {
-            precision: 2,
-            pushRange: true,
-            floor: -1e6,
-            ceil: 1e9,
-            showSelectionBar: true,
-            translate: function(value) {
-                return "$" + value;
-            }
-        }
-    };
-    vm.genericSlider = {
-        options:
-        {
-            precision: 2,
-            pushRange: true,
-            showSelectionBar: true,
-            floor: 0,
-            ceil: 100
-        }
-    };
-    vm.percentSlider = {
-        options:
-        {
-            precision: 2,
-            pushRange: true,
-            floor: 0,
-            ceil: 1000,
-            showSelectionBar: true,
-            translate: function(value) {
-                return value + "%";
-            }
-        }
-    };
-    vm.annualSlider = {
-        options:
-        {
-            precision: 2,
-            pushRange: true,
-            floor: 0,
-            ceil: 1e6,
-            showSelectionBar: true,
-            translate: function(value) {
-                return "$" + value;
-            }
-        }
-    };
+    //Chart display
 
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    //Date picker functions
-    vm.yearEndDate = new Date();  //what date to consider as year end?
-    vm.dateOptions = {
-        dateDisabled: "",
-        formatYear: 'yy',
-        maxDate: new Date(2100, 5, 22),
-        minDate: new Date(1900,5,22),
-        initDate: new Date(),
-        maxMode: "month",
-        startingDay: 1
-    };
-    vm.format = 'dd-MM-yyyy';
-    vm.popup1 = {
-        opened: false
-    };
-    vm.open1 = function() {
-        vm.popup1.opened = true;
-    };
-/*
-    $(window).resize(function()
-    {
-        vm.chart.setSize(
-       $(document).width(),
-       $(document).height()/2,
-       false
-        );
-    });
-*/
     //Initialize chart
     vm.chart = FIREChartConfig.nwChartConfig(vm.netWorthData);
     //vm.chart = new Highcharts.chart("static-chart", this.netWorthChartConfig);
@@ -131,6 +54,9 @@ angular.module("wealthManagerApp")
     //Display graph based on data
     vm.displayNetWorth = function(){
         if (vm.useCalculatedData === true){
+
+            var currentYear = new Date().getFullYear();
+
             NetWorthDataAPI.getDataWithPromise()
                 .then(data => {
                     console.log (data.data);
@@ -146,6 +72,11 @@ angular.module("wealthManagerApp")
                     vm.combinedData = useHistoricalNetWorth(vm.loadedHistoricalData, vm.useHistoricalROI, yearEndMonth, yearEndDay, vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth, vm.expensePerMonth, vm.expenseGrowth,
                         vm.numberOfYears, vm.compoundMonthly);
 
+                    vm.futureNetWorth = vm.combinedData[vm.combinedData.length - 1].net_worth;
+
+                    //update on page settings based on historical data
+                    vm.FIincome = FIRECalcHelper.calculateFIIncome (vm.futureNetWorth, vm.withdrawalRate);
+                    vm.netWorth = vm.combinedData.findIndex(obj => obj.year === currentYear).net_worth;
                     //vm.chart.series[0].data.push(vm.combinedData);
                     vm.chart.series[0].data = vm.combinedData;
                     //vm.netWorthChartConfig = angular.copy(vm.netWorthChartConfig);
@@ -156,7 +87,7 @@ angular.module("wealthManagerApp")
             vm.netWorthData = FIRECalcHelper.netWorthCalc(vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth,
                 vm.expensePerMonth, vm.expenseGrowth, vm.numberOfYears, vm.compoundMonthly);
             vm.futureNetWorth = calculateFutureNetWorth(vm.netWorthData);
-
+            vm.FIincome = FIRECalcHelper.calculateFIIncome (vm.futureNetWorth, vm.withdrawalRate);
             if (DEBUG){
                 console.log ("Future net worth: " + vm.futureNetWorth);
                 console.log("Use calculated data? " + vm.useCalculatedData);
@@ -198,4 +129,131 @@ angular.module("wealthManagerApp")
 
         return combinedData;
     };
+     ////////////////////////////////////////////////////////////////////////////////////////////
+    //On page controls
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //Sliders
+    vm.nwSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            floor: 0,
+            ceil: 2e6,
+            showSelectionBar: true,
+            translate: function(value) {
+                return "$" + value;
+            },
+            onChange: function(){
+                vm.displayNetWorth();
+            }
+        }
+    };
+    vm.yearSlider = {
+        options:
+        {
+            precision: 0,
+            pushRange: true,
+            showSelectionBar: true,
+            floor: 0,
+            ceil: 50,
+            onChange: function(){
+                vm.displayNetWorth();
+            }
+        }
+    };
+    vm.percentSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            floor: 0,
+            ceil: 20,
+            showSelectionBar: true,
+            translate: function(value) {
+                return value + "%";
+            },
+            onChange: function(){
+                vm.displayNetWorth();
+            }
+        }
+    };
+    vm.annualPaymentSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            floor: 0,
+            ceil: 100000,
+            showSelectionBar: true,
+            translate: function(value) {
+                return "$" + value;
+            },
+            onChange: function(){
+                vm.displayNetWorth();
+            }
+        }
+    };
+    vm.monthlyPaymentSlider = {
+        options:
+        {
+            precision: 2,
+            pushRange: true,
+            floor: 0,
+            ceil: 10000,
+            showSelectionBar: true,
+            translate: function(value) {
+                return "$" + value;
+            },
+            onChange: function(){
+                vm.displayNetWorth();
+            }
+        }
+    };
+    vm.withdrawalRateSlider = {
+            options:
+            {
+                precision: 2,
+                step: 0.1,
+                floor: 0,
+                ceil: 10,
+                showSelectionBar: true,
+                translate: function(value) {
+                    return value + "%";
+                },
+                onChange: function(){
+                    vm.displayNetWorth();
+                }
+            }
+        };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //Date picker functions
+    vm.yearEndDate = new Date();  //what date to consider as year end?
+    vm.dateOptions = {
+        dateDisabled: "",
+        formatYear: 'yy',
+        maxDate: new Date(2100, 5, 22),
+        minDate: new Date(1900,5,22),
+        initDate: new Date(),
+        maxMode: "month",
+        startingDay: 1
+    };
+    vm.format = 'dd-MM-yyyy';
+    vm.popup1 = {
+        opened: false
+    };
+    vm.open1 = function() {
+        vm.popup1.opened = true;
+    };
+/*
+    $(window).resize(function()
+    {
+        vm.chart.setSize(
+       $(document).width(),
+       $(document).height()/2,
+       false
+        );
+    });
+*/
 }]);

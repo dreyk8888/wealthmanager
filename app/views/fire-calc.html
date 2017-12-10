@@ -13,6 +13,9 @@
     <div class="col-md-6">
       <p>Net Worth @ Retirement <input type="text" value="Future Net Worth" ng-model="vm.futureNetWorth" disabled class="pull-right" size="15"></p>
     </div>
+    <div class="col-md-6">
+      <p>FI Income  <input type="text" value="FI income" ng-model="vm.FIincome" ng-change="vm.displayNetWorth()" disabled class="pull-right" size="10"></p>
+    </div>
   </div>
   <br/>
   <br/>
@@ -29,7 +32,7 @@
       <rzslider rz-slider-model="vm.netWorth" rz-slider-options="vm.nwSlider.options" class="custom-slider"></rzslider>
     </div>
     <div class="col-md-6">
-      <rzslider rz-slider-model="vm.incomePerYear" rz-slider-options="vm.annualSlider.options" class="custom-slider"></rzslider>
+      <rzslider rz-slider-model="vm.incomePerYear" rz-slider-options="vm.annualPaymentSlider.options" class="custom-slider"></rzslider>
     </div>
   </div>
   <div class="row">
@@ -62,30 +65,26 @@
       <rzslider id="annual-return-slider" rz-slider-model="vm.annualReturn" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
     </div>
     <div class="col-md-6">
-      <rzslider rz-slider-model="vm.expensePerMonth" rz-slider-options="vm.annualSlider.options" class="custom-slider"></rzslider>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <p>FI Income  <input type="text" value="FI income" ng-model="vm.FIincome" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-    </div>
-    <div class="col-md-6">
-      <p>Expected Annual Expense Growth  <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
-      <p style="font-size:0.7em;">Inflation + spending growth</p><!--this should be a tooltip -->
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <rzslider rz-slider-model="vm.FIincome" rz-slider-options="vm.annualSlider.options" class="custom-slider"></rzslider>
-    </div>
-    <div class="col-md-6">
-      <rzslider rz-slider-model="vm.expenseGrowth" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
+      <rzslider rz-slider-model="vm.expensePerMonth" rz-slider-options="vm.monthlyPaymentSlider.options" class="custom-slider"></rzslider>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <p>FI Withdrawal Rate  <input type="text" value="withdrawal rate" ng-model="vm.withdrawalRate" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
     </div>
+    <div class="col-md-6">
+      <p>Expected Annual Expense Growth  <input type="text" value="Expense Growth" ng-model="vm.expenseGrowth" ng-change="vm.displayNetWorth()" class="pull-right" size="10"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.withdrawalRate" rz-slider-options="vm.withdrawalRateSlider.options" class="custom-slider"></rzslider>
+    </div>
+    <div class="col-md-6">
+      <rzslider rz-slider-model="vm.expenseGrowth" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-3">
       <div class="btn-group" id="hist-data-toggle">
         <label class="btn btn-primary" ng-model="vm.useCalculatedData" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
@@ -95,9 +94,6 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
-      <rzslider rz-slider-model="vm.withdrawalRate" rz-slider-options="vm.percentSlider.options" class="custom-slider"></rzslider>
-    </div>
     <div class="col-md-3">
       <div class="btn-group" id="hist-roi-toggle">
         <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>

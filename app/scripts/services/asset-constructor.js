@@ -35,7 +35,9 @@ angular.module('wealthManagerApp')
                 name: "",
                 units: "",
                 unitCost: "",
-                amount: "",
+                marketPrice: "",
+                totalCost: "",
+                marketValue: "",
                 location: "",
                 date_purchased: "",
                 currency: ""
@@ -48,7 +50,9 @@ angular.module('wealthManagerApp')
             asset.name = "";
             asset.units = "";
             asset.unitCost = "";
-            asset.amount = "";
+            asset.marketPrice = "";
+            asset.totalCost = "";
+            asset.marketValue = "";
             asset.location = "";
             asset.date_purchased = "";
             asset.currency = "";
@@ -60,7 +64,9 @@ angular.module('wealthManagerApp')
             asset.name = "";
             asset.units = "";
             asset.unitCost = "";
-            asset.amount = "";
+            asset.marketPrice = "";
+            asset.totalCost = "";
+            asset.marketValue = "";
             asset.location = "";
             asset.date_purchased = "";
             asset.currency = "";
@@ -71,7 +77,7 @@ angular.module('wealthManagerApp')
         //this will be used if we ever allow changing of asset classes in row edit
         //return the Asset object parameter populated with parameterized values and calculated amount
         //keep track of _id for API posting purposes
-        this.populate = function (asset, _id, assetClass, name, units, unitCost, amount, location, date_purchased, currency){
+        this.populate = function (asset, _id, assetClass, name, units, unitCost, totalCost, location, date_purchased, currency, marketPrice, marketValue){
             asset._id = _id;
 
             if (assetClass === GlobalConstants.CASH){
@@ -79,7 +85,9 @@ angular.module('wealthManagerApp')
                 asset.name = name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
-                asset.amount = amount;
+                asset.totalCost = totalCost;
+                asset.marketPrice = GlobalConstants.UNDEFNUM;
+                asset.marketValue = GlobalConstants.UNDEFNUM;
                 asset.location = GlobalConstants.UNDEFSTR;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
                 asset.currency = currency;
@@ -88,7 +96,9 @@ angular.module('wealthManagerApp')
                 asset.name = name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
-                asset.amount = amount;
+                asset.totalCost = totalCost;
+                asset.marketPrice = GlobalConstants.UNDEFNUM;
+                asset.marketValue = marketValue;
                 asset.location = location;
                 asset.date_purchased = date_purchased;
                 asset.currency = currency;
@@ -97,7 +107,9 @@ angular.module('wealthManagerApp')
                 asset.name = name;
                 asset.units = Number(units);
                 asset.unitCost = Number(unitCost);
-                asset.amount = asset.units*asset.unitCost;
+                asset.totalCost = asset.units*asset.unitCost;
+                asset.marketPrice = Number(marketPrice);
+                asset.marketValue = asset.units*asset.marketPrice;
                 asset.location = location;
                 asset.date_purchased = date_purchased;
                 asset.currency = currency;
@@ -115,7 +127,9 @@ angular.module('wealthManagerApp')
                 asset.name = obj.name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
-                asset.amount = obj.amount;
+                asset.totalCost = obj.totalCost;
+                asset.marketPrice = GlobalConstants.UNDEFNUM;
+                asset.marketValue = GlobalConstants.UNDEFNUM;
                 asset.location = GlobalConstants.UNDEFSTR;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
                 asset.currency = obj.currency;
@@ -123,7 +137,9 @@ angular.module('wealthManagerApp')
                 asset.name = obj.name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
-                asset.amount = obj.amount;
+                asset.totalCost = obj.totalCost;
+                asset.marketPrice = GlobalConstants.UNDEFNUM;
+                asset.marketValue = obj.marketValue;
                 asset.location = obj.location;
                 asset.date_purchased = obj.date_purchased;
                 asset.currency = obj.currency;
@@ -131,7 +147,9 @@ angular.module('wealthManagerApp')
                 asset.name = obj.name;
                 asset.units = Number(obj.units);
                 asset.unitCost = Number(obj.unitCost);
-                asset.amount = asset.units*asset.unitCost;
+                asset.totalCost = asset.units*asset.unitCost;
+                asset.marketPrice = Number(obj.marketPrice);
+                asset.marketValue = asset.units*asset.marketPrice;
                 asset.location = obj.location;
                 asset.date_purchased = obj.date_purchased;
                 asset.currency = obj.currency;

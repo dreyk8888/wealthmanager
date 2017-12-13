@@ -42,7 +42,9 @@ describe("Service: Asset constructor", function () {
       name: "TEST",
       units: "100",
       unitCost: "10.50",
-      amount: "",
+      totalCost: "",
+      marketPrice: "53.23",
+      marketValue: "",
       location: "Domestic",
       date_purchased: "7/23/2017",
       currency: "INR"
@@ -52,7 +54,9 @@ describe("Service: Asset constructor", function () {
       name: "",
       units: "",
       unitCost: "",
-      amount: "",
+      totalCost: "",
+      marketPrice: "",
+      marketValue: "",
       location: "",
       date_purchased: "",
       currency: ""
@@ -72,7 +76,9 @@ describe("Service: Asset constructor", function () {
       name: "TEST",
       units: "100",
       unitCost: "10.50",
-      amount: "",
+      totalCost: "45",
+      marketPrice: "23",
+      marketValue: "67",
       location: "Domestic",
       date_purchased: "7/23/2017",
       currency: "INR"
@@ -83,7 +89,9 @@ describe("Service: Asset constructor", function () {
       name: "",
       units: "",
       unitCost: "",
-      amount: "",
+      totalCost: "",
+      marketPrice: "",
+      marketValue: "",
       location: "",
       date_purchased: "",
       currency: ""
@@ -98,7 +106,9 @@ describe("Service: Asset constructor", function () {
       name: "TEST",
       units: "100",
       unitCost: "10.50",
-      amount: "",
+      totalCost: "",
+      marketPrice: "53.23",
+      marketValue: "",
       location: "Domestic",
       date_purchased: "7/23/2017",
       currency: "INR"
@@ -110,7 +120,9 @@ describe("Service: Asset constructor", function () {
       name: "My mom's money",
       units: "",
       unitCost: "",
-      amount: 50000,
+      totalCost: 50000,
+      marketPrice: "",
+      marketValue: "",
       location: "",
       date_purchased: "",
       currency: "USD"
@@ -122,7 +134,9 @@ describe("Service: Asset constructor", function () {
       name: "My mom's money",
       units: -1,
       unitCost: -1,
-      amount: 50000,
+      totalCost: 50000,
+      marketPrice: -1,
+      marketValue: -1,
       location: "---",
       date_purchased: "1/1/1111",
       currency: "USD"
@@ -143,7 +157,9 @@ describe("Service: Asset constructor", function () {
       name: "My mom's house",
       units: "",
       unitCost: "",
-      amount: 50000,
+      totalCost: 50000,
+      marketPrice: 53.23,
+      marketValue: 90876.8756,
       location: "Japan",
       date_purchased: "01/15/1973",
       currency: "YEN"
@@ -155,7 +171,9 @@ describe("Service: Asset constructor", function () {
       name: "My mom's house",
       units: -1,
       unitCost: -1,
-      amount: 50000,
+      totalCost: 50000,
+      marketPrice: -1,
+      marketValue: 90876.8756,
       location: "Japan",
       date_purchased: "01/15/1973",
       currency: "YEN"
@@ -166,7 +184,7 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, location, date purchased, currency if asset class is fixed asset", function () {
-    expect(Asset.populate(testAsset3, "1234", "Fixed Assets", "My mom's house","","",50000,"Japan","01/15/1973", "YEN")).toEqual(expectedPopulatedFixedAsset);
+    expect(Asset.populate(testAsset3, "1234", "Fixed Assets", "My mom's house","","",50000,"Japan","01/15/1973", "YEN","123",90876.8756)).toEqual(expectedPopulatedFixedAsset);
   });
 
   var testCurr = {
@@ -175,7 +193,9 @@ describe("Service: Asset constructor", function () {
       name: "US Dollars in eTrade",
       units: "",
       unitCost: "",
-      amount: 50000,
+      totalCost: 50000,
+      marketPrice: 53.23,
+      marketValue: "",
       location: "Japan",
       date_purchased: "01/15/1973",
       currency: "YEN"
@@ -186,7 +206,9 @@ describe("Service: Asset constructor", function () {
       name: "US Dollars in eTrade",
       units: -1,
       unitCost: -1,
-      amount: 50000,
+      totalCost: 50000,
+      marketPrice: -1,
+      marketValue: "",
       location: "Japan",
       date_purchased: "01/15/1973",
       currency: "YEN"
@@ -206,7 +228,9 @@ describe("Service: Asset constructor", function () {
       name: "TEST",
       units: "100",
       unitCost: "10.50",
-      amount: "",
+      totalCost: "",
+      marketPrice: "13.54",
+      marketValue: "",
       location: "Domestic",
       date_purchased: "7/23/2017",
       currency: "INR"
@@ -218,7 +242,9 @@ describe("Service: Asset constructor", function () {
       name: "TEST",
       units: 100,
       unitCost: 10.50,
-      amount: 1050,
+      totalCost: 1050,
+      marketPrice: 13.54,
+      marketValue: 1354,
       location: "Domestic",
       date_purchased: "7/23/2017",
       currency: "INR"
@@ -230,7 +256,9 @@ describe("Service: Asset constructor", function () {
       name: "TESTDATA",
       units: 1000,
       unitCost: 10.40,
-      amount: 10400,
+      totalCost: 10400,
+      marketPrice: 9.23,
+      marketValue: 9230,
       location: "CAN",
       date_purchased: "6/10/2080",
       currency: "USD"
@@ -241,7 +269,7 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, location, date purchased, currency if asset class is equities", function () {
-    expect(Asset.populate(testEquity, "1000", "Equities", "TESTDATA", "1000","10.40",50000,"CAN","6/10/2080", "USD")).toEqual(expectedEquity2);
+    expect(Asset.populate(testEquity, "1000", "Equities", "TESTDATA", "1000","10.40",50000,"CAN","6/10/2080", "USD", "9.23",60540)).toEqual(expectedEquity2);
   });
 
 

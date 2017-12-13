@@ -99,6 +99,7 @@
         <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="true" ng-change="vm.displayNetWorth()">On</label>
         <label class="btn btn-primary" ng-model="vm.useHistoricalROI" uib-btn-radio="false" ng-change="vm.displayNetWorth()">Off</label>
         <span class="toggle-text">Historical ROI</span>
+        <input type="text" value="Historical return" ng-model="vm.historicalROI" ng-change="vm.displayNetWorth()" disabled class="pull-right" size="10"></p>
       </div>
     </div>
   </div>

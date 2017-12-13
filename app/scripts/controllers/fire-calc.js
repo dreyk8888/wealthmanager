@@ -42,6 +42,7 @@ angular.module("wealthManagerApp")
     vm.netWorthData = [];
     vm.loadedHistoricalData = [];
     vm.futureNetWorth = 0;
+    vm.historicalROI = 0;
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     //Chart display
@@ -72,14 +73,33 @@ angular.module("wealthManagerApp")
                     vm.combinedData = useHistoricalNetWorth(vm.loadedHistoricalData, vm.useHistoricalROI, yearEndMonth, yearEndDay, vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth, vm.expensePerMonth, vm.expenseGrowth,
                         vm.numberOfYears, vm.compoundMonthly);
 
-                    vm.futureNetWorth = vm.combinedData[vm.combinedData.length - 1].net_worth;
+                    vm.futureNetWorth = vm.combinedData[vm.combinedData.length - 1][1];
 
                     //update on page settings based on historical data
                     vm.FIincome = FIRECalcHelper.calculateFIIncome (vm.futureNetWorth, vm.withdrawalRate);
-                    vm.netWorth = vm.combinedData.findIndex(obj => obj.year === currentYear).net_worth;
-                    //vm.chart.series[0].data.push(vm.combinedData);
+
+                    //determine net worth at current year from combined data
+                    var currentYearIndex = 0;
+                    while (currentYear != vm.combinedData[currentYearIndex][0]){
+                        currentYearIndex++;
+
+                        if (DEBUG){
+                            console.log ("Array index of current net worth: " + currentYearIndex);
+                            console.log ("Year: " + vm.combinedData[currentYearIndex][0] + " NW " + vm.combinedData[currentYearIndex][1]);
+                        }
+                    }
+
+                    if (DEBUG){
+                        console.log ("This year is: " + currentYear);
+                        console.log ("Size of combinedData " + vm.combinedData.length);
+                        console.log ("Array index of current net worth: " + currentYearIndex);
+                        console.log ("Future net worth " + vm.futureNetWorth);
+                    }
+                    vm.netWorth = vm.combinedData[currentYearIndex][1];
+
+                    //plot data
                     vm.chart.series[0].data = vm.combinedData;
-                    //vm.netWorthChartConfig = angular.copy(vm.netWorthChartConfig);
+                    vm.netWorthChartConfig = angular.copy(vm.netWorthChartConfig);
                 })
                 .catch(error => console.log(error));
 
@@ -94,7 +114,6 @@ angular.module("wealthManagerApp")
             }
 
             vm.chart.series[0].data = vm.netWorthData;
-            //vm.chart.series[0].data.push(vm.netWorthData);
         }
 
     };
@@ -108,7 +127,11 @@ angular.module("wealthManagerApp")
     var useHistoricalNetWorth = function(loadedData, useHistoricalROI, yearEndMonth, yearEndDay, netWorthStart, annualReturn, incomePerYear, incomeGrowth, expensePerMonth,
         expenseGrowth, numberOfYears, compoundMonthly){
         var historicalData = FIRECalcHelper.consolidateHistoricalData(loadedData, yearEndMonth, yearEndDay); //clean up the loaded data so we get 1 point per year
-
+        if (DEBUG){
+            for (var i=0; i < historicalData.length; i++){
+                console.log("Consolidated historical data " + historicalData[i].year + " " + historicalData[i].net_worth);
+            }
+        }
         if (useHistoricalROI === true)
         {
             var years = historicalData[historicalData.length - 1].year - historicalData[0].year;
@@ -129,6 +152,7 @@ angular.module("wealthManagerApp")
 
         return combinedData;
     };
+
      ////////////////////////////////////////////////////////////////////////////////////////////
     //On page controls
     ////////////////////////////////////////////////////////////////////////////////////////////

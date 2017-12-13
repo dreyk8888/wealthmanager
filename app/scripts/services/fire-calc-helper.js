@@ -150,6 +150,16 @@ angular.module("wealthManagerApp")
                 tempYear --;
             }
         }
+
+        //now fill in the gaps if any between last year in data and the actual year
+        var yearNow = new Date().getFullYear();
+        tempYear = returnData[returnData.length-1].year;
+
+        while (yearNow - tempYear >= 1){
+            tempYear++ ;
+            returnData.push({"year": tempYear, "net_worth": returnData[returnData.length-1].net_worth, "currency": returnData[returnData.length-1].currency});
+
+        }
         return returnData;
     };
 
@@ -226,6 +236,6 @@ angular.module("wealthManagerApp")
         income = netWorth * rate;
         income = income.toFixed(2);
         return income;
-    }
+    };
 }]);
 

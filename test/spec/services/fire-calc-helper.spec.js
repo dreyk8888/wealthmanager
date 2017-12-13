@@ -171,7 +171,7 @@ describe("Service: FIRECalcHelper", function () {
 
   var testDateObj2 = {
     net_worth: 965465,
-    date: "2014-01-28T21:09:18.000Z",
+    date: "2014-05-28T21:09:18.000Z",
     currency: "CAD"
   };
 
@@ -191,20 +191,50 @@ describe("Service: FIRECalcHelper", function () {
     date: "2017-10-23T21:09:08.000Z",
     currency: "USD"
   };
-
-  var testDateObj6 = {
+  var testDateObj5 = {
     net_worth: 1002000,
-    date: "2019-05-15T21:09:18.000Z",
+    date: "2014-01-15T21:09:18.000Z",
     currency: "USD"
   };
-  var testDateObj5 = {
-    net_worth: 8000,
-    date: "2019-05-23T21:09:18.000Z",
+  var testDateObj6 = {
+    net_worth: 1002000,
+    date: "2015-05-15T21:09:18.000Z",
+    currency: "USD"
+  };
+  var testDateObj7 = {
+    net_worth: 98000,
+    date: "2006-05-23T21:09:18.000Z",
+    currency: "USD"
+  };
+  var testDateObj8 = {
+    net_worth: 888000,
+    date: "2010-05-23T21:09:18.000Z",
+    currency: "USD"
+  };
+  var testDateObj9 = {
+    net_worth: 45000,
+    date: "2007-05-23T21:09:18.000Z",
+    currency: "USD"
+  };
+  var testDateObj10 = {
+    net_worth: 80000.154,
+    date: "2009-05-23T21:09:18.000Z",
+    currency: "USD"
+  };
+  var testDateObj11 = {
+    net_worth: 216456.10,
+    date: "2009-03-23T21:09:18.000Z",
+    currency: "USD"
+  };
+  var testDateObj12 = {
+    net_worth: 1002000,
+    date: "2016-05-15T21:09:18.000Z",
     currency: "USD"
   };
 
   var testData = [testDateObj1, testDateObj2, testDateObj3, testDateObj4];
   var testData2 = [testDateObj1, testDateObj2, testDateObj3, testDateObj4, testDateObj5, testDateObj6];
+  var testData3 = [testDateObj10, testDateObj9, testDateObj8, testDateObj7, testDateObj2,testDateObj11,testDateObj12];
   var resultData = [
       {
         year: 2014,
@@ -235,26 +265,78 @@ describe("Service: FIRECalcHelper", function () {
       },
       {
         year: 2015,
-        net_worth: 965465,
-        currency: "CAD"
+        net_worth: 1002000,
+        currency: "USD"
       },
       {
         year: 2016,
-        net_worth: 965465,
-        currency: "CAD"
+        net_worth: 1002000,
+        currency: "USD"
       },
       {
         year: 2017,
         net_worth: 150,
         currency: "USD"
-      },
+      }
+    ];
+    var resultData3 = [
       {
-        year: 2018,
-        net_worth: 150,
+        year: 2006,
+        net_worth: 98000,
         currency: "USD"
       },
       {
-        year: 2019,
+        year: 2007,
+        net_worth: 45000,
+        currency: "USD"
+      },
+      {
+        year: 2008,
+        net_worth: 45000,
+        currency: "USD"
+      },
+      {
+        year: 2009,
+        net_worth: 80000.154,
+        currency: "USD"
+      },
+      {
+        year: 2010,
+        net_worth: 888000,
+        currency: "USD"
+      },
+      {
+        year: 2011,
+        net_worth: 888000,
+        currency: "USD"
+      },
+      {
+        year: 2012,
+        net_worth: 888000,
+        currency: "USD"
+      },
+      {
+        year: 2013,
+        net_worth: 888000,
+        currency: "USD"
+      },
+      {
+        year: 2014,
+        net_worth: 965465,
+        currency: "CAD"
+      },
+      {
+        year: 2015,
+        net_worth: 965465,
+        currency: "CAD"
+      },
+      {
+        year: 2016,
+        net_worth: 1002000,
+        currency: "USD"
+      },
+      {
+        year: 2017,
         net_worth: 1002000,
         currency: "USD"
       }
@@ -282,6 +364,9 @@ describe("Service: FIRECalcHelper", function () {
 
   it ("consolidateHistoricalData() return an array of year, net worth, currency objects - 6 items", function(){
     expect(FIRECalcHelper.consolidateHistoricalData(testData2, 5, 15)).toEqual(resultData2);
+  });
+  it ("consolidateHistoricalData() return an array of year, net worth, currency objects - 13 items", function(){
+    expect(FIRECalcHelper.consolidateHistoricalData(testData3, 5, 15)).toEqual(resultData3);
   });
 
   it ("generateCombinedNetWorthPlotData() should exist", function(){

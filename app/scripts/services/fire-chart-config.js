@@ -13,7 +13,7 @@ angular.module("wealthManagerApp")
             var chartConfig = {
                 chart: {
                     type: "column",
-                    height: 60 + "%",
+                    height: 40 + "%",
                     width: 900,
                     backgroundColor: "transparent",
                     style: {
@@ -31,9 +31,9 @@ angular.module("wealthManagerApp")
                 }],
                 xAxis: {
                     labels: {
-                      formatter: function () {
-                        return this.value + 1;
-                      }
+                        formatter: function () {
+                            return this.value + 1;
+                        }
                     }
                 }
             };

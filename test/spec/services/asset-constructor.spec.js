@@ -195,7 +195,7 @@ describe("Service: Asset constructor", function () {
       unitCost: "",
       totalCost: 50000,
       marketPrice: 53.23,
-      marketValue: "",
+      marketValue: 5640,
       location: "Japan",
       date_purchased: "01/15/1973",
       currency: "YEN"
@@ -208,7 +208,7 @@ describe("Service: Asset constructor", function () {
       unitCost: -1,
       totalCost: 50000,
       marketPrice: -1,
-      marketValue: "",
+      marketValue: 5640,
       location: "Japan",
       date_purchased: "01/15/1973",
       currency: "YEN"
@@ -219,7 +219,7 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, location, date purchased, currency if asset class is foreign currency", function () {
-    expect(Asset.populate(testAsset3, "1234", "Foreign Currency", "US Dollars in eTrade","","",50000,"Japan","01/15/1973", "YEN")).toEqual(expectedPopulatedForeignCurr);
+    expect(Asset.populate(testAsset3, "1234", "Foreign Currency", "US Dollars in eTrade","","",50000,"Japan","01/15/1973", "YEN", 19.546, 5640)).toEqual(expectedPopulatedForeignCurr);
   });
 
   var testEquity = {

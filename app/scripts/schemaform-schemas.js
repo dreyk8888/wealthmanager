@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc function
@@ -9,38 +9,40 @@
  * This is a service so that dropdowns can be dynamically populated
  */
 
- angular.module('wealthManagerApp')
- .service ('AssetSchema', function() {
+ angular.module("wealthManagerApp")
+ .service ("AssetSchema", function() {
     //asset class is selected in the view because we need to dynamically display a different form
     //depending on class selected
     this.schema = {
-        type: 'object',
-        title: 'Asset Entry Form',
+        type: "object",
+        title: "Asset Entry Form",
         properties: {
-            name: { 'type': 'string', 'title': 'Name or Ticker symbol'},
-            ticker: { 'type': 'string', 'title': 'Ticker'},
-            units: { 'type': 'number', 'title': 'Number of Units', 'minimum': 1},
-            unitCost: {'type': 'number', 'title': 'Unit Cost', 'minimum': 1},
-            amount: { 'type': 'number', 'title': 'Amount', 'minimum': 1},   //this will be calculated from units X unitCost
-            location: { 'type': 'string', 'title': 'Geographical Location'},
-            date_purchased: { 'type': 'string', 'title': 'Date Purchased (mm/dd/yyyy)', 'pattern': '^\\d\\d\/\\d\\d\/\\d\\d\\d\\d$', },
-            currency: { 'type': 'string', 'title': 'Currency'}
+            name: { "type": "string", "title": "Name or Ticker symbol"},
+            ticker: { "type": "string", "title": "Ticker"},
+            units: { "type": "number", "title": "Units", "minimum": 0},
+            unitCost: {"type": "number", "title": "Unit Cost", "minimum": 0},
+            totalCost: { "type": "number", "title": "Cost", "minimum": 0},   //this will be calculated from units X unitCost
+            marketPrice: { "type": "number", "title": "Market Price", "minimum": 0},
+            marketValue: { "type": "number", "title": "Market Value", "minimum": 0},
+            location: { "type": "string", "title": "Geographical Location"},
+            date_purchased: { "type": "string", "title": "Date Purchased (mm/dd/yyyy)", "pattern": "^\\d\\d\/\\d\\d\/\\d\\d\\d\\d$", },
+            currency: { "type": "string", "title": "Currency"}
         },
-        'required': ['name','units', 'unitCost', 'amount', 'location', 'date_purchased']
+        "required": ["name","units", "unitCost", "totalCost", "marketPrice", "marketValue", "location", "date_purchased"]
     };
     return;
 })
 
-.service ('DebtSchema', function() {
+.service ("DebtSchema", function() {
     this.schema = {
-        type: 'object',
-        title: 'Debt Entry Form',
+        type: "object",
+        title: "Debt Entry Form",
         properties: {
-            term: { 'type': 'string', 'title': 'Liability type'},
-            name: { 'type': 'string', 'title': 'Description of liability'},
-            amount: { 'type': 'number', 'title': 'Amount', 'minimum': 1}
+            term: { "type": "string", "title": "Liability type"},
+            name: { "type": "string", "title": "Description of liability"},
+            amount: { "type": "number", "title": "Amount", "minimum": 0}
         },
-        'required': ['name', 'amount']
+        "required": ["name", "amount"]
     };
     return;
 });

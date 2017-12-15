@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc service
@@ -7,8 +7,8 @@
  * # wealthManagerData
  * Portfolio input form to display based on the input object type
  */
-angular.module('wealthManagerApp')
-    .service('PortfolioForms', ['GlobalConstants', 'Asset', 'Debt', 'Helpers', 'Currency', function(GlobalConstants, Asset, Debt, Helpers, Currency) {
+angular.module("wealthManagerApp")
+    .service("PortfolioForms", ["GlobalConstants", "Asset", "Debt", "Helpers", "Currency", function(GlobalConstants, Asset, Debt, Helpers, Currency) {
         //asset class is selected in the view because we need to dynamically display a different form
         //depending on class selected
         //send the right type of schema form to use given the asset class
@@ -19,111 +19,127 @@ angular.module('wealthManagerApp')
             var form = [];
             if (assetClass === GlobalConstants.CASH){
                  form = [
-                    'name',
+                    "name",
                     {
-                        'key': 'amount',
-                        'validationMessage': 'Enter 1 or more'
+                        "key": "totalCost",
+                        "title": "Amount",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'currency',
-                        'type': 'select',
-                        'description': 'Select currency',
-                        'titleMap': currencyTitleMap
+                        "key": "currency",
+                        "type": "select",
+                        "description": "Select currency",
+                        "titleMap": currencyTitleMap
                     }
                 ];
             } else if (assetClass === GlobalConstants.FIXEDINCOME){
                  form = [
-                    'name',
+                    "name",
                     {
-                        'key': 'units',
-                        'validationMessage': 'Enter 1 or more'
+                        "key": "units",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'unitCost',
-                        'validationMessage': 'Enter 1 or more'
+                        "key": "unitCost",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'location',
-                        'type': 'select',
-                        'description': 'Select location',
-                        'titleMap': assetLocationTitleMap
+                        "key": "marketPrice",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'date_purchased',
-                        'validationMessage': 'Enter as mm/dd/yyyy'
+                        "key": "location",
+                        "type": "select",
+                        "description": "Select location",
+                        "titleMap": assetLocationTitleMap
                     },
                     {
-                        'key': 'currency',
-                        'type': 'select',
-                        'description': 'Select currency',
-                        'titleMap': currencyTitleMap
+                        "key": "date_purchased",
+                        "validationMessage": "Enter as mm/dd/yyyy"
+                    },
+                    {
+                        "key": "currency",
+                        "type": "select",
+                        "description": "Select currency",
+                        "titleMap": currencyTitleMap
                     }
                 ];
             } else if (assetClass === GlobalConstants.FIXEDASSETS){
                  form = [
-                    'name',
-                    'amount',
+                    "name",
                     {
-                       'key': 'location',
-                        'type': 'select',
-                        'description': 'Select location',
-                        'titleMap': assetLocationTitleMap
+                        "key": "totalCost",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'date_purchased',
-                        'validationMessage': 'Enter as mm/dd/yyyy'
+                        "key": "marketValue",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'currency',
-                        'type': 'select',
-                        'description': 'Select currency',
-                        'titleMap': currencyTitleMap
+                       "key": "location",
+                        "type": "select",
+                        "description": "Select location",
+                        "titleMap": assetLocationTitleMap
+                    },
+                    {
+                        "key": "date_purchased",
+                        "validationMessage": "Enter as mm/dd/yyyy"
+                    },
+                    {
+                        "key": "currency",
+                        "type": "select",
+                        "description": "Select currency",
+                        "titleMap": currencyTitleMap
                     }
                 ];
             } else if (assetClass === GlobalConstants.FOREIGNCURR){
                  form = [
-                    'name',
+                    "name",
                     {
-                        'key': 'amount',
-                        'validationMessage': 'Enter 1 or more'
+                        "key": "totalCost",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'date_purchased',
-                        'validationMessage': 'Enter as mm/dd/yyyy'
+                        "key": "date_purchased",
+                        "validationMessage": "Enter as mm/dd/yyyy"
                     },
                     {
-                        'key': 'currency',
-                        'type': 'select',
-                        'description': 'Select currency',
-                        'titleMap': currencyTitleMap
+                        "key": "currency",
+                        "type": "select",
+                        "description": "Select currency",
+                        "titleMap": currencyTitleMap
                     }
                 ];
             } else {
                  form = [
-                    'name',
+                    "name",
                     {
-                        'key': 'units',
-                        'validationMessage': 'Enter 1 or more'
+                        "key": "units",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'unitCost',
-                        'validationMessage': 'Enter 1 or more'
+                        "key": "unitCost",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                       'key': 'location',
-                        'type': 'select',
-                        'description': 'Select location',
-                        'titleMap': assetLocationTitleMap
+                        "key": "marketPrice",
+                        "validationMessage": "Enter 0 or greater"
                     },
                     {
-                        'key': 'date_purchased',
-                        'validationMessage': 'Enter as mm/dd/yyyy'
+                       "key": "location",
+                        "type": "select",
+                        "description": "Select location",
+                        "titleMap": assetLocationTitleMap
                     },
                     {
-                        'key': 'currency',
-                        'type': 'select',
-                        'description': 'Select currency',
-                        'titleMap': currencyTitleMap
+                        "key": "date_purchased",
+                        "validationMessage": "Enter as mm/dd/yyyy"
+                    },
+                    {
+                        "key": "currency",
+                        "type": "select",
+                        "description": "Select currency",
+                        "titleMap": currencyTitleMap
                     }
                 ];
             }
@@ -134,15 +150,15 @@ angular.module('wealthManagerApp')
         var form = [];
         form = [
             {
-                'key': 'term',
-                'type': 'select',
-                'description': 'Select liability type',
-                'titleMap': debtTypeTitleMap
+                "key": "term",
+                "type": "select",
+                "description": "Select liability type",
+                "titleMap": debtTypeTitleMap
             },
-            'name',
+            "name",
             {
-                'key': 'amount',
-                'validationMessage': 'Enter 1 or more'
+                "key": "amount",
+                "validationMessage": "Enter 0 or greater"
             }
         ];
         return form;

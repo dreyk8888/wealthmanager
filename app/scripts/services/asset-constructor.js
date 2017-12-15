@@ -127,9 +127,9 @@ angular.module('wealthManagerApp')
                 asset.name = obj.name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
-                asset.totalCost = obj.totalCost;
+                asset.totalCost = GlobalConstants.UNDEFNUM;
                 asset.marketPrice = GlobalConstants.UNDEFNUM;
-                asset.marketValue = GlobalConstants.UNDEFNUM;
+                asset.marketValue = obj.marketValue;
                 asset.location = GlobalConstants.UNDEFSTR;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
                 asset.currency = obj.currency;

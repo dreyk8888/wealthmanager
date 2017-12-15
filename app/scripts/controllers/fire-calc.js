@@ -9,11 +9,9 @@
  */
 
 // format numbers with commas
-// income in FI calculation - the FI income number will be greyed out, displaying how much income will be based on net worth and withdrawal rate
-//add another number for withdrawal rate to calculate the income
 
 //graph does not refresh until you click on another text box when using historical data
-
+//does not work if you just entered data, since it gets current net worth by day, not time
 //test historical data with more realistic date, historical ROI, longer number of years
 // color theme
 //make graph bigger - need to make this dynamic width, but refuses to work. Do later
@@ -61,11 +59,9 @@ angular.module("wealthManagerApp")
             NetWorthDataAPI.getDataWithPromise()
                 .then(data => {
                     console.log (data.data);
-                    if (DEBUG){
-                        for (var i = 0; i < data.data.length; i++){
-                            vm.loadedHistoricalData.push(data.data[i]);
-                            console.log ("Data returned from API: " + vm.loadedHistoricalData[i].net_worth + " " + vm.loadedHistoricalData[i].date);
-                        }
+                    for (var i = 0; i < data.data.length; i++){
+                        vm.loadedHistoricalData.push(data.data[i]);
+                         if (DEBUG){console.log ("Data returned from API: " + vm.loadedHistoricalData[i].net_worth + " " + vm.loadedHistoricalData[i].date);}
                     }
 
                     var yearEndMonth = vm.yearEndDate.getMonth();

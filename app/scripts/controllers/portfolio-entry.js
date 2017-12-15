@@ -10,7 +10,7 @@
 
  /*todo
  - graph of historical net worth trend put on top
- ---- which number to take in the graph? And there are multiple entries per day.
+ - refactor API calls to be promises and remove the global variables
  - total assets and debts need to account for currency settings and convert to the "local" currrency
  */
 
@@ -128,9 +128,9 @@ angular.module("wealthManagerApp")
 //Calculations
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
-        vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData, "amount");
-        vm.assetTotalsPerClass = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "class", "amount");
-        vm.assetTotalsPerLocation = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "location", "amount");
+        vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData, "marketValue");
+        vm.assetTotalsPerClass = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "class", "marketValue");
+        vm.assetTotalsPerLocation = PortfolioCalcs.perTypeTotalPercentCalc(vm.assetData, "location", "marketValue");
         vm.totalDebt = PortfolioCalcs.totalCalc(vm.debtData, "amount");
         vm.debtTotalsPerType = PortfolioCalcs.perTypeTotalPercentCalc(vm.debtData, "term", "amount");
         vm.updateChartData();
@@ -175,6 +175,7 @@ angular.module("wealthManagerApp")
         $scope.$broadcast("schemaFormValidate");
         if (form.$valid){
             console.log ("Form is valid");
+            console.log (vm.assetEntry);
             var temp = Asset.copyAndCalculateAmount(vm.assetEntry);
             //post to database
             AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);

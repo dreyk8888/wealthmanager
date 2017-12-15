@@ -60,10 +60,10 @@ angular.module("wealthManagerApp")
     return function (input, entity) {
         //don't display anything if this a group heading row
         if (entity.date_purchased == undefined)
-            return "---";
+            return "";
         //check if dummy date, if so show the n/a dashes
-        var dateVal = moment(entity.date_purchased,"MM-DD-YYYY");
-        var compareDate = moment("01/01/1800","MM-DD-YYYY");
+        var dateVal = moment(entity.date_purchased,"MM/DD/YYYY");
+        var compareDate = moment("01/01/1800","MM/DD/YYYY");
         if (dateVal < compareDate){
             return "---";
         }

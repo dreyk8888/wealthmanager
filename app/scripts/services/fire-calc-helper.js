@@ -9,7 +9,7 @@
  */
 angular.module("wealthManagerApp")
     .service("FIRECalcHelper", ["Helpers", function(Helpers) {
-    var DEBUG = false;
+    var DEBUG = true;
 
     //calculate the future value of netWorthStart and returns a double
     //annualReturn - expected annual return in percentage (eg. 7)
@@ -164,17 +164,16 @@ angular.module("wealthManagerApp")
     };
 
     this.findObjClosestToEndDate = function(x, y, yearEndMonth, yearEndDay, currentYear){
-        //month starts from 0 for Date objects
         var retVal = x;
-        var xDate = new Date(x.date);
-        var yDate = new Date(y.date);
-        var yearEnd = new Date(currentYear, yearEndMonth-1, yearEndDay,0,0,0,0);
+        var xDate = moment(x.date);
+        var yDate = moment(y.date);
+        var yearEnd = moment(yearEndMonth + "-" + yearEndDay + "-" + currentYear);
         var xDiff = Math.abs(xDate - yearEnd);
         var yDiff = Math.abs(yDate - yearEnd);
         if (DEBUG){
-            console.log ("Year end = " + yearEnd);
-            console.log ("xDate = " + xDate);
-            console.log ("yDate = " + yDate);
+            console.log ("Year end = " + yearEnd.format("MM-DD-YYYY"));
+            console.log ("xDate = " + xDate.format("MM-DD-YYYY"));
+            console.log ("yDate = " + yDate.format("MM-DD-YYYY"));
             console.log ("xDiff = " + xDiff);
             console.log ("yDiff = " + yDiff);
         }

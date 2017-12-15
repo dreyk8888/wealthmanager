@@ -11,7 +11,9 @@
 // format numbers with commas
 
 //graph does not refresh until you click on another text box when using historical data
-//does not work if you just entered data, since it gets current net worth by day, not time
+// remove all the code to calculate closeness to fiscal year end since we are using 1 net worth value per year --- commented out
+//set historical ROI value on screen
+//turning on historical ROI should disable ROI slider and input. Turning on historical net data should disable net worth sliders and input
 //test historical data with more realistic date, historical ROI, longer number of years
 // color theme
 //make graph bigger - need to make this dynamic width, but refuses to work. Do later
@@ -41,6 +43,7 @@ angular.module("wealthManagerApp")
     vm.loadedHistoricalData = [];
     vm.futureNetWorth = 0;
     vm.historicalROI = 0;
+    vm.yearEndDate = moment("1/1/2017");    //until we support setting custom fiscal year end, hardcode to Jan 1
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     //Chart display
@@ -64,8 +67,8 @@ angular.module("wealthManagerApp")
                          if (DEBUG){console.log ("Data returned from API: " + vm.loadedHistoricalData[i].net_worth + " " + vm.loadedHistoricalData[i].date);}
                     }
 
-                    var yearEndMonth = vm.yearEndDate.getMonth();
-                    var yearEndDay = vm.yearEndDate.getDay();
+                    var yearEndMonth = moment(vm.yearEndDate).month();
+                    var yearEndDay = moment(vm.yearEndDate).day();
                     vm.combinedData = useHistoricalNetWorth(vm.loadedHistoricalData, vm.useHistoricalROI, yearEndMonth, yearEndDay, vm.netWorth, vm.annualReturn, vm.incomePerYear, vm.incomeGrowth, vm.expensePerMonth, vm.expenseGrowth,
                         vm.numberOfYears, vm.compoundMonthly);
 
@@ -249,6 +252,7 @@ angular.module("wealthManagerApp")
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     //Date picker functions
+    /*
     vm.yearEndDate = new Date();  //what date to consider as year end?
     vm.dateOptions = {
         dateDisabled: "",
@@ -266,6 +270,7 @@ angular.module("wealthManagerApp")
     vm.open1 = function() {
         vm.popup1.opened = true;
     };
+    */
 /*
     $(window).resize(function()
     {

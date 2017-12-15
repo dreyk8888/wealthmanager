@@ -90,7 +90,7 @@
   <br/>
   <div class="row" id="asset-table-controls">
     <div class="col-md-6">
-      <span id="asset-label"><h2>Asset Data</h2></span>
+      <span id="asset-label"><h2>Assets</h2></span>
     </div>
     <div class="col-md-3"></div>
     <div class="col-md-3" id="asset-table-control-buttons">
@@ -113,8 +113,8 @@
 </div>
   <br/>
 
-  <div class="row" id="asset-grid" >
-    <div class="col-md-10">
+  <div class="row">
+    <div class="col-md-12">
       <div id="assetGrid" ui-grid="vm.assetGridOptions" ui-grid-grouping ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="grid"></div>
     </div>
   </div>
@@ -122,24 +122,24 @@
   <div id="expand-input-button">
       <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNewAsset = !addNewAsset"><span class="glyphicon glyphicon-plus"></span></button></h3>
   </div>
-  <div class="row" id="asset-input-form">
-    <div class="col-md-6">
-      <div id="assetInputForm" ng-submit="vm.submitAssets()" ng-hide="addNewAsset">
+  <div class="row">
+    <div class="col-md-3">
+      <div id="asset-input-form" ng-submit="vm.submitAssets()" ng-hide="addNewAsset">
       <h3><strong>Enter new asset</strong></h3>
       <br/>
       <!--asset class is selected in the view because we need to dynamically display a different form depending on class selected-->
 
-        <div class="dropdown">Select asset type:
-          <button class="btn btn-default dropdown-toggle" type="button" id="assetclassdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                {{vm.assetEntry.class}}
-                <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="assetclassdropdown">
-                <li ng-repeat="class in vm.assetclasses"><a ng-click="vm.classSelected(class)">{{class}}</a></li>
-            </ul>
-        </div>
+      <div class="btn-group" uib-dropdown keyboard-nav><p>Select asset type:
+        <button id="simple-btn-keyboard-nav" type="button" class="btn" uib-dropdown-toggle>
+            {{vm.assetEntry.class}}  </p><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li ng-repeat="class in vm.assetclasses"><a ng-click="vm.classSelected(class)">{{class}}</a></li>
+        </ul>
+    </div>
+
         <br/>
-        <form name="assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity"></form>
+        <form name="assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity" class="input-form"></form>
         <button class="btn btn-success" ng-click="vm.submitAssets(assetInputForm); assetSubmitted=true">Submit</button>
         <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
     </div>
@@ -149,7 +149,7 @@
   </div>
   <div class="row" id="debt-table-controls">
     <div class="col-md-6">
-      <span id="debt-label"><h2>Liabilities Data</h2></span>
+      <span id="debt-label"><h2>Liabilities</h2></span>
     </div>
   </div>
   <div class="row" id="debt-grid" >
@@ -162,11 +162,11 @@
     <div id="expand-input-button">
       <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNewDebt = !addNewDebt"><span class="glyphicon glyphicon-plus"></span></button></h3>
   </div>
-  <div class="row" id="debt-input-form">
+  <div class="row">
     <div class="col-md-6">
       <h3><strong>Enter new liability</strong></h3>
-      <div id="debtInputForm" ng-hide="addNewDebt">
-        <form name="debtInputForm" sf-schema="vm.debtschema" sf-form="vm.debtform" sf-model="vm.debtentity"></form>
+      <div id="debt-input-form" ng-hide="addNewDebt">
+        <form name="debtInputForm" sf-schema="vm.debtschema" sf-form="vm.debtform" sf-model="vm.debtentity" class="input-form"></form>
         <button class="btn btn-success" ng-click="vm.submitDebt(debtInputForm)">Submit</button>
         <button class="btn btn-danger" ng-click="vm.cancelDebtEntry()">Cancel</button>
       </div>

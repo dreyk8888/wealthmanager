@@ -21,7 +21,21 @@
     background-color: #05416b;
     color: white;
 }
+#asset-input-form input {
+  text-align: left;
+  size: 5;
+}
+#debt-input-form input {
+  text-align: left;
+  size: 5;
+}
+.modal-body input {
+  text-align: left;
+}
 
+.help-block {
+    font-size: 0.75em;
+}
 .display-amounts {
 	 text-align: right;
 }
@@ -56,7 +70,7 @@ h3.horizontal-divider:after {
 /* UI-Grid */
 .grid {
     width: 100%;
-    height: 100%;
-    font-size: 1.1em;
+    height: auto;
+    font-size: 1.0em;
     font-family: 'Roboto Condensed', sans-serif;
 }

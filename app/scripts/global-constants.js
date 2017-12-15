@@ -12,7 +12,7 @@
         API_URL_LOCAL: "http://localhost:3000", //local API URL
         UNDEFSTR: "---",   //empty string representation in app
         UNDEFNUM: -1,
-        UNDEFDATE: "1/1/1111",
+        UNDEFDATE: "01/01/1111",
         //asset classes
         CASH: "Cash",
         EQUITIES: "Equities",
@@ -33,6 +33,7 @@
         FRONTIER: "Frontier Markets",
 
         //currencies, these are hardcoded as defaults in DB, don't change without changing DB!
+        DOM: "Local",
         CAD: "CAD",
         USD: "USD",
         EURO: "EUR",
@@ -42,7 +43,6 @@
         FRANC: "CHF",
         RUPEE: "INR",
         AUD: "AUD",
-        DOM: "Local",
         //debt types
         SHORT_TERM: "Short Term",
         LONG_TERM: "Long Term",

@@ -26,7 +26,7 @@ angular.module("wealthManagerApp")
     var vm = this;
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    //Initial values
+    //Initial values for dynamic on page settings
     vm.useCalculatedData = false;
     vm.useHistoricalROI = false;
     vm.annualReturn = 7;
@@ -37,12 +37,18 @@ angular.module("wealthManagerApp")
     vm.expenseGrowth = 2;
     vm.numberOfYears = 25;
     vm.compoundMonthly = false;
-    vm.FIincome = 0;
     vm.withdrawalRate = 3.5;
+
+    //static values
+    vm.FIincome = 0;
+    vm.futureNetWorth = 0;
+
+    //values from database, only displayed if historical toggle on
+    vm.histROI = 4.546;
+    vm.histNetWorth = 0;
+    //data storage objects
     vm.netWorthData = [];
     vm.loadedHistoricalData = [];
-    vm.futureNetWorth = 0;
-    vm.historicalROI = 0;
     vm.yearEndDate = moment("1/1/2017");    //until we support setting custom fiscal year end, hardcode to Jan 1
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +56,7 @@ angular.module("wealthManagerApp")
 
     //Initialize chart
     vm.chart = FIREChartConfig.nwChartConfig(vm.netWorthData);
+
     //vm.chart = new Highcharts.chart("static-chart", this.netWorthChartConfig);
     //dislay historical data vs calculation to plot trend
 
@@ -94,7 +101,7 @@ angular.module("wealthManagerApp")
                         console.log ("Array index of current net worth: " + currentYearIndex);
                         console.log ("Future net worth " + vm.futureNetWorth);
                     }
-                    vm.netWorth = vm.combinedData[currentYearIndex][1];
+                    vm.histNetWorth = vm.combinedData[currentYearIndex][1];
 
                     //plot data
                     vm.chart.series[0].data = vm.combinedData;
@@ -189,6 +196,7 @@ angular.module("wealthManagerApp")
         options:
         {
             precision: 2,
+            step: 0.01,
             pushRange: true,
             floor: 0,
             ceil: 20,
@@ -237,7 +245,7 @@ angular.module("wealthManagerApp")
             options:
             {
                 precision: 2,
-                step: 0.1,
+                step: 0.01,
                 floor: 0,
                 ceil: 10,
                 showSelectionBar: true,

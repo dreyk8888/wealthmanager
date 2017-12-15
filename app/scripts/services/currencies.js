@@ -14,12 +14,12 @@ angular.module('wealthManagerApp')
             GlobalConstants.DOM,
             GlobalConstants.USD,
             GlobalConstants.EURO,
-            GlobalConstants.CAN,
-            GlobalConstants.BP,
+            GlobalConstants.CAD,
+            GlobalConstants.GBP,
             GlobalConstants.YEN,
             GlobalConstants.YUAN,
             GlobalConstants.FRANC,
-            GlobalConstants.INR,
+            GlobalConstants.RUPEE,
             GlobalConstants.AUD
         ];
 }]);

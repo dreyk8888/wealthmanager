@@ -50,3 +50,4 @@ jspm_packages
 .tmp/styles/main.css
 bower.json
 ~$FICalculator.xlsx
+app/views/fire-calc-backup.html

@@ -9,7 +9,8 @@
  */
 
  /*todo
- - graph of historical net worth trend put on top
+ - make forms horizontal to match columns in table
+ - move graphs to a trends or dashboard page
  - refactor API calls to be promises and remove the global variables
  - total assets and debts need to account for currency settings and convert to the "local" currrency
  */
@@ -125,7 +126,7 @@ angular.module("wealthManagerApp")
     vm.debtschema = DebtSchema.schema;
 
 ////////////////////////////////////////////////////////////////////////////
-//Calculations
+//Refresh calls
     //contains all the functions needed to recalculate everything
     vm.recalculate = function(){
         vm.totalAssets = PortfolioCalcs.totalCalc(vm.assetData, "marketValue");
@@ -152,6 +153,7 @@ angular.module("wealthManagerApp")
 
     vm.updateNetWorth = function(assetTotal, debtTotal, myCurrency){
         var currentDate = moment().format();
+        var currentYear = moment(currentDate).year();
         var net = assetTotal - debtTotal;
         var netWorth = {
             net_worth: net,
@@ -159,7 +161,25 @@ angular.module("wealthManagerApp")
             currency: myCurrency
         };
 
-        NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
+        //check if there is already an entry with the current date. If yes, overwrite it, otherwise create a new entry
+        NetWorthDataAPI.getDataWithPromise()
+                .then(data => {
+                    var oid = 0;
+                    for (var i = 0; i < data.data.length; i++){
+                        if (DEBUG){console.log ("Data returned from API: " + data.data[i].net_worth + " " + data.data[i].date);}
+
+                        if (moment(data.data[i].date).year() === currentYear){
+                            oid = data.data[i]._id;
+                            break;
+                        }
+                    }
+                    //failed to find an entry of the same year in database, add a new one
+                    if (oid === 0){
+                        NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
+                    } else {
+                        NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
+                    }
+                });
     };
 
 ////////////////////////////////////////////////////////////////////////////

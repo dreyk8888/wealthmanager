@@ -21,7 +21,7 @@ angular.module("wealthManagerApp")
                  form = [
                     "name",
                     {
-                        "key": "totalCost",
+                        "key": "marketValue",
                         "title": "Amount",
                         "validationMessage": "Enter 0 or greater"
                     },
@@ -96,7 +96,7 @@ angular.module("wealthManagerApp")
                  form = [
                     "name",
                     {
-                        "key": "totalCost",
+                        "key": "marketValue",
                         "validationMessage": "Enter 0 or greater"
                     },
                     {

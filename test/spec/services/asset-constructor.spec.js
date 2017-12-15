@@ -120,9 +120,9 @@ describe("Service: Asset constructor", function () {
       name: "My mom's money",
       units: "",
       unitCost: "",
-      totalCost: 50000,
+      totalCost: "",
       marketPrice: "",
-      marketValue: "",
+      marketValue: 50000,
       location: "",
       date_purchased: "",
       currency: "USD"
@@ -134,11 +134,11 @@ describe("Service: Asset constructor", function () {
       name: "My mom's money",
       units: -1,
       unitCost: -1,
-      totalCost: 50000,
+      totalCost: -1,
       marketPrice: -1,
-      marketValue: -1,
+      marketValue: 50000,
       location: "---",
-      date_purchased: "1/1/1111",
+      date_purchased: "01/01/1111",
       currency: "USD"
   };
 
@@ -148,7 +148,7 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, currency if asset class is cash", function () {
-    expect(Asset.populate(testAsset3, "1234567", "Cash", "My mom's money", "", "", 50000, "", "", "USD" )).toEqual(expectedPopulatedCashAsset);
+    expect(Asset.populate(testAsset3, "1234567", "Cash", "My mom's money", "", "", 40000, "", "", "USD","",50000 )).toEqual(expectedPopulatedCashAsset);
   });
 
   var testFixed = {

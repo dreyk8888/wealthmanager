@@ -85,9 +85,9 @@ angular.module('wealthManagerApp')
                 asset.name = name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
-                asset.totalCost = totalCost;
+                asset.totalCost = GlobalConstants.UNDEFNUM;
                 asset.marketPrice = GlobalConstants.UNDEFNUM;
-                asset.marketValue = GlobalConstants.UNDEFNUM;
+                asset.marketValue = marketValue;
                 asset.location = GlobalConstants.UNDEFSTR;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
                 asset.currency = currency;

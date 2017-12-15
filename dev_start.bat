@@ -2,17 +2,11 @@
 Have to be bower, since yeoman builds the script/css section automatically based on what's in the bower.json file
 
 #start mongo instance
-c:/mongodb/bin/mongod.exe --dbpath="c:\mongodata\db"
+cd startup
+start mongo_start.bat
 
 #run express server
-cd \
-cd web development
-cd wealth-mgr-api
-npm install
-# run the app on Windows
-SET PORT=4000
-npm start
+start backend_start.bat
 
-cd ..
-cd WealthManager
-grunt serve
+#run front end server
+start frontend_start.bat

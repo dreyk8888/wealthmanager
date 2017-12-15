@@ -1,0 +1,11 @@
+Design Decisions
+
+Historical net worth
+- write one value per year
+- always make Jan 1 the start of a new year
+- whenever asset/debt updated, check in DB for existing net worth value for that year, and if it exists, overwrite
+- cannot use date purchased to calculate net worth because there is no way to go back and determine the market value of the assets at any given time
+
+Asset value calculations
+- always use the market value to calculate net worth, trends, graphs etc.
+- the market value will also be the one to get updated when we have Finance API

@@ -51,3 +51,4 @@ jspm_packages
 bower.json
 ~$FICalculator.xlsx
 app/views/fire-calc-backup.html
+app/scripts/services/portfolio-forms-vertical.js

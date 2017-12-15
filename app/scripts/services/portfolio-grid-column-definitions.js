@@ -62,7 +62,7 @@ angular.module("wealthManagerApp")
         if (entity.date_purchased == undefined)
             return "";
         //check if dummy date, if so show the n/a dashes
-        var dateVal = moment(entity.date_purchased,"MM/DD/YYYY");
+        var dateVal = moment(entity.date_purchased);
         var compareDate = moment("01/01/1800","MM/DD/YYYY");
         if (dateVal < compareDate){
             return "---";

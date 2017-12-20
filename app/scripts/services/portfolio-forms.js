@@ -19,129 +19,276 @@ angular.module("wealthManagerApp")
             var form = [];
             if (assetClass === GlobalConstants.CASH){
                  form = [
-                    "name",
-                    {
-                        "key": "marketValue",
-                        "title": "Amount",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "currency",
-                        "type": "select",
-                        "description": "Select currency",
-                        "titleMap": currencyTitleMap
-                    }
-                ];
-            } else if (assetClass === GlobalConstants.FIXEDINCOME){
-                 form = [
-                    "name",
-                    {
-                        "key": "units",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "unitCost",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "marketPrice",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "location",
-                        "type": "select",
-                        "description": "Select location",
-                        "titleMap": assetLocationTitleMap
-                    },
-                    {
-                        "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
-                    },
-                    {
-                        "key": "currency",
-                        "type": "select",
-                        "description": "Select currency",
-                        "titleMap": currencyTitleMap
-                    }
-                ];
+                     {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "name",
+                                        "title": "",
+                                        "description": "Name/Ticker"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "marketValue",
+                                        "title": "",
+                                        "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "currency",
+                                        "type": "select",
+                                        "description": "Select currency",
+                                        "title": "",
+                                        "titleMap": currencyTitleMap
+                                    }
+                                ]
+                            }
+                        ]
+                }];
             } else if (assetClass === GlobalConstants.FIXEDASSETS){
                  form = [
-                    "name",
                     {
-                        "key": "totalCost",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "marketValue",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                       "key": "location",
-                        "type": "select",
-                        "description": "Select location",
-                        "titleMap": assetLocationTitleMap
-                    },
-                    {
-                        "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
-                    },
-                    {
-                        "key": "currency",
-                        "type": "select",
-                        "description": "Select currency",
-                        "titleMap": currencyTitleMap
-                    }
-                ];
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "name",
+                                        "title": "",
+                                        "description": "Name/Ticker"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "totalCost",
+                                        "title": "",
+                                        "description": "Total Cost",
+                                        "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "marketValue",
+                                        "title": "",
+                                        "description": "Mkt Value",
+                                        "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "location",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Select location",
+                                        "titleMap": assetLocationTitleMap
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "date_purchased",
+                                        "title": "",
+                                        "validationMessage": "Enter as mm/dd/yyyy"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "currency",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Select currency",
+                                        "titleMap": currencyTitleMap
+                                    }
+                                ]
+                            }
+                        ]
+                }];
             } else if (assetClass === GlobalConstants.FOREIGNCURR){
                  form = [
-                    "name",
                     {
-                        "key": "marketValue",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
-                    },
-                    {
-                        "key": "currency",
-                        "type": "select",
-                        "description": "Select currency",
-                        "titleMap": currencyTitleMap
-                    }
-                ];
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "name",
+                                        "title": "",
+                                        "description": "Name/Ticker"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "marketValue",
+                                        "title": "",
+                                        "description": "Market Value",
+                                        "validationMessage": "Enter 0 or more"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "date_purchased",
+                                        "title": "",
+                                        "description": "Date purchased",
+                                        "validationMessage": "mm/dd/yyyy"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "currency",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Currency",
+                                        "titleMap": currencyTitleMap
+                                    }
+                                ]
+                            }
+                        ]
+                    }];
             } else {
-                 form = [
-                    "name",
+                form = [
                     {
-                        "key": "units",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "unitCost",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "marketPrice",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                       "key": "location",
-                        "type": "select",
-                        "description": "Select location",
-                        "titleMap": assetLocationTitleMap
-                    },
-                    {
-                        "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
-                    },
-                    {
-                        "key": "currency",
-                        "type": "select",
-                        "description": "Select currency",
-                        "titleMap": currencyTitleMap
-                    }
-                ];
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "name",
+                                        "title": "",
+                                        "description": "Name/Ticker"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "location",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Select location",
+                                        "titleMap": assetLocationTitleMap
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "units",
+                                        "title": "",
+                                        "description": "#Units",
+                                        "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "unitCost",
+                                        "title": "",
+                                        "description": "Unit cost",
+                                        "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "marketPrice",
+                                        "title": "",
+                                        "description": "Mkt price",
+                                        "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "date_purchased",
+                                        "title": "",
+                                        "description": "Date purchased",
+                                        "validationMessage": "mm/dd/yyyy"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2",
+                                "items": [
+                                    {
+                                        "key": "currency",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Currency",
+                                        "titleMap": currencyTitleMap
+                                    }
+                                ]
+                            }
+                            ]
+                    }];
             }
         return form;
     };
@@ -150,17 +297,47 @@ angular.module("wealthManagerApp")
         var form = [];
         form = [
             {
-                "key": "term",
-                "type": "select",
-                "description": "Select liability type",
-                "titleMap": debtTypeTitleMap
-            },
-            "name",
-            {
-                "key": "amount",
-                "validationMessage": "Enter 0 or greater"
-            }
-        ];
+                "type": "section",
+                "htmlClass": "row",
+                "items": [
+                    {
+                        "type": "section",
+                        "htmlClass": "col-xs-2",
+                        "items": [
+                            {
+                                "key": "term",
+                                "type": "select",
+                                "title": "",
+                                "description": "Select liability type",
+                                "titleMap": debtTypeTitleMap
+                            }
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "col-xs-2",
+                        "items": [
+                            {
+                                "key": "name",
+                                "title": "",
+                                "description": "Name/Ticker"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "col-xs-2",
+                        "items": [
+                            {
+                                "key": "amount",
+                                "title": "",
+                                "description": "Amount",
+                                "validationMessage": "Enter 0 or greater"
+                            }
+                        ]
+                    }
+                ]
+        }];
         return form;
     };
 }]);

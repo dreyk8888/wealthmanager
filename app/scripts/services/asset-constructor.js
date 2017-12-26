@@ -11,7 +11,8 @@
 angular.module('wealthManagerApp')
     .service('Asset', ['GlobalConstants', function(GlobalConstants) {
         //set of supported asset classes
-        this.ASSETCLASSES = [GlobalConstants.CASH, GlobalConstants.EQUITIES, GlobalConstants.FIXEDINCOME, GlobalConstants.FIXEDASSETS,GlobalConstants.FOREIGNCURR];
+        //removed foreign currency because it is the same as cash
+        this.ASSETCLASSES = [GlobalConstants.CASH, GlobalConstants.EQUITIES, GlobalConstants.FIXEDINCOME, GlobalConstants.FIXEDASSETS];
 
         //supported asset allocations
         this.ASSETLOCATIONS = [

@@ -25,7 +25,7 @@ angular.module("wealthManagerApp")
                         "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "name",
@@ -36,130 +36,59 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
-                                        "key": "marketValue",
+                                        "key": "units",
                                         "title": "",
-                                        "validationMessage": "Enter 0 or greater"
+                                        "description": "#Units",
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
                                     }
                                 ]
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
-                                        "key": "currency",
-                                        "type": "select",
-                                        "description": "Select currency",
+                                        "key": "unitCost",
                                         "title": "",
-                                        "titleMap": currencyTitleMap
-                                    }
-                                ]
-                            }
-                        ]
-                }];
-            } else if (assetClass === GlobalConstants.FIXEDASSETS){
-                 form = [
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "name",
-                                        "title": "",
-                                        "description": "Name/Ticker"
+                                        "description": "Unit cost",
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
                                     }
                                 ]
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "totalCost",
                                         "title": "",
                                         "description": "Total Cost",
-                                        "validationMessage": "Enter 0 or greater"
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
                                     }
                                 ]
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
-                                        "key": "marketValue",
+                                        "key": "marketPrice",
                                         "title": "",
-                                        "description": "Mkt Value",
-                                        "validationMessage": "Enter 0 or greater"
+                                        "description": "Mkt price",
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
                                     }
                                 ]
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "location",
-                                        "type": "select",
-                                        "title": "",
-                                        "description": "Select location",
-                                        "titleMap": assetLocationTitleMap
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "date_purchased",
-                                        "title": "",
-                                        "validationMessage": "Enter as mm/dd/yyyy"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "currency",
-                                        "type": "select",
-                                        "title": "",
-                                        "description": "Select currency",
-                                        "titleMap": currencyTitleMap
-                                    }
-                                ]
-                            }
-                        ]
-                }];
-            } else if (assetClass === GlobalConstants.FOREIGNCURR){
-                 form = [
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "name",
-                                        "title": "",
-                                        "description": "Name/Ticker"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "marketValue",
@@ -171,7 +100,129 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "date_purchased",
+                                        "title": "",
+                                        "description": "Date purchased",
+                                        "validationMessage": "mm/dd/yyyy",
+                                        "readonly": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "location",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Select location",
+                                        "titleMap": assetLocationTitleMap,
+                                        "readonly": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "currency",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Currency",
+                                        "titleMap": currencyTitleMap
+                                    }
+                                ]
+                            }
+                      ]
+                }];
+            } else if (assetClass === GlobalConstants.FIXEDASSETS){
+                 form = [
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "name",
+                                        "title": "",
+                                        "description": "Name/Ticker"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "units",
+                                        "title": "",
+                                        "description": "#Units",
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "unitCost",
+                                        "title": "",
+                                        "description": "Unit cost",
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "totalCost",
+                                        "title": "",
+                                        "description": "Total Cost",
+                                        "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "marketPrice",
+                                        "title": "",
+                                        "description": "Mkt price",
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "marketValue",
+                                        "title": "",
+                                        "description": "Market Value",
+                                        "validationMessage": "Enter 0 or more"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "date_purchased",
@@ -183,7 +234,20 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "location",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Select location",
+                                        "titleMap": assetLocationTitleMap
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "currency",
@@ -194,7 +258,7 @@ angular.module("wealthManagerApp")
                                     }
                                 ]
                             }
-                        ]
+                            ]
                     }];
             } else {
                 form = [
@@ -204,25 +268,12 @@ angular.module("wealthManagerApp")
                         "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "name",
                                         "title": "",
                                         "description": "Name/Ticker"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "location",
-                                        "type": "select",
-                                        "title": "",
-                                        "description": "Select location",
-                                        "titleMap": assetLocationTitleMap
                                     }
                                 ]
                             },
@@ -255,10 +306,36 @@ angular.module("wealthManagerApp")
                                 "htmlClass": "col-xs-1",
                                 "items": [
                                     {
+                                        "key": "totalCost",
+                                        "title": "",
+                                        "description": "Total Cost",
+                                        "validationMessage": "Enter 0 or greater",
+                                        "readonly": true
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
                                         "key": "marketPrice",
                                         "title": "",
                                         "description": "Mkt price",
                                         "validationMessage": "Enter 0 or greater"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "marketValue",
+                                        "title": "",
+                                        "description": "Market Value",
+                                        "validationMessage": "Enter 0 or more",
+                                        "readonly": true
                                     }
                                 ]
                             },
@@ -276,7 +353,20 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-1",
+                                "items": [
+                                    {
+                                        "key": "location",
+                                        "type": "select",
+                                        "title": "",
+                                        "description": "Select location",
+                                        "titleMap": assetLocationTitleMap
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "currency",

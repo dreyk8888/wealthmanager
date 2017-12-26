@@ -126,9 +126,8 @@
     <div class="row">
       <div class="col-xs-2">
         <!--asset class is selected in the view because we need to dynamically display a different form depending on class selected-->
-        <div class="btn-group" uib-dropdown keyboard-nav><p>Select type
-          <button id="simple-btn-keyboard-nav" type="button" class="btn" uib-dropdown-toggle>
-              {{vm.assetEntry.class}}  </p><span class="caret"></span>
+        <div class="btn-group" uib-dropdown keyboard-nav>
+          <button id="asset-class-select" type="button" class="btn btn-default" uib-dropdown-toggle style="width:140px;">{{vm.classDisplay}}<span class="caret pull-right" style="margin-left:3px;margin-top:6px"></span>
           </button>
           <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
             <li ng-repeat="class in vm.assetclasses"><a ng-click="vm.classSelected(class)">{{class}}</a></li>

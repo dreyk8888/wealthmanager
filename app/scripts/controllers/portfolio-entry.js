@@ -107,11 +107,12 @@ angular.module("wealthManagerApp")
 ////////////////////////////////////////////////////////////////////////////
 //Asset Input form
     vm.assetclasses = Asset.ASSETCLASSES;
-
+    vm.classDisplay = "Asset Class";
     vm.form = PortfolioForms.getAssetForm("");  //fetch default form until user selects asset type
     vm.classSelected = function(assetClass){
         vm.assetEntry.class = assetClass;
         vm.form = PortfolioForms.getAssetForm(assetClass);
+        vm.classDisplay = assetClass;
         if (DEBUG) { console.log ("Class selected: " + assetClass ); }
     };
 

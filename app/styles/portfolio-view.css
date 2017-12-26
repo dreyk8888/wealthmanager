@@ -9,7 +9,6 @@
     border: 1px solid #ddd;
     padding: 8px;
 }
-
 /*.diversification tr:nth-child(even){background-color:#cccfd1;}*/
 
 .diversification tr:hover {background-color: #fff;}
@@ -21,14 +20,31 @@
     background-color: #05416b;
     color: white;
 }
+
+.schema-form-section {
+    padding-left: 1.25px;
+    padding-right: 1.25px;
+}
 #asset-input-form input {
   text-align: left;
   size: 5;
+}
+#asset-input-form p {
+    font-size:0.75em;
+}
+#asset-input-form span {
+    padding-left: 1px;
 }
 #debt-input-form input {
   text-align: left;
   size: 5;
 }
+
+#asset-class-select dropdown-menu{
+    padding-right:2px;
+}
+
+
 .modal-body input {
   text-align: left;
 }

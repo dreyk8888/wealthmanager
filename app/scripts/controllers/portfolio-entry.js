@@ -9,10 +9,13 @@
  */
 
  /*todo
- - make forms horizontal to match columns in table
+ - make input boxes big enough to fit input text
+ - add inline edit to grid or fix your pop up edit (make another copy of the forms that is NOT horizontal)
+ - add currency to the grid for asset and debt
+ - total assets and debts need to account for currency settings and convert to the "local" currrency
  - move graphs to a trends or dashboard page
  - refactor API calls to be promises and remove the global variables
- - total assets and debts need to account for currency settings and convert to the "local" currrency
+
  */
 
 

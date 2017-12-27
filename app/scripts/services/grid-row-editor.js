@@ -17,11 +17,11 @@ angular.module('wealthManagerApp')
         var modalInstance = $uibModal.open({
             templateUrl: 'views/edit-modal.html',
             controllerAs: 'vm',
-            controller: function ($scope, $uibModalInstance, AssetSchema, PortfolioForms, grid, row) {
+            controller: function ($scope, $uibModalInstance, AssetSchema, PortfolioFormsModal, grid, row) {
                 var vm = this;
                 vm.schema = AssetSchema.schema;
                 vm.entity = angular.copy(row.entity);
-                vm.form = PortfolioForms.getAssetForm (vm.entity.class);
+                vm.form = PortfolioFormsModal.getAssetForm (vm.entity.class);
 
                 vm.save =  function save(form) {
                     $scope.$broadcast('schemaFormValidate');

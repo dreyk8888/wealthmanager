@@ -1,62 +1,98 @@
 <!doctype html>
 <html ng-app="wealthManagerApp">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width" initial-scale=1.0>
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
-    <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/portfolio-view.css">
-    <link rel="stylesheet" href="styles/net-worth-view.css">
-    <!-- endbuild -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
-  </head>
-  <body>
-
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width" initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+  <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/framework.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/portfolio-view.css">
+  <link rel="stylesheet" href="styles/net-worth-view.css">
+  <!-- endbuild -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans:700" rel="stylesheet">
+</head>
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 <body>
-    <div class="header">
-      <div class="page-header">
-       <div id="title-container" class="container">
-        <h1><p>Wealth Manager       <small>Your tool to financial independence</small></p>	</h1>
-       </div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+  <div class="wrapper row0">
+    <div id="topbar" class="hoc clear">
+    <!-- ################################################################################################ -->
+      <div class="fl_right">
+        <ul class="nospace inline pushright">
+          <li><i class="topbar-sign-in"></i> <a ui-sref="#">Login</a></li>
+          <li><i class="topbar-register"></i> <a ui-sref="#">Register</a></li>
+        </ul>
       </div>
-
-      <div id="navbar" class="container">
-		<nav class="navbar navbar-default">
-          <div class="navbar-header">
-            <ul id="navbar-items" class="nav navbar-nav">
-              <li><a ui-sref="/"><span class="glyphicon glyphicon-menu-hamburger"></span></a></li>
-              <li><a ui-sref="home">Home</a></li>
-              <li><a ui-sref="portfolio">Portfolio</a></li>
-              <li><a ui-sref="firecalc">Net Worth Calculator</a></li>
-            </ul>
-          </div>
+    <!-- ################################################################################################ -->
+    </div>
+  </div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1>Wealth Manager<small id="title-subtext" style="margin-left: 10px;">Your tool to financial independence</small></h1>
+      </div>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+  <div class="wrapper row2">
+    <nav id="mainav" class="hoc clear">
+    <!-- ################################################################################################ -->
+      <ul id="navbar-items" class="clear">
+        <li class="active"><a ui-sref="home">Dashboard</a></li>
+        <li><a ui-sref="portfolio">Portfolio</a></li>
+        <li><a ui-sref="firecalc">Net Worth Calculator</a></li>
+      </ul>
+    </nav>
+  </div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+  <div class="wrapper row3">
+    <div id="content" class="container hoc clear" ui-view></div>
+  </div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+  <div class="wrapper row5">
+    <div id="footer" class="hoc clear">
+      <div class="col-md-4">
+        <div id="footer-content" class="group">
+          <ul class="nospace">
+            <li><span class="glyphicon glyphicon-info-sign"></span><a ui-sref="#about"> About</a></li>
+            <li><span class="glyphicon glyphicon-envelope"></span><a ui-sref="#contact"> Contact</a></li>
+            <li><span class="glyphicon glyphicon-comment"></span><a ui-sref="#feedback"> Feedback</a></li>
+            <li><span class="glyphicon glyphicon-share-alt"></span><a ui-sref="#share"> Share this tool</a></li>
+          </ul>
         </div>
-      </nav>
-    </div>
-
-    <div class="container" ui-view></div>
-
-    <div class="footer">
-      <div id="footer-container" class="container">
-        <p><span class="glyphicon glyphicon-info-sign"></span><a ui-sref="#about"> About</p>
-         <p><span class="glyphicon glyphicon-envelope"></span><a ui-sref="#contact"> Contact</p>
-        <p><span class="glyphicon glyphicon-comment"></span><a ui-sref="#feedback"> Feedback</p>
-        <p><span class="glyphicon glyphicon-share-alt"></span><a ui-sref="#share"> Share this tool</p>
       </div>
     </div>
+  </div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+  <div class="wrapper row6">
+  <div id="copyright" class="hoc clear">
+    <!-- ################################################################################################ -->
+    <p class="fl_left">Copyright &copy; 2016 - All Rights Reserved - <a href="#">Domain Name</a></p>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -71,9 +107,9 @@
     </script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
     <script src="bower_components/tv4/tv4.js"></script>

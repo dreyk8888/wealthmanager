@@ -25,7 +25,7 @@ angular.module("wealthManagerApp")
                         "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "name",
@@ -42,7 +42,8 @@ angular.module("wealthManagerApp")
                                         "key": "units",
                                         "title": "",
                                         "description": "#Units",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -55,7 +56,8 @@ angular.module("wealthManagerApp")
                                         "key": "unitCost",
                                         "title": "",
                                         "description": "Unit cost",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -68,7 +70,8 @@ angular.module("wealthManagerApp")
                                         "key": "totalCost",
                                         "title": "",
                                         "description": "Total Cost",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -81,7 +84,8 @@ angular.module("wealthManagerApp")
                                         "key": "marketPrice",
                                         "title": "",
                                         "description": "Mkt price",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -97,23 +101,34 @@ angular.module("wealthManagerApp")
                                         "validationMessage": "Enter 0 or more"
                                     }
                                 ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2"
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "date_purchased",
                                         "title": "",
                                         "description": "Date purchased",
-                                        "validationMessage": "mm/dd/yyyy",
+                                        "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "location",
@@ -121,6 +136,8 @@ angular.module("wealthManagerApp")
                                         "title": "",
                                         "description": "Select location",
                                         "titleMap": assetLocationTitleMap,
+                                        "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -148,7 +165,7 @@ angular.module("wealthManagerApp")
                         "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "name",
@@ -165,7 +182,7 @@ angular.module("wealthManagerApp")
                                         "key": "units",
                                         "title": "",
                                         "description": "#Units",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
                                         "readonly": true
                                     }
                                 ]
@@ -178,7 +195,7 @@ angular.module("wealthManagerApp")
                                         "key": "unitCost",
                                         "title": "",
                                         "description": "Unit cost",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
                                         "readonly": true
                                     }
                                 ]
@@ -203,7 +220,7 @@ angular.module("wealthManagerApp")
                                         "key": "marketPrice",
                                         "title": "",
                                         "description": "Mkt price",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
                                         "readonly": true
                                     }
                                 ]
@@ -219,10 +236,20 @@ angular.module("wealthManagerApp")
                                         "validationMessage": "Enter 0 or more"
                                     }
                                 ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2"
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "date_purchased",
@@ -234,7 +261,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "location",
@@ -268,7 +295,7 @@ angular.module("wealthManagerApp")
                         "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "name",
@@ -309,7 +336,7 @@ angular.module("wealthManagerApp")
                                         "key": "totalCost",
                                         "title": "",
                                         "description": "Total Cost",
-                                        "validationMessage": "Enter 0 or greater",
+                                        "validation": false,
                                         "readonly": true
                                     }
                                 ]
@@ -334,14 +361,24 @@ angular.module("wealthManagerApp")
                                         "key": "marketValue",
                                         "title": "",
                                         "description": "Market Value",
-                                        "validationMessage": "Enter 0 or more",
+                                        "validation": false,
                                         "readonly": true
                                     }
                                 ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "htmlClass": "row",
+                        "items": [
+                            {
+                                "type": "section",
+                                "htmlClass": "col-xs-2"
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "date_purchased",
@@ -353,7 +390,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "location",

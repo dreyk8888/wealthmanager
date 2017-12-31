@@ -67,6 +67,12 @@ body {
   color: #FFFFFF;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
@@ -74,3 +80,5 @@ body {
 .marketing p + h4 {
   margin-top: 28px;
 }
+
+

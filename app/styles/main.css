@@ -19,7 +19,7 @@ File: Layout CSS
 
 /* Top Bar
 --------------------------------------------------------------------------------------------------------------- */
-#topbar{padding:5px 0; font-size:12px;}
+#topbar{padding:5px 0; font-size:14px;}
 #topbar i{margin:0 5px 0 0; line-height:normal;}
 
 /* Header
@@ -34,7 +34,7 @@ File: Layout CSS
 #header input{width:100%; min-width:250px; padding:5px 40px 5px 15px;}
 #header button{position:absolute; top:1px; right:1px; width:32px; height:34px; font-size:16px; cursor:pointer;}
 #header button em{display:none;}
-
+#header #login {margin-top:15px;}
 
 /* Page Intro
 --------------------------------------------------------------------------------------------------------------- */
@@ -265,6 +265,7 @@ input:focus, textarea:focus, *:required:focus{border-color:#00BCDF;}
 #header button{color:#00BCDF;}
 #header h1{color:#FFFFFF;}
 #header h1 #title-subtext{color:#b8bbbc;}
+#header a {color:#b8bbbc;}
 
 /* Page Intro */
 #pageintro .btn.inverse{color:#00BCDF; background-color:#FFFFFF; border-color:#FFFFFF;}

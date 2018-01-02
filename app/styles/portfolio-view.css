@@ -24,10 +24,8 @@
 
 .diversification tr:hover {background-color: #eee;}
 
-#add-asset-toggle {
-    margin-left: 20px 10px 20px 5px;
-}
-
+#add-asset-toggle { margin-left: 20px 10px 20px 5px;}
+#add-asset-toggle {font-variant:small-caps;}
 #asset-class-select { margin: 10px 0 10px 0;}
 #asset-class-select .btn {border-radius: 0;}
 #asset-class-select dropdown-menu {padding-right:2px;}
@@ -36,6 +34,7 @@
     padding-left: 1.25px;
     padding-right: 1.25px;
 }
+
 #asset-input-form input {
   text-align: left;
   size: 5;

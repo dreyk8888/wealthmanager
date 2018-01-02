@@ -183,6 +183,7 @@ angular.module("wealthManagerApp")
                                         "title": "",
                                         "description": "#Units",
                                         "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -196,6 +197,7 @@ angular.module("wealthManagerApp")
                                         "title": "",
                                         "description": "Unit cost",
                                         "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -221,6 +223,7 @@ angular.module("wealthManagerApp")
                                         "title": "",
                                         "description": "Mkt price",
                                         "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -337,6 +340,7 @@ angular.module("wealthManagerApp")
                                         "title": "",
                                         "description": "Total Cost",
                                         "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]
@@ -362,6 +366,7 @@ angular.module("wealthManagerApp")
                                         "title": "",
                                         "description": "Market Value",
                                         "validation": false,
+                                        "required": false,
                                         "readonly": true
                                     }
                                 ]

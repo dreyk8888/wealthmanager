@@ -49,10 +49,12 @@ angular.module("wealthManagerApp")
     vm.assetEntry = Asset.init();
     vm.totalAssets = 0;   //container for asset total amount
     vm.assetTotals = [];
+    vm.assetInputForm = {}; //container for passing form into submit function
 
     vm.debtEntry = Debt.init();
     vm.totalDebt = 0;
     vm.debtTotals = [];
+    vm.debtInputForm = {}; //container for passing form into submit function
 
     vm.localCurrency = GlobalConstants.USD; //use USD as the default local currency for now
 ///////////////////////////////////////////////////////////////////////////

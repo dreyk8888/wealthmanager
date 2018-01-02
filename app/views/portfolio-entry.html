@@ -134,18 +134,12 @@
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
-    <!--<div id="asset-input-form" ng-submit="vm.submitAssets()" ng-hide="addNewAsset">-->
-    <!-- ################################################################################################ -->
-    <!-- ################################################################################################ -->
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-8">
           <!-- ################################################################################################ -->
-          <!--
-            <label class="btn btn-default btn-lg" ng-model="class" ng-click="vm.classSelected(class)">{{class}}</label>
-          </div>-->
-          <div id="asset-class-select">
+          <div id="asset-input-form">
             <uib-tabset justified="true" type="tabs">
-              <uib-tab index="$index" ng-repeat="class in vm.assetclasses" heading="{{class}}" ng-click="vm.classSelected(class)">
+              <uib-tab index="$index" ng-repeat="class in vm.assetclasses" heading="{{class}}" ng-init="vm.classSelected(vm.assetclasses[0])" ng-click="vm.classSelected(class)">
                 <form name="vm.assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity" class="input-form"></form></uib-tab>
             </uib-tabset>
           </div>

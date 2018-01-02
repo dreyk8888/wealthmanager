@@ -26,29 +26,12 @@
 
 #add-asset-toggle { margin-left: 20px 10px 20px 5px;}
 #add-asset-toggle {font-variant:small-caps;}
-#asset-class-select { margin: 10px 0 10px 0;}
-#asset-class-select .btn {border-radius: 0;}
-#asset-class-select dropdown-menu {padding-right:2px;}
 
-.schema-form-section {
-    padding-left: 1.25px;
-    padding-right: 1.25px;
-}
+#asset-input-form uib-tab {border: 2px; border-color: #363D41;}
+#asset-input-form a {color: #363D41;}
+#asset-input-form .schema-form-section { margin-top:10px; padding-left: 3px; padding-right: 3px;}
 
-#asset-input-form input {
-  text-align: left;
-  size: 5;
-}
-#asset-input-form p {
-    font-size:0.75em;
-}
-#asset-input-form span {
-    padding-left: 1px;
-}
-#debt-input-form input {
-  text-align: left;
-  size: 5;
-}
+#debt-input-form input {  text-align: left;  size: 5;}
 
 
 .modal-body input {

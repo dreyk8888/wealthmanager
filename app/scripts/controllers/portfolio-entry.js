@@ -108,6 +108,10 @@ angular.module("wealthManagerApp")
     vm.editAssetRow = RowEditor.editAssetRow; //handle edit row functionality in grid
     vm.editDebtRow = RowEditor.editDebtRow;
 ////////////////////////////////////////////////////////////////////////////
+// Add entry collapsible initialize
+    vm.isAssetEntryCollapsed = false;
+    vm.isDebtEntryCollapsed = false;
+////////////////////////////////////////////////////////////////////////////
 //Asset Input form
     vm.assetclasses = Asset.ASSETCLASSES;
     vm.classDisplay = "Asset Class";
@@ -122,6 +126,7 @@ angular.module("wealthManagerApp")
     vm.schema = AssetSchema.schema;
     vm.entity = vm.assetEntry;
     vm.model = {};
+
 
 ////////////////////////////////////////////////////////////////////////////
 //Debt Input form

@@ -119,13 +119,20 @@
     </div>
   </div>
   <br/>
-  <div id="expand-input-button">
-      <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNewAsset = !addNewAsset"><span class="glyphicon glyphicon-plus"></span></button></h3>
-  </div>
+  <div id="expand-input-button" class="row">
+    <div class="col-xs-4">
+      <!--
+      <button id="add-asset-toggle" type="button" class="btn btn-primary btn-lg" ng-click="addNewAsset = !addNewAsset"><span class="glyphicon glyphicon-plus" style="margin-right:10px;"></span>Add Entry</button>
+    </div>
+  -->
+  <button type="button" class="btn btn-default" ng-click="vm.isAssetEntryCollapsed = !vm.isAssetEntryCollapsed"><span class="glyphicon glyphicon-plus" style="margin-right:10px;"></span>Add Entry</button>
+  <hr>
+  <div uib-collapse="vm.isAssetEntryCollapsed">
+
+
   <div id="asset-input-form" ng-submit="vm.submitAssets()" ng-hide="addNewAsset">
-    <div class="row">
-      <div class="col-xs-2">
         <!--asset class is selected in the view because we need to dynamically display a different form depending on class selected-->
+        <!--
         <div class="btn-group" uib-dropdown keyboard-nav>
           <button id="asset-class-select" type="button" class="btn btn-default" uib-dropdown-toggle style="width:140px;">{{vm.classDisplay}}<span class="caret pull-right" style="margin-left:3px;margin-top:6px"></span>
           </button>
@@ -133,20 +140,30 @@
             <li ng-repeat="class in vm.assetclasses"><a ng-click="vm.classSelected(class)">{{class}}</a></li>
           </ul>
         </div>
+      -->
+    <div class="row">
+      <div class="col-xs-8">
+        <div class="btn-group" id="asset-class-select" ng-repeat="class in vm.assetclasses">
+          <label class="btn btn-default btn-lg" ng-model="class" ng-click="vm.classSelected(class)">{{class}}</label>
+        </div>
       </div>
-      <div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
         <form name="assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity" class="input-form"></form>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-10"></div>
+      <div class="col-xs-6"></div>
       <div class="col-xs-1">
-        <button class="btn btn-success pull-right" ng-click="vm.submitAssets(assetInputForm); assetSubmitted=true">Submit</button>
+        <button class="btn btn-success" ng-click="vm.submitAssets(assetInputForm); assetSubmitted=true">Submit</button>
       </div>
       <div class="col-xs-1">
-        <button class="btn btn-danger pull-right" ng-click="vm.cancelAssetEntry()">Cancel</button>
+        <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
       </div>
     </div>
+  </div>
+  </div>
   </div>
     <br/>
     <br/>

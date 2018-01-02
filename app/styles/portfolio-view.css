@@ -1,3 +1,4 @@
+/*
 .diversification {
 	width: 100%;
 	font-size: 1.0em;
@@ -9,9 +10,8 @@
     border: 1px solid #ddd;
     padding: 8px;
 }
-/*.diversification tr:nth-child(even){background-color:#cccfd1;}*/
 
-.diversification tr:hover {background-color: #fff;}
+.diversification tr:nth-child(even){background-color:#cccfd1;}
 
 .diversification th {
     padding-top: 12px;
@@ -20,6 +20,17 @@
     background-color: #05416b;
     color: white;
 }
+*/
+
+.diversification tr:hover {background-color: #eee;}
+
+#add-asset-toggle {
+    margin-left: 20px 10px 20px 5px;
+}
+
+#asset-class-select { margin: 10px 0 10px 0;}
+#asset-class-select .btn {border-radius: 0;}
+#asset-class-select dropdown-menu {padding-right:2px;}
 
 .schema-form-section {
     padding-left: 1.25px;
@@ -38,10 +49,6 @@
 #debt-input-form input {
   text-align: left;
   size: 5;
-}
-
-#asset-class-select dropdown-menu{
-    padding-right:2px;
 }
 
 

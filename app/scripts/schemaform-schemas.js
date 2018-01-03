@@ -17,14 +17,14 @@
         type: "object",
         title: "Asset Entry Form",
         properties: {
-            name: { "type": "string", "title": "Name or Ticker symbol"},
-            ticker: { "type": "string", "title": "Ticker"},
+            name: { "type": "string", "title": "Name or Symbol"},
+            description: { "type": "string", "title": "Description of asset"},
             units: { "type": "number", "title": "Units", "minimum": 0},
             unitCost: {"type": "number", "title": "Unit Cost", "minimum": 0},
             totalCost: { "type": "number", "title": "Cost", "minimum": 0},   //this will be calculated from units X unitCost
             marketPrice: { "type": "number", "title": "Market Price", "minimum": 0},
             marketValue: { "type": "number", "title": "Market Value", "minimum": 0},
-            location: { "type": "string", "title": "Geographical Location"},
+            location: { "type": "string", "title": "Asset location for allocation."},
             date_purchased: { "type": "string", "title": "Date Purchased (mm/dd/yyyy)", "pattern": "^\\d\\d\/\\d\\d\/\\d\\d\\d\\d$", },
             currency: { "type": "string", "title": "Currency"}
         },

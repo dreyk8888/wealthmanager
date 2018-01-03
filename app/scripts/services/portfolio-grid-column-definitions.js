@@ -78,7 +78,7 @@ angular.module("wealthManagerApp")
         { name: "ID", field: "_id", width: "0%", visible: false },
         { name: "Asset Class", field: "class", width: "8%", grouping: { groupPriority: 0 }, sort: { priority: 0, direction: "asc" }, cellTemplate: "views/portfolioentry-grid-grouping-template.html" },
         { name: "Location", field: "location", width: "9%"},
-        { name: "Name/Ticker", field: "name", width: "14%" },
+        { name: "Name/Symbol", field: "name", width: "14%" },
         { name: "#Units", field: "units", type: "number", width: "9%", cellFilter: "GridUnitsFilter:row.entity"},
         { name: "Cost/Unit", field: "unitCost", type: "number", width: "9%", cellFilter: "GridUnitCostFilter:row.entity"},
         { name: "Cost", field: "totalCost", type: "number", width: "12%", enableCellEdit: false, cellFilter: "GridTotalCostFilter:row.entity" },

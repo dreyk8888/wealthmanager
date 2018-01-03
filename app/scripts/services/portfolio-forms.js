@@ -30,7 +30,7 @@ angular.module("wealthManagerApp")
                                     {
                                         "key": "name",
                                         "title": "",
-                                        "description": "Name/Ticker"
+                                        "description": "Name/Symbol"
                                     }
                                 ]
                             },
@@ -153,7 +153,7 @@ angular.module("wealthManagerApp")
                                     {
                                         "key": "name",
                                         "title": "",
-                                        "description": "Name/Ticker"
+                                        "description": "Name/Symbol"
                                     }
                                 ]
                             },
@@ -273,7 +273,7 @@ angular.module("wealthManagerApp")
                                     {
                                         "key": "name",
                                         "title": "",
-                                        "description": "Name/Ticker"
+                                        "description": "Name/Symbol"
                                     }
                                 ]
                             },
@@ -410,7 +410,7 @@ angular.module("wealthManagerApp")
                             {
                                 "key": "name",
                                 "title": "",
-                                "description": "Name/Ticker"
+                                "description": "Name/Symbol"
                             }
                         ]
                     },

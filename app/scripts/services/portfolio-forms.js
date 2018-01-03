@@ -36,63 +36,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "units",
-                                        "title": "",
-                                        "description": "#Units",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "unitCost",
-                                        "title": "",
-                                        "description": "Unit cost",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "totalCost",
-                                        "title": "",
-                                        "description": "Total Cost",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "marketPrice",
-                                        "title": "",
-                                        "description": "Mkt price",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "marketValue",
@@ -101,50 +45,10 @@ angular.module("wealthManagerApp")
                                         "validationMessage": "Enter 0 or more"
                                     }
                                 ]
-                            }
-                        ]
-                    },
-                    {
-                        "type": "section",
-                        "htmlClass": "row",
-                        "items": [
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2"
                             },
                             {
                                 "type": "section",
                                 "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "date_purchased",
-                                        "title": "",
-                                        "description": "Date purchased",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "location",
-                                        "type": "select",
-                                        "title": "",
-                                        "description": "Select location",
-                                        "titleMap": assetLocationTitleMap,
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
                                 "items": [
                                     {
                                         "key": "currency",
@@ -155,7 +59,7 @@ angular.module("wealthManagerApp")
                                     }
                                 ]
                             }
-                      ]
+                        ]
                 }];
             } else if (assetClass === GlobalConstants.FIXEDASSETS){
                  form = [
@@ -176,35 +80,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "units",
-                                        "title": "",
-                                        "description": "#Units",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "unitCost",
-                                        "title": "",
-                                        "description": "Unit cost",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "totalCost",
@@ -216,21 +92,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "marketPrice",
-                                        "title": "",
-                                        "description": "Mkt price",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "marketValue",
@@ -248,10 +110,6 @@ angular.module("wealthManagerApp")
                         "items": [
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2"
-                            },
-                            {
-                                "type": "section",
                                 "htmlClass": "col-xs-2",
                                 "items": [
                                     {
@@ -264,7 +122,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-3",
                                 "items": [
                                     {
                                         "key": "location",
@@ -277,7 +135,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "currency",
@@ -309,7 +167,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "units",
@@ -321,7 +179,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "unitCost",
@@ -333,41 +191,13 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "totalCost",
-                                        "title": "",
-                                        "description": "Total Cost",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "marketPrice",
                                         "title": "",
                                         "description": "Mkt price",
                                         "validationMessage": "Enter 0 or greater"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-1",
-                                "items": [
-                                    {
-                                        "key": "marketValue",
-                                        "title": "",
-                                        "description": "Market Value",
-                                        "validation": false,
-                                        "required": false,
-                                        "readonly": true
                                     }
                                 ]
                             }
@@ -395,7 +225,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-3",
                                 "items": [
                                     {
                                         "key": "location",
@@ -408,7 +238,7 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-1",
+                                "htmlClass": "col-xs-2",
                                 "items": [
                                     {
                                         "key": "currency",

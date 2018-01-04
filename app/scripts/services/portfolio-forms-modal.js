@@ -28,7 +28,8 @@ angular.module("wealthManagerApp")
                     {
                         "key": "currency",
                         "type": "select",
-                        "description": "Select currency",
+                        "title": "Currency",
+                        "description": "Currency asset is held in",
                         "titleMap": currencyTitleMap
                     }
                 ];
@@ -50,17 +51,24 @@ angular.module("wealthManagerApp")
                     {
                         "key": "location",
                         "type": "select",
-                        "description": "Select location",
+                        "title": "Location",
+                        "description": "Category for global asset allocation",
                         "titleMap": assetLocationTitleMap
                     },
                     {
                         "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
+                        "format": "yyyy-mm-dd",
+                        "type":"datepicker",
+                        "minDate": "01-01-1900",
+                        "maxDate": new Date(),
+                        "selectYears": "true",
+                        "selectMonths": "true",
+                        "validationMessage": "mm/dd/yyyy"
                     },
                     {
                         "key": "currency",
                         "type": "select",
-                        "description": "Select currency",
+                        "description": "Currency asset is held in",
                         "titleMap": currencyTitleMap
                     }
                 ];
@@ -76,32 +84,21 @@ angular.module("wealthManagerApp")
                         "validationMessage": "Enter 0 or greater"
                     },
                     {
-                       "key": "location",
+                        "key": "location",
                         "type": "select",
-                        "description": "Select location",
+                        "title": "Location",
+                        "description": "Category for global asset allocation",
                         "titleMap": assetLocationTitleMap
                     },
                     {
                         "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
-                    },
-                    {
-                        "key": "currency",
-                        "type": "select",
-                        "description": "Select currency",
-                        "titleMap": currencyTitleMap
-                    }
-                ];
-            } else if (assetClass === GlobalConstants.FOREIGNCURR){
-                 form = [
-                    "name",
-                    {
-                        "key": "marketValue",
-                        "validationMessage": "Enter 0 or greater"
-                    },
-                    {
-                        "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
+                        "format": "yyyy-mm-dd",
+                        "type":"datepicker",
+                        "minDate": "01-01-1900",
+                        "maxDate": new Date(),
+                        "selectYears": "true",
+                        "selectMonths": "true",
+                        "validationMessage": "mm/dd/yyyy"
                     },
                     {
                         "key": "currency",
@@ -127,13 +124,22 @@ angular.module("wealthManagerApp")
                     },
                     {
                        "key": "location",
+                       "title": "Location",
                         "type": "select",
-                        "description": "Select location",
+                        "description": "Category for global asset allocation",
                         "titleMap": assetLocationTitleMap
                     },
                     {
                         "key": "date_purchased",
-                        "validationMessage": "Enter as mm/dd/yyyy"
+                        "title": "Date Purchased",
+                        "format": "yyyy-mm-dd",
+                        "type":"datepicker",
+                        "minDate": "01-01-1900",
+                        "maxDate": new Date(),
+                        "selectYears": "true",
+                        "selectMonths": "true",
+                        "validationMessage": "mm/dd/yyyy",
+                        "readonly": false
                     },
                     {
                         "key": "currency",

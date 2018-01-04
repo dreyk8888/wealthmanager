@@ -22,32 +22,46 @@
 }
 */
 
+/*Asset allocation table*/
 .diversification tr:hover {background-color: #eee;}
+.display-amounts {
+     text-align: right;
+}
+.div-all-total {
+    font-weight: bold;
+    background-color: #bccbd6;
+}
 
+/* Edit pop up*/
+.modal-body input {text-align: left;}
+.modal-body select {text-align: left; margin-left:0;}
+.modal-header {background-color: #363D41;}
+.modal-title {color: #FFF;}
+.modal-body .control-label{color:#3C4348;}
+.modal-body  .help-block {color:#939496;}
+.modal-body #P770959738 {background-color:#FFF; border-color: #abacad;}
+.modal-body .picker__select--year {margin-left:20px;}
+.modal-body .picker__select--month {margin-left:50px;}
+/*Asset input form and toggle*/
 #add-asset-toggle { margin-left: 20px 10px 20px 5px;}
 #add-asset-toggle {font-variant:small-caps;}
 
-#asset-input-form uib-tab {border: 2px; border-color: #363D41;}
-#asset-input-form a {color: #363D41;}
+#asset-input-form uib-tabset hr{width:70%;}
+#asset-input-form a {color: #FFF; background-color: #4d565b;}
+#asset-input-form a:active{color: #FFF; background-color: #363D41;}
+#asset-input-form input, select {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}
 #asset-input-form .schema-form-section { margin-top:10px; padding-left: 3px; padding-right: 3px;}
+#asset-form  {background-color:#d1d1d1; border-width: 2px; border-color: #363D41; padding: 15px; width: 70%; margin-left:0; }
+#asset-form button {margin-left: 10px;}
+#asset-form .picker__select--month {display: inline-block;margin-left:100px; margin-top:5px;font-size:20px; }
+#asset-form .picker__select--year {margin-left:20px; font-size:20px;}
+#asset-input-form .control-label {font-size: 1.0em; margin-left:10px; padding-left:10px;}
+#asset-input-form .help-block {margin-left: 20px; font-size: 0.8em;} /*Description text in form*/
 
-#debt-input-form input {  text-align: left;  size: 5;}
+ /*Debt input form*/
+#debt-input-form input {text-align: left;  size: 5;}
 
 
-.modal-body input {
-  text-align: left;
-}
-
-.help-block {
-    font-size: 0.75em;
-}
-.display-amounts {
-	 text-align: right;
-}
-.div-all-total {
-	font-weight: bold;
-    background-color: #bccbd6;
-}
 
 h3.horizontal-divider{
   overflow: hidden;

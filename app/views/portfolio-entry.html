@@ -130,33 +130,26 @@
     </div>
   </div>
   <hr>
-  <div uib-collapse="vm.isAssetEntryCollapsed">
+  <div uib-collapse="vm.isAssetEntryCollapsed" id="asset-input-form">
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
-      <div class="row">
-        <div class="col-xs-8">
-          <!-- ################################################################################################ -->
-          <div id="asset-input-form">
-            <uib-tabset justified="true" type="tabs">
-              <uib-tab index="$index" ng-repeat="class in vm.assetclasses" heading="{{class}}" ng-init="vm.classSelected(vm.assetclasses[0])" ng-click="vm.classSelected(class)">
-                <form name="vm.assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity" class="input-form"></form></uib-tab>
-            </uib-tabset>
-          </div>
+        <!-- ################################################################################################ -->
+          <uib-tabset justified="false" type="tabs">
+            <uib-tab index="$index" ng-repeat="class in vm.assetclasses" heading="{{class}}" ng-init="vm.classSelected(vm.assetclasses[0])" ng-click="vm.classSelected(class)">
+            <div class="container" id="asset-form">
+                <form name="vm.assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity" class="input-form"></form>
+                <button class="btn btn-success" ng-click="vm.submitAssets(vm.assetInputForm); assetSubmitted=true">Submit</button>
+                <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
+             </div>     <!-- ################################################################################################ -->
+            </uib-tab>
+          </uib-tabset>
           <!-- ################################################################################################ -->
         </div>
       </div>
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
-    <div class="row">
-      <div class="col-xs-6"></div>
-      <div class="col-xs-2">
-        <!-- ################################################################################################ -->
-        <button class="btn btn-success" ng-click="vm.submitAssets(vm.assetInputForm); assetSubmitted=true">Submit</button>
-        <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
-        <!-- ################################################################################################ -->
-      </div>
-    </div>
+
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
   </div>

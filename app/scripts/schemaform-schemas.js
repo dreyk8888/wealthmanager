@@ -25,10 +25,11 @@
             marketPrice: { "type": "number", "title": "Market Price", "minimum": 0},
             marketValue: { "type": "number", "title": "Market Value", "minimum": 0},
             location: { "type": "string", "title": "Asset location for allocation."},
-            date_purchased: { "type": "string", "title": "Date Purchased (mm/dd/yyyy)", "pattern": "^\\d\\d\/\\d\\d\/\\d\\d\\d\\d$", },
+            /*date_purchased: { "type": "string", "format": "date", "title": "Date Purchased", "pattern": "^\\d\\d\/\\d\\d\/\\d\\d\\d\\d$"},*/
+            date_purchased: { "type": "string", "title": "Date Purchased","pattern": "^\\d\\d*\/\\d\\d*\/\\d\\d\\d\\d$"},
             currency: { "type": "string", "title": "Currency"}
         },
-        "required": ["name","units", "unitCost", "totalCost", "marketPrice", "marketValue", "location", "date_purchased"]
+        "required": ["name","units", "unitCost", "totalCost", "marketPrice", "marketValue", "location"]
     };
     return;
 })

@@ -9,8 +9,8 @@
  */
 
  /*todo
- - make input boxes big enough to fit input text
- - add inline edit to grid or fix your pop up edit (make another copy of the forms that is NOT horizontal)
+ - bug -> database IDs are not written to the grid until table is reloaded from databse. This means editing right after submit doesn't work
+ ------ solution - when posting, return the ID in success handler and write to the grid
  - add currency to the grid for asset and debt
  - total assets and debts need to account for currency settings and convert to the "local" currrency
  - move graphs to a trends or dashboard page
@@ -42,7 +42,7 @@ angular.module("wealthManagerApp")
         function ($scope, $http, uiGridConstants, GlobalConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, NetWorthDataAPI, APIResponseHandlersCommon, Helpers,
             PortfolioGridColumnDefs, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
-    var DEBUG = true;
+    var DEBUG = false;
 
     var vm = this;
 
@@ -174,23 +174,23 @@ angular.module("wealthManagerApp")
 
         //check if there is already an entry with the current date. If yes, overwrite it, otherwise create a new entry
         NetWorthDataAPI.getDataWithPromise()
-                .then(data => {
-                    var oid = 0;
-                    for (var i = 0; i < data.data.length; i++){
-                        if (DEBUG){console.log ("Data returned from API: " + data.data[i].net_worth + " " + data.data[i].date);}
+          .then(data => {
+              var oid = 0;
+              for (var i = 0; i < data.data.length; i++){
+                  if (DEBUG){console.log ("Data returned from API: " + data.data[i].net_worth + " " + data.data[i].date);}
 
-                        if (moment(data.data[i].date).year() === currentYear){
-                            oid = data.data[i]._id;
-                            break;
-                        }
-                    }
-                    //failed to find an entry of the same year in database, add a new one
-                    if (oid === 0){
-                        NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
-                    } else {
-                        NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
-                    }
-                });
+                  if (moment(data.data[i].date).year() === currentYear){
+                      oid = data.data[i]._id;
+                      break;
+                  }
+              }
+              //failed to find an entry of the same year in database, add a new one
+              if (oid === 0){
+                  NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
+              } else {
+                  NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
+              }
+          });
     };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -198,8 +198,30 @@ angular.module("wealthManagerApp")
 
     //load asset data for the view
     vm.getData = function() {
-        AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
-        DebtDataAPI.getData(vm.debtGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
+        AssetDataAPI.getData()
+          .then(data => {
+              vm.assetData = [];
+              for (var i = 0; i < data.data.length; i++){
+                  vm.assetData.push(data.data[i]);
+                  if (DEBUG) {console.log ("Asset added from API data: " + vm.assetData[i].name);}
+              }
+              vm.recalculate();
+              vm.assetGridOptions.data = vm.assetData;
+        });
+
+        DebtDataAPI.getData()
+          .then(data => {
+              vm.debtData = [];
+              for (var i = 0; i < data.data.length; i++){
+                  vm.debtData.push(data.data[i]);
+                  if (DEBUG) {console.log ("Debt added from API data: " + vm.vm.debtData[i].name);}
+              }
+              vm.recalculate();
+              vm.debtGridOptions.data = vm.debtData;
+        });
+
+        //AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
+        //DebtDataAPI.getData(vm.debtGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
     };
 
     vm.submitAssets = function(form) {
@@ -210,6 +232,12 @@ angular.module("wealthManagerApp")
             var temp = Asset.copyAndCalculateAmount(vm.assetEntry);
             //post to database
             AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
+
+            /*THERE IS A BUG HERE!!!*/
+            /*
+            The ID of the object in the database is never saved back to the table until the table is reloaded from database
+            so you can not edit objects using the ID because it is undefined
+            */
             vm.assetData.push(temp);
             vm.recalculate();
             vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table

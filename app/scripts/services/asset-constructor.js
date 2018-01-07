@@ -89,7 +89,7 @@ angular.module('wealthManagerApp')
                 asset.totalCost = GlobalConstants.UNDEFNUM;
                 asset.marketPrice = GlobalConstants.UNDEFNUM;
                 asset.marketValue = marketValue;
-                asset.location = GlobalConstants.UNDEFSTR;
+                asset.location = GlobalConstants.DOMESTIC;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
                 asset.currency = currency;
             } else if (assetClass === GlobalConstants.FIXEDASSETS || assetClass === GlobalConstants.FOREIGNCURR){
@@ -131,7 +131,7 @@ angular.module('wealthManagerApp')
                 asset.totalCost = GlobalConstants.UNDEFNUM;
                 asset.marketPrice = GlobalConstants.UNDEFNUM;
                 asset.marketValue = obj.marketValue;
-                asset.location = GlobalConstants.UNDEFSTR;
+                asset.location = GlobalConstants.DOMESTIC;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
                 asset.currency = obj.currency;
             } else if (asset.class === GlobalConstants.FIXEDASSETS || asset.class === GlobalConstants.FOREIGNCURR){

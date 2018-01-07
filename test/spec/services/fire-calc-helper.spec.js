@@ -354,18 +354,25 @@ describe("Service: FIRECalcHelper", function () {
     expect(FIRECalcHelper.findObjClosestToEndDate(testDateObj4, testDateObj3, 5,15,2017)).toEqual(testDateObj4);
   });
 
+//The results of these functions change depending on the current year.
+//Hence mock the current year to always be 2017
+  beforeEach(() => {
+    let today = moment('2017-06-01').toDate();
+    jasmine.clock().mockDate(today);
+  });
+
   it ("consolidateHistoricalData() should exist", function(){
     expect(FIRECalcHelper.consolidateHistoricalData(testData, "","")).toBeDefined();
   });
 
-  it ("consolidateHistoricalData() return an array of year, net worth, currency objects - 4 items", function(){
+  it ("consolidateHistoricalData() return an array of year, net worth, currency objects up to current year", function(){
     expect(FIRECalcHelper.consolidateHistoricalData(testData, 5, 15)).toEqual(resultData);
   });
 
-  it ("consolidateHistoricalData() return an array of year, net worth, currency objects - 6 items", function(){
+  it ("consolidateHistoricalData() return an array of year, net worth, currency objects up to current year", function(){
     expect(FIRECalcHelper.consolidateHistoricalData(testData2, 5, 15)).toEqual(resultData2);
   });
-  it ("consolidateHistoricalData() return an array of year, net worth, currency objects - 13 items", function(){
+  it ("consolidateHistoricalData() return an array of year, net worth, currency objects up to current year", function(){
     expect(FIRECalcHelper.consolidateHistoricalData(testData3, 5, 15)).toEqual(resultData3);
   });
 
@@ -426,6 +433,7 @@ describe("Service: FIRECalcHelper", function () {
     [2021, 710215.12],
     [2022, 812345]
   ];
+
 
   it ("generateCombinedNetWorthPlotData() should return a combined array from historical and calculated data", function(){
     expect(FIRECalcHelper.generateCombinedNetWorthPlotData(testNWDataHist,testNWDataCalc)).toEqual(combinedNWData);

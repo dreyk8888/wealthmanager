@@ -42,7 +42,7 @@ angular.module("wealthManagerApp")
         function ($scope, $http, uiGridConstants, GlobalConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, NetWorthDataAPI, APIResponseHandlersCommon, Helpers,
             PortfolioGridColumnDefs, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
-    var DEBUG = false;
+    var DEBUG = true;
 
     var vm = this;
 
@@ -173,7 +173,7 @@ angular.module("wealthManagerApp")
         };
 
         //check if there is already an entry with the current date. If yes, overwrite it, otherwise create a new entry
-        NetWorthDataAPI.getDataWithPromise()
+        NetWorthDataAPI.getData()
           .then(data => {
               var oid = 0;
               for (var i = 0; i < data.data.length; i++){
@@ -186,7 +186,11 @@ angular.module("wealthManagerApp")
               }
               //failed to find an entry of the same year in database, add a new one
               if (oid === 0){
-                  NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
+                  NetWorthDataAPI.postData(netWorth)
+                  .then(data => {
+                    if (DEBUG) {console.log ("Object posted to API: ID=" + data.data._id + " net_worth=" + data.data.net_worth + " currency=" + data.data.amount + " date=" +
+                    data.data.date);}
+                  });
               } else {
                   NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
               }
@@ -198,6 +202,7 @@ angular.module("wealthManagerApp")
 
     //load asset data for the view
     vm.getData = function() {
+
         AssetDataAPI.getData()
           .then(data => {
               vm.assetData = [];
@@ -214,14 +219,11 @@ angular.module("wealthManagerApp")
               vm.debtData = [];
               for (var i = 0; i < data.data.length; i++){
                   vm.debtData.push(data.data[i]);
-                  if (DEBUG) {console.log ("Debt added from API data: " + vm.vm.debtData[i].name);}
+                  if (DEBUG) {console.log ("Debt added from API data: " + vm.debtData[i].name);}
               }
               vm.recalculate();
               vm.debtGridOptions.data = vm.debtData;
         });
-
-        //AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
-        //DebtDataAPI.getData(vm.debtGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
     };
 
     vm.submitAssets = function(form) {
@@ -231,16 +233,17 @@ angular.module("wealthManagerApp")
             console.log (vm.assetEntry);
             var temp = Asset.copyAndCalculateAmount(vm.assetEntry);
             //post to database
-            AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
+            var postResponse = {};  //need the response to get the ID to write back to table
+            AssetDataAPI.postData(temp)
+              .then(data => {
+                postResponse = data.data;
+                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
+                  postResponse.unitCost + " location=" + postResponse.location + " currency=" + postResponse.currency);}
 
-            /*THERE IS A BUG HERE!!!*/
-            /*
-            The ID of the object in the database is never saved back to the table until the table is reloaded from database
-            so you can not edit objects using the ID because it is undefined
-            */
-            vm.assetData.push(temp);
-            vm.recalculate();
-            vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+                vm.assetData.push(postResponse);  //update the table with what was actually posted, since ID and defaults are in the response only
+                vm.recalculate();
+                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+              });
         }
         return true;
     };
@@ -254,10 +257,16 @@ angular.module("wealthManagerApp")
             }
 
             //post to database
-            DebtDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, vm.debtEntry);
-            vm.debtData.push(vm.debtEntry);
-            vm.recalculate();
-            vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+            DebtDataAPI.postData(vm.debtEntry)
+             .then(data => {
+                postResponse = data.data;
+                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
+                  postResponse.unitCost + " location=" + postResponse.location + " currency=" + postResponse.currency);}
+
+                vm.debtData.push(postResponse);  //update the table with what was actually posted, since ID and defaults are in the response only
+                vm.recalculate();
+                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+              });
         }
         return true;
     };
@@ -292,28 +301,5 @@ angular.module("wealthManagerApp")
         return Helpers.checkIfEmptyString(myString);
     };
 
-    //custom success handler for API Get Asset
-    vm.assetGetSuccessHandler = function successHandler_GET(res) {
-        vm.assetData = [];
-        for (var i = 0; i < res.data.length; i++){
-            vm.assetData.push(res.data[i]);
-            console.log ("Asset added: " + vm.assetData[i].name);
-        }
-        vm.recalculate();
-        vm.assetGridOptions.data = vm.assetData;
-        console.log ("API Success: Data retrieved and all amounts recalculated.");
-    };
-
-      //custom success handler for API Get Debt
-    vm.debtGetSuccessHandler = function successHandler_GET(res) {
-        vm.debtData = [];
-        for (var i = 0; i < res.data.length; i++){
-            vm.debtData.push(res.data[i]);
-            console.log ("Debt added: " + vm.debtData[i].name);
-        }
-        vm.recalculate();
-        vm.debtGridOptions.data = vm.debtData;
-        console.log ("API Success: Data retrieved and all amounts recalculated.");
-    };
 
 }]);

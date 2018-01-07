@@ -27,18 +27,4 @@ angular.module('wealthManagerApp')
             return APIHelper.delete(id, apiURL);
         };
 
-        /*
-        this.postData = function(successHandler, failureHandler, data){
-            return APIHelper.post(data, apiURL);
-        };
-
-        this.updateData = function(successHandler, failureHandler, data, id){
-            return APIHelper.put(successHandler, failureHandler, data, id, apiURL);
-        };
-
-
-        this.deleteData = function(successHandler, failureHandler, id){
-            return APIHelper.delete(successHandler, failureHandler, id, apiURL);
-        };
-        */
 }]);

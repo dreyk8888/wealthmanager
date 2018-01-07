@@ -401,13 +401,24 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
-      }
+      },
+      uiGridFonts: {
+        expand: true,
+        flatten: true,
+        dest: '<%= yeoman.app %>/styles/',
+        src: ['bower_components/angular-ui-grid/ui-grid.ttf',
+              'bower_components/angular-ui-grid/ui-grid.woff',
+              'bower_components/angular-ui-grid/ui-grid.eot',
+              'bower_components/angular-ui-grid/ui-grid.svg'
+              ]
+        }
     },
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'copy:styles'
+        'copy:styles',
+        'copy:uiGridFonts'
       ],
       test: [
         'copy:styles'
@@ -415,7 +426,8 @@ module.exports = function (grunt) {
       dist: [
         'copy:styles',
         'imagemin',
-        'svgmin'
+        'svgmin',
+        'copy:uiGridFonts'
       ]
     },
 
@@ -427,7 +439,6 @@ module.exports = function (grunt) {
       }
     }
   });
-
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {

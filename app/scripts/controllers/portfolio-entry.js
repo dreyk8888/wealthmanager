@@ -9,8 +9,8 @@
  */
 
  /*todo
- - make input boxes big enough to fit input text
- - add inline edit to grid or fix your pop up edit (make another copy of the forms that is NOT horizontal)
+ - bug -> database IDs are not written to the grid until table is reloaded from databse. This means editing right after submit doesn't work
+ ------ solution - when posting, return the ID in success handler and write to the grid
  - add currency to the grid for asset and debt
  - total assets and debts need to account for currency settings and convert to the "local" currrency
  - move graphs to a trends or dashboard page
@@ -49,10 +49,12 @@ angular.module("wealthManagerApp")
     vm.assetEntry = Asset.init();
     vm.totalAssets = 0;   //container for asset total amount
     vm.assetTotals = [];
+    vm.assetInputForm = {}; //container for passing form into submit function
 
     vm.debtEntry = Debt.init();
     vm.totalDebt = 0;
     vm.debtTotals = [];
+    vm.debtInputForm = {}; //container for passing form into submit function
 
     vm.localCurrency = GlobalConstants.USD; //use USD as the default local currency for now
 ///////////////////////////////////////////////////////////////////////////
@@ -108,6 +110,10 @@ angular.module("wealthManagerApp")
     vm.editAssetRow = RowEditor.editAssetRow; //handle edit row functionality in grid
     vm.editDebtRow = RowEditor.editDebtRow;
 ////////////////////////////////////////////////////////////////////////////
+// Add entry collapsible initialize
+    vm.isAssetEntryCollapsed = false;
+    vm.isDebtEntryCollapsed = false;
+////////////////////////////////////////////////////////////////////////////
 //Asset Input form
     vm.assetclasses = Asset.ASSETCLASSES;
     vm.classDisplay = "Asset Class";
@@ -122,6 +128,7 @@ angular.module("wealthManagerApp")
     vm.schema = AssetSchema.schema;
     vm.entity = vm.assetEntry;
     vm.model = {};
+
 
 ////////////////////////////////////////////////////////////////////////////
 //Debt Input form
@@ -166,24 +173,28 @@ angular.module("wealthManagerApp")
         };
 
         //check if there is already an entry with the current date. If yes, overwrite it, otherwise create a new entry
-        NetWorthDataAPI.getDataWithPromise()
-                .then(data => {
-                    var oid = 0;
-                    for (var i = 0; i < data.data.length; i++){
-                        if (DEBUG){console.log ("Data returned from API: " + data.data[i].net_worth + " " + data.data[i].date);}
+        NetWorthDataAPI.getData()
+          .then(data => {
+              var oid = 0;
+              for (var i = 0; i < data.data.length; i++){
+                  if (DEBUG){console.log ("Data returned from API: " + data.data[i].net_worth + " " + data.data[i].date);}
 
-                        if (moment(data.data[i].date).year() === currentYear){
-                            oid = data.data[i]._id;
-                            break;
-                        }
-                    }
-                    //failed to find an entry of the same year in database, add a new one
-                    if (oid === 0){
-                        NetWorthDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, netWorth);
-                    } else {
-                        NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
-                    }
-                });
+                  if (moment(data.data[i].date).year() === currentYear){
+                      oid = data.data[i]._id;
+                      break;
+                  }
+              }
+              //failed to find an entry of the same year in database, add a new one
+              if (oid === 0){
+                  NetWorthDataAPI.postData(netWorth)
+                  .then(data => {
+                    if (DEBUG) {console.log ("Object posted to API: ID=" + data.data._id + " net_worth=" + data.data.net_worth + " currency=" + data.data.amount + " date=" +
+                    data.data.date);}
+                  });
+              } else {
+                  NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
+              }
+          });
     };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -191,8 +202,28 @@ angular.module("wealthManagerApp")
 
     //load asset data for the view
     vm.getData = function() {
-        AssetDataAPI.getData(vm.assetGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
-        DebtDataAPI.getData(vm.debtGetSuccessHandler, APIResponseHandlersCommon.failureHandler_GET);
+
+        AssetDataAPI.getData()
+          .then(data => {
+              vm.assetData = [];
+              for (var i = 0; i < data.data.length; i++){
+                  vm.assetData.push(data.data[i]);
+                  if (DEBUG) {console.log ("Asset added from API data: " + vm.assetData[i].name);}
+              }
+              vm.recalculate();
+              vm.assetGridOptions.data = vm.assetData;
+        });
+
+        DebtDataAPI.getData()
+          .then(data => {
+              vm.debtData = [];
+              for (var i = 0; i < data.data.length; i++){
+                  vm.debtData.push(data.data[i]);
+                  if (DEBUG) {console.log ("Debt added from API data: " + vm.debtData[i].name);}
+              }
+              vm.recalculate();
+              vm.debtGridOptions.data = vm.debtData;
+        });
     };
 
     vm.submitAssets = function(form) {
@@ -202,10 +233,17 @@ angular.module("wealthManagerApp")
             console.log (vm.assetEntry);
             var temp = Asset.copyAndCalculateAmount(vm.assetEntry);
             //post to database
-            AssetDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, temp);
-            vm.assetData.push(temp);
-            vm.recalculate();
-            vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+            var postResponse = {};  //need the response to get the ID to write back to table
+            AssetDataAPI.postData(temp)
+              .then(data => {
+                postResponse = data.data;
+                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
+                  postResponse.unitCost + " location=" + postResponse.location + " currency=" + postResponse.currency);}
+
+                vm.assetData.push(postResponse);  //update the table with what was actually posted, since ID and defaults are in the response only
+                vm.recalculate();
+                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+              });
         }
         return true;
     };
@@ -219,10 +257,16 @@ angular.module("wealthManagerApp")
             }
 
             //post to database
-            DebtDataAPI.postData (APIResponseHandlersCommon.successHandler_POST, APIResponseHandlersCommon.failureHandler_POST, vm.debtEntry);
-            vm.debtData.push(vm.debtEntry);
-            vm.recalculate();
-            vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+            DebtDataAPI.postData(vm.debtEntry)
+             .then(data => {
+                postResponse = data.data;
+                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
+                  postResponse.unitCost + " location=" + postResponse.location + " currency=" + postResponse.currency);}
+
+                vm.debtData.push(postResponse);  //update the table with what was actually posted, since ID and defaults are in the response only
+                vm.recalculate();
+                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+              });
         }
         return true;
     };
@@ -257,28 +301,5 @@ angular.module("wealthManagerApp")
         return Helpers.checkIfEmptyString(myString);
     };
 
-    //custom success handler for API Get Asset
-    vm.assetGetSuccessHandler = function successHandler_GET(res) {
-        vm.assetData = [];
-        for (var i = 0; i < res.data.length; i++){
-            vm.assetData.push(res.data[i]);
-            console.log ("Asset added: " + vm.assetData[i].name);
-        }
-        vm.recalculate();
-        vm.assetGridOptions.data = vm.assetData;
-        console.log ("API Success: Data retrieved and all amounts recalculated.");
-    };
-
-      //custom success handler for API Get Debt
-    vm.debtGetSuccessHandler = function successHandler_GET(res) {
-        vm.debtData = [];
-        for (var i = 0; i < res.data.length; i++){
-            vm.debtData.push(res.data[i]);
-            console.log ("Debt added: " + vm.debtData[i].name);
-        }
-        vm.recalculate();
-        vm.debtGridOptions.data = vm.debtData;
-        console.log ("API Success: Data retrieved and all amounts recalculated.");
-    };
 
 }]);

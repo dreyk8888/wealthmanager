@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
   <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.css" />
+  <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.css" />
+  <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.date.css" />
+  <link rel="stylesheet" href="bower_components/pickadate/lib/themes/default.time.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
@@ -59,7 +62,13 @@
     <!-- ################################################################################################ -->
       <ul id="navbar-items" class="clear">
         <li class="active"><a ui-sref="home">Dashboard</a></li>
-        <li><a ui-sref="portfolio">Portfolio</a></li>
+        <span uib-dropdown on-toggle="toggled(open)">
+        <li><a ui-sref="portfolio" uib-dropdown-toggle>Portfolio</a></li>
+         <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="portfolio-dropdown">
+          <li><a ui-sref="assets">Assets</a></li>
+          <li><a ui-sref="debt">Liabilities</a></li>
+        </ul>
+      </span>
         <li><a ui-sref="firecalc">Net Worth Calculator</a></li>
       </ul>
     </nav>
@@ -125,6 +134,10 @@
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
+    <script src="bower_components/pickadate/lib/picker.js"></script>
+    <script src="bower_components/pickadate/lib/picker.date.js"></script>
+    <script src="bower_components/pickadate/lib/picker.time.js"></script>
+    <script src="bower_components/angular-schema-form-datepicker/bootstrap-datepicker.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -141,6 +154,7 @@
     <script src="scripts/services/asset-data-api.js"></script>
   	<script src="scripts/services/debt-data-api.js"></script>
     <script src="scripts/services/net-worth-data-api.js"></script>
+	<script src="scripts/services/api-helper.js"></script>
     <script src="scripts/controllers/fire-calc.js"></script>
     <script src="scripts/services/fire-calc-helper.js"></script>
     <script src="scripts/services/fire-chart-config.js"></script>

@@ -231,6 +231,7 @@ h1, h2, h3, h4, h5, h6, .heading{font-family: 'Noto Sans', sans-serif;}
 /* Text
 #4A4A4A - top bar text
 #00BCDF - bright blue (links)
+#337ab7 - bootstrap blue
 #aeb5ba - title small text
 */
 body{color:#EAEAEA; background-color:#3C4348;}

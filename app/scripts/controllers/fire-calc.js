@@ -12,11 +12,11 @@
 
 //graph does not refresh until you click on another text box when using historical data
 // remove all the code to calculate closeness to fiscal year end since we are using 1 net worth value per year --- commented out
-//set historical ROI value on screen
+//set historical ROI value on screen -> need to separate it out of the lumped together function call
 //turning on historical ROI should disable ROI slider and input. Turning on historical net data should disable net worth sliders and input
 //test historical data with more realistic date, historical ROI, longer number of years
 // color theme
-//make graph bigger - need to make this dynamic width, but refuses to work. Do later
+//graph width should not be fixed, but refuses to work. Do later
 
 
 angular.module("wealthManagerApp")
@@ -66,7 +66,7 @@ angular.module("wealthManagerApp")
 
             var currentYear = new Date().getFullYear();
 
-            NetWorthDataAPI.getDataWithPromise()
+            NetWorthDataAPI.getData()
                 .then(data => {
                     console.log (data.data);
                     for (var i = 0; i < data.data.length; i++){

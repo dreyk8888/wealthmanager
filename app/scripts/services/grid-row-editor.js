@@ -8,7 +8,7 @@
  * Service for opening a new modal for row editing in ui-grid and saving changed data
  */
 angular.module('wealthManagerApp')
-.service('RowEditor', ['$rootScope', '$uibModal', 'AssetDataAPI', 'DebtDataAPI', 'APIResponseHandlersCommon', 'Asset', function ($rootScope, $uibModal, AssetDataAPI, DebtDataAPI, APIResponseHandlersCommon, Asset) {
+.service('RowEditor', ['$rootScope', '$uibModal','AssetDataAPI','DebtDataAPI','Asset', 'Debt',function ($rootScope, $uibModal, AssetDataAPI, DebtDataAPI, Asset, Debt) {
 
     var DEBUG = true;
 

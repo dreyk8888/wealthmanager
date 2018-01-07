@@ -29,7 +29,6 @@ angular.module("wealthManagerApp")
         "AssetDataAPI",
         "DebtDataAPI",
         "NetWorthDataAPI",
-        "APIResponseHandlersCommon",
         "Helpers",
         "PortfolioGridColumnDefs",
         "PortfolioCalcs",
@@ -38,7 +37,7 @@ angular.module("wealthManagerApp")
         "AssetSchema",
         "DebtSchema",
         "PortfolioForms",
-        function ($scope, $http, uiGridConstants, GlobalConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, NetWorthDataAPI, APIResponseHandlersCommon, Helpers,
+        function ($scope, $http, uiGridConstants, GlobalConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, NetWorthDataAPI, Helpers,
             PortfolioGridColumnDefs, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
     var DEBUG = false;

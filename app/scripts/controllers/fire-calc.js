@@ -20,7 +20,7 @@
 
 
 angular.module("wealthManagerApp")
-.controller("FIRECalcCtrl", ["FIRECalcHelper","FIREChartConfig", "NetWorthDataAPI", "APIResponseHandlersCommon", function (FIRECalcHelper, FIREChartConfig, NetWorthDataAPI, APIResponseHandlersCommon){
+.controller("FIRECalcCtrl", ["FIRECalcHelper","FIREChartConfig", "NetWorthDataAPI", function (FIRECalcHelper, FIREChartConfig, NetWorthDataAPI){
     var DEBUG = true;
 
     var vm = this;

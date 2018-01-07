@@ -31,21 +31,32 @@ angular.module('wealthManagerApp')
                         var updateData = Asset.copyAndCalculateAmount(row.entity);
 
 
-                        if (DEBUG){ console.log("Data to save: " + updateData); }
+                        if (DEBUG){
+                            console.log("Data to save: " + updateData._id);
+                            console.log ("ID to write to grid" + grid.appScope.assetData.findIndex(x => x._id === updateData._id));
+                        }
 
+                        var updateResponse = {};
                         //update data in storage
-                        AssetDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, updateData, updateData._id);
+                        AssetDataAPI.updateData(updateData, updateData._id)
+                            .then (data => {
+                                updateResponse = data.data;
+                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + " name=" + updateResponse.name + " units=" + updateResponse.units + " unitCost=" +
+                                updateResponse.unitCost + " location=" + updateResponse.location + " currency=" + updateResponse.currency);}
 
-                        //update grid
-                        grid.appScope.assetData[grid.appScope.assetData.findIndex(x => x._id === updateData._id)] = updateData;
+                                //update grid
+                                grid.appScope.assetData[grid.appScope.assetData.findIndex(x => x._id === updateData._id)] = updateResponse; //update the table with what was actually posted, since ID and defaults are in the response only
 
-                        //update the totals, and pie charts
-                        grid.appScope.recalculate();
-                        //save net worth to net worth history
-                        grid.appScope.updateNetWorth(grid.appScope.totalAssets, grid.appScope.totalDebt, grid.appScope.localCurrency);
+                                //update the totals, and pie charts
+                                grid.appScope.recalculate();
 
-                        //close modal
-                        $uibModalInstance.close(row.entity);
+                                //save net worth to net worth history
+                                grid.appScope.updateNetWorth(grid.appScope.totalAssets, grid.appScope.totalDebt, grid.appScope.localCurrency);
+
+                                //close modal
+                                $uibModalInstance.close(row.entity);
+                            });
+
                     }
                 };
 
@@ -83,16 +94,23 @@ angular.module('wealthManagerApp')
                         if (DEBUG){ console.log("Data to save: " + row.entity); }
 
                         //update data in storage
-                        DebtDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, row.entity, row.entity._id);
+                        var updateResponse = {};
+                        DebtDataAPI.updateData(row.entity, row.entity._id)
+                            .then (data => {
+                                updateResponse = data.data;
+                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + " name=" + updateResponse.name + " units=" + updateResponse.units + " unitCost=" +
+                                updateResponse.unitCost + " location=" + updateResponse.location + " currency=" + updateResponse.currency);}
 
-                        //update grid
-                        grid.appScope.debtData[grid.appScope.debtData.findIndex(x => x._id === row.entity._id)] = row.entity;
+                                //update grid
+                                grid.appScope.debtData[grid.appScope.debtData.findIndex(x => x._id === row.entity._id)] = updateResponse;
 
-                        //assetData was never updated. That's why recalculate doesn't work
-                        grid.appScope.recalculate();
+                                //assetData was never updated. That's why recalculate doesn't work
+                                grid.appScope.recalculate();
 
-                        //close modal
-                        $uibModalInstance.close(row.entity);
+                                //close modal
+                                $uibModalInstance.close(row.entity);
+                            });
+
                     }
                 };
 

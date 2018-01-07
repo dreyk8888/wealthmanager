@@ -9,8 +9,8 @@
  */
 
  /*todo
- - bug -> database IDs are not written to the grid until table is reloaded from databse. This means editing right after submit doesn't work
- ------ solution - when posting, return the ID in success handler and write to the grid
+- default location for cash should not be blank, should be domestic
+- fix the date box
  - add currency to the grid for asset and debt
  - total assets and debts need to account for currency settings and convert to the "local" currrency
  - move graphs to a trends or dashboard page
@@ -42,7 +42,7 @@ angular.module("wealthManagerApp")
         function ($scope, $http, uiGridConstants, GlobalConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, NetWorthDataAPI, APIResponseHandlersCommon, Helpers,
             PortfolioGridColumnDefs, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
-    var DEBUG = true;
+    var DEBUG = false;
 
     var vm = this;
 
@@ -188,11 +188,16 @@ angular.module("wealthManagerApp")
               if (oid === 0){
                   NetWorthDataAPI.postData(netWorth)
                   .then(data => {
-                    if (DEBUG) {console.log ("Object posted to API: ID=" + data.data._id + " net_worth=" + data.data.net_worth + " currency=" + data.data.amount + " date=" +
+                    if (DEBUG) {console.log ("Object posted, response: ID=" + data.data._id + " net_worth=" + data.data.net_worth + " currency=" + data.data.amount + " date=" +
                     data.data.date);}
                   });
               } else {
-                  NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
+                  //NetWorthDataAPI.updateData(APIResponseHandlersCommon.successHandler_PUT, APIResponseHandlersCommon.failureHandler_PUT, netWorth, oid);
+                  NetWorthDataAPI.updateData(netWorth, oid)
+                  .then (data => {
+                    if (DEBUG) {console.log ("Object updated, response: ID=" + data.data._id + " net_worth=" + data.data.net_worth + " currency=" + data.data.amount + " date=" +
+                    data.data.date);}
+                  });
               }
           });
     };
@@ -278,18 +283,27 @@ angular.module("wealthManagerApp")
             console.log ("Data to be deleted: " + vm.assetData[vm.assetData.indexOf(id)]);
         }
 
-        AssetDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
-        vm.assetData.splice(vm.assetData.findIndex(obj => obj._id === id), 1); //remove item from local list of assets
-        vm.assetGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
-        vm.recalculate();
-        vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+        //AssetDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
+        AssetDataAPI.deleteData(id)
+            .then(data => {
+                vm.assetData.splice(vm.assetData.findIndex(obj => obj._id === id), 1); //remove item from local list of assets
+                vm.assetGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
+                vm.recalculate();
+                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+              });
+
     };
 
     vm.deleteDebt = function(id){
-        DebtDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
-        vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
-        vm.recalculate();
-        vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+        //DebtDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
+        DebtDataAPI.delete(id)
+             .then(data => {
+                vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
+                vm.debtGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
+                vm.recalculate();
+                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+              });
+
     };
 
     vm.cancelAssetEntry = function (){

@@ -79,11 +79,11 @@ angular.module('wealthManagerApp')
         var modalInstance = $uibModal.open({
             templateUrl: 'views/edit-modal.html',
             controllerAs: 'vm',
-            controller: function ($scope, $uibModalInstance, DebtSchema, PortfolioForms, grid, row) {
+            controller: function ($scope, $uibModalInstance, Debt, DebtSchema, PortfolioFormsModal, grid, row) {
                 var vm = this;
                 vm.schema = DebtSchema.schema;
                 vm.entity = angular.copy(row.entity);
-                vm.form = PortfolioForms.getDebtForm ();
+                vm.form = PortfolioFormsModal.getDebtForm ();
 
                 vm.save =  function save(form) {
                     $scope.$broadcast('schemaFormValidate');
@@ -91,22 +91,29 @@ angular.module('wealthManagerApp')
                         // Copy row values over
                         row.entity = angular.extend(row.entity, vm.entity);
 
-                        if (DEBUG){ console.log("Data to save: " + row.entity); }
+                        //clean up the data before write to DB
+                        var updateData = Debt.init();
+                        updateData = Debt.populate (updateData, row.entity._id, row.entity.term, row.entity.name, row.entity.amount);
+                        if (DEBUG){ console.log("Data to save: " + row.entity._id + " " + row.entity.name + " " + row.entity.term);
+                                    console.log("Data to save: " + updateData._id + " " + updateData.name + " " + updateData.term);
+                         }
 
                         //update data in storage
                         var updateResponse = {};
-                        DebtDataAPI.updateData(row.entity, row.entity._id)
+                        DebtDataAPI.updateData(updateData, updateData._id)
                             .then (data => {
                                 updateResponse = data.data;
-                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + " name=" + updateResponse.name + " units=" + updateResponse.units + " unitCost=" +
-                                updateResponse.unitCost + " location=" + updateResponse.location + " currency=" + updateResponse.currency);}
+                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + " name=" + updateResponse.name + " amount=" + updateResponse.amount + "term=" +
+                                updateResponse.term);}
 
                                 //update grid
                                 grid.appScope.debtData[grid.appScope.debtData.findIndex(x => x._id === row.entity._id)] = updateResponse;
 
-                                //assetData was never updated. That's why recalculate doesn't work
+                                //debtData was never updated. That's why recalculate doesn't work
                                 grid.appScope.recalculate();
 
+                                //save net worth to net worth history
+                                grid.appScope.updateNetWorth(grid.appScope.totalAssets, grid.appScope.totalDebt, grid.appScope.localCurrency);
                                 //close modal
                                 $uibModalInstance.close(row.entity);
                             });

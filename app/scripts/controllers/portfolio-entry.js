@@ -9,7 +9,6 @@
  */
 
  /*todo
-- default location for cash should not be blank, should be domestic
 - fix the date box
  - add currency to the grid for asset and debt
  - total assets and debts need to account for currency settings and convert to the "local" currrency
@@ -117,15 +116,15 @@ angular.module("wealthManagerApp")
 //Asset Input form
     vm.assetclasses = Asset.ASSETCLASSES;
     vm.classDisplay = "Asset Class";
-    vm.form = PortfolioForms.getAssetForm("");  //fetch default form until user selects asset type
+    vm.assetform = PortfolioForms.getAssetForm("");  //fetch default form until user selects asset type
     vm.classSelected = function(assetClass){
         vm.assetEntry.class = assetClass;
-        vm.form = PortfolioForms.getAssetForm(assetClass);
+        vm.assetform = PortfolioForms.getAssetForm(assetClass);
         vm.classDisplay = assetClass;
         if (DEBUG) { console.log ("Class selected: " + assetClass ); }
     };
 
-    vm.schema = AssetSchema.schema;
+    vm.assetschema = AssetSchema.schema;
     vm.entity = vm.assetEntry;
     vm.model = {};
 
@@ -262,6 +261,7 @@ angular.module("wealthManagerApp")
             }
 
             //post to database
+            var postResponse = {};
             DebtDataAPI.postData(vm.debtEntry)
              .then(data => {
                 postResponse = data.data;
@@ -296,7 +296,7 @@ angular.module("wealthManagerApp")
 
     vm.deleteDebt = function(id){
         //DebtDataAPI.deleteData(APIResponseHandlersCommon.successHandler_DELETE, APIResponseHandlersCommon.failureHandler_DELETE, id);
-        DebtDataAPI.delete(id)
+        DebtDataAPI.deleteData(id)
              .then(data => {
                 vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
                 vm.debtGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);

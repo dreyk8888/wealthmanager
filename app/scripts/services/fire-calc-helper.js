@@ -189,7 +189,7 @@ angular.module("wealthManagerApp")
     this.generateCombinedNetWorthPlotData = function(historicalData, netWorthData){
         var returnData = [];
         //var currentYear = 2017;
-        var currentYear = new Date().getFullYear();
+        var currentYear = moment().year()
         var yearPtr = 0;
         var dataPoint = {};
 

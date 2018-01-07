@@ -43,7 +43,7 @@
             name: { "type": "string", "title": "Description of liability"},
             amount: { "type": "number", "title": "Amount", "minimum": 0}
         },
-        "required": ["name", "amount"]
+        "required": ["term", "name", "amount"]
     };
     return;
 });

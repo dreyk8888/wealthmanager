@@ -135,31 +135,20 @@
     <!-- ################################################################################################ -->
     <!-- ################################################################################################ -->
         <!-- ################################################################################################ -->
-          <uib-tabset justified="false" type="tabs">
-            <uib-tab index="$index" ng-repeat="class in vm.assetclasses" heading="{{class}}" ng-init="vm.classSelected(vm.assetclasses[0])" ng-click="vm.classSelected(class)">
-            <div class="container" id="asset-form">
-                <form name="vm.assetInputForm" sf-schema="vm.schema" sf-form="vm.form" sf-model="vm.entity" class="input-form"></form>
-                <button class="btn btn-success" ng-click="vm.submitAssets(vm.assetInputForm); assetSubmitted=true">Submit</button>
-                <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
-             </div>     <!-- ################################################################################################ -->
-            </uib-tab>
-          </uib-tabset>
-          <!-- ################################################################################################ -->
-        </div>
-      </div>
+    <uib-tabset justified="false" type="tabs">
+      <uib-tab index="$index" ng-repeat="class in vm.assetclasses" heading="{{class}}" ng-init="vm.classSelected(vm.assetclasses[0])" ng-click="vm.classSelected(class)">
+      <div class="container" id="asset-form">
+          <form name="vm.assetInputForm" sf-schema="vm.assetschema" sf-form="vm.assetform" sf-model="vm.entity" class="input-form"></form>
+          <button class="btn btn-success" ng-click="vm.submitAssets(vm.assetInputForm); assetSubmitted=true">Submit</button>
+          <button class="btn btn-danger" ng-click="vm.cancelAssetEntry()">Cancel</button>
+       </div>     <!-- ################################################################################################ -->
+      </uib-tab>
+    </uib-tabset>
     <!-- ################################################################################################ -->
-    <!-- ################################################################################################ -->
-
-    <!-- ################################################################################################ -->
-    <!-- ################################################################################################ -->
-  </div>
-  <!-- ################################################################################################ -->
-  <!-- ################################################################################################ -->
-  <!-- ################################################################################################ -->
   </div>
   <br/>
   <br/>
-  <div class="row" id="debt-table-controls">
+  <div class="row">
     <div class="col-md-6">
       <span id="debt-label"><h2>Liabilities</h2></span>
     </div>
@@ -170,28 +159,31 @@
     </div>
   </div>
   <br/>
-    <div id="expand-input-button">
-      <h3 class="horizontal-divider"><button id="btn-formShowHide" type="button" class="btn btn-primary btn-sm" ng-click="addNewDebt = !addNewDebt"><span class="glyphicon glyphicon-plus"></span></button></h3>
-  </div>
-
-  <div id="debt-input-form" ng-hide="addNewDebt">
-    <div class="row">
-      <div class="col-md-12">
-        <form name="vm.debtInputForm" sf-schema="vm.debtschema" sf-form="vm.debtform" sf-model="vm.debtentity" class="input-form"></form>
+  <div class="row">
+    <div class="col-xs-4">
+      <!-- ################################################################################################ -->
+      <div id="add-debt-toggle">
+        <button id="add-debt-button type="button" class="btn btn-primary btn-lg" ng-click="vm.isDebtEntryCollapsed = !vm.isDebtEntryCollapsed">
+        <span class="glyphicon glyphicon-plus" style="margin-right:10px;"></span>Add Entry</button>
       </div>
-      <div class="row">
-        <div class="col-xs-10"></div>
-        <div class="col-xs-1">
-          <button class="btn btn-success pull-right" ng-click="vm.submitDebt(vm.debtInputForm)">Submit</button>
-        </div>
-        <div class="col-xs-1">
-          <button class="btn btn-danger" ng-click="vm.cancelDebtEntry()">Cancel</button>
-        </div>
-      </div>
+      <!-- ################################################################################################ -->
     </div>
   </div>
-  <br/>
-  <br/>
+  <hr>
+  <div uib-collapse="vm.isDebtEntryCollapsed" id="debt-input-form">
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <div class="container" id="debt-form">
+        <form name="vm.debtInputForm" sf-schema="vm.debtschema" sf-form="vm.debtform" sf-model="vm.debtentity" class="input-form"></form>
+        <button class="btn btn-success" ng-click="vm.submitDebt(vm.debtInputForm)">Submit</button>
+        <button class="btn btn-danger" ng-click="vm.cancelDebtEntry()">Cancel</button>
+     </div>
+     <!-- ################################################################################################ -->
   </div>
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
 </div>
 

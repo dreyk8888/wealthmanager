@@ -49,18 +49,31 @@
 #asset-input-form uib-tabset hr{width:70%;}
 #asset-input-form a {color: #FFF; background-color: #4d565b;}
 #asset-input-form a:active{color: #FFF; background-color: #363D41;}
-#asset-input-form input, select {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}
 #asset-input-form .schema-form-section { margin-top:10px; padding-left: 3px; padding-right: 3px;}
+
 #asset-form  {background-color:#d1d1d1; border-width: 2px; border-color: #363D41; padding: 15px; width: 70%; margin-left:0; }
+#asset-form input {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}
+#asset-form select {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}
 #asset-form button {margin-left: 10px;}
+#asset-form .control-label {font-size: 1.0em; margin-left:10px; padding-left:10px;}
+#asset-form .help-block {margin-left: 20px; font-size: 0.8em;} /*Description text in form*/
+/*Datepicker styling*/
 #asset-form .picker__select--month {display: inline-block;margin-left:100px; margin-top:5px;font-size:20px; }
 #asset-form .picker__select--year {margin-left:20px; font-size:20px;}
-#asset-input-form .control-label {font-size: 1.0em; margin-left:10px; padding-left:10px;}
-#asset-input-form .help-block {margin-left: 20px; font-size: 0.8em;} /*Description text in form*/
+
 
  /*Debt input form*/
+#add-debt-toggle { margin-left: 20px 10px 20px 5px;}
+#add-debt-toggle {font-variant:small-caps;}
 #debt-input-form input {text-align: left;  size: 5;}
+#debt-input-form .schema-form-section { margin-top:10px; padding-left: 3px; padding-right: 3px;}
 
+#debt-input-form  {background-color:#d1d1d1; border-width: 2px; border-color: #363D41; padding: 15px; width: 70%; margin-left:0; }
+#debt-input-form input {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}
+#debt-input-form select {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}
+#debt-input-form button {margin-left: 10px;}
+#debt-input-form .control-label {font-size: 1.0em; margin-left:10px; padding-left:10px;}
+#debt-input-form .help-block {margin-left: 20px; font-size: 0.8em;} /*Description text in form*/
 
 
 h3.horizontal-divider{

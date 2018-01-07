@@ -295,8 +295,8 @@ angular.module("wealthManagerApp")
                             {
                                 "key": "term",
                                 "type": "select",
-                                "title": "",
-                                "description": "Select liability type",
+                                "title": "Category",
+                                "description": "Type of debt",
                                 "titleMap": debtTypeTitleMap
                             }
                         ]
@@ -318,8 +318,8 @@ angular.module("wealthManagerApp")
                         "items": [
                             {
                                 "key": "amount",
-                                "title": "",
-                                "description": "Amount",
+                                "title": "Amount",
+                                "description": "",
                                 "validationMessage": "Enter 0 or greater"
                             }
                         ]

@@ -8,13 +8,11 @@
  * Controller of the wealthManagerApp Portfolio View
  */
 
- /*todo
+/*todo
 - fix the date box
  - add currency to the grid for asset and debt
  - total assets and debts need to account for currency settings and convert to the "local" currrency
  - move graphs to a trends or dashboard page
- - refactor API calls to be promises and remove the global variables
-
  */
 
 

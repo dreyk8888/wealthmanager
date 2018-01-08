@@ -14,7 +14,7 @@ angular.module("wealthManagerApp")
                 chart: {
                     type: "column",
                     height: 40 + "%",
-                    width: 900,
+                    width: window.screen.width*0.75,
                     backgroundColor: "transparent",
                     style: {
                         font: '"Roboto Condensed", sans-serif',
@@ -35,8 +35,33 @@ angular.module("wealthManagerApp")
                             return this.value + 1;
                         }
                     }
-                }
-            };
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: window.screen.width*0.7
+                        },
+                        // Make the labels less space demanding on mobile
+                    chartOptions: {
+                        xAxis: {
+                            labels: {
+
+                            }
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -2
+                            },
+                            title: {
+                                text: ''
+                            }
+                        }
+                    }
+                }]
+            }
+        }
 
             return chartConfig;
         };

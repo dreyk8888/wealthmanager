@@ -26,7 +26,7 @@
             marketValue: { "type": "number", "title": "Market Value", "minimum": 0},
             location: { "type": "string", "title": "Asset location for allocation."},
             /*date_purchased: { "type": "string", "format": "date", "title": "Date Purchased", "pattern": "^\\d\\d\/\\d\\d\/\\d\\d\\d\\d$"},*/
-            date_purchased: { "type": "string", "title": "Date Purchased","pattern": "^\\d\\d*\/\\d\\d*\/\\d\\d\\d\\d$"},
+            date_purchased: { "type": "string", "title": "Date Purchased"},
             currency: { "type": "string", "title": "Currency"}
         },
         "required": ["name","units", "unitCost", "totalCost", "marketPrice", "marketValue", "location"]

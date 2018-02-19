@@ -40,8 +40,8 @@
 .modal-body .control-label{color:#3C4348;}
 .modal-body  .help-block {color:#939496;}
 .modal-body #P770959738 {background-color:#FFF; border-color: #abacad;}
-.modal-body .picker__select--year {margin-left:20px;}
-.modal-body .picker__select--month {margin-left:50px;}
+.modal-body .picker__select--year {margin-left:100px; margin-top:5px;font-size:20px;width:30%; padding:3px; padding-left:10px;}
+.modal-body .picker__select--month {margin-left:100px; margin-top:5px; font-size:20px;width:30%; padding:3px; padding-left:10px;}
 /*Asset input form and toggle*/
 #add-asset-toggle { margin-left: 20px 10px 20px 5px;}
 #add-asset-toggle {font-variant:small-caps;}
@@ -58,9 +58,8 @@
 #asset-form .control-label {font-size: 1.0em; margin-left:10px; padding-left:10px;}
 #asset-form .help-block {margin-left: 20px; font-size: 0.8em;} /*Description text in form*/
 /*Datepicker styling*/
-#asset-form .picker__select--month {display: inline-block;margin-left:100px; margin-top:5px;font-size:20px; }
-#asset-form .picker__select--year {margin-left:20px; font-size:20px;}
-
+#asset-form .picker__select--month {margin-left:100px; margin-top:5px;font-size:20px;width:30%; padding:3px; padding-left:10px;}
+#asset-form .picker__select--year {margin-left:100px; font-size:20px;width:30%; padding:3px; padding-left:10px;}
 
  /*Debt input form*/
 #add-debt-toggle { margin-left: 20px 10px 20px 5px;}

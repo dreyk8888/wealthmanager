@@ -61,9 +61,10 @@ angular.module("wealthManagerApp")
                         "type":"datepicker",
                         "minDate": "01-01-1900",
                         "maxDate": new Date(),
-                        "selectYears": "true",
+                        "selectYears": 100,
                         "selectMonths": "true",
-                        "validationMessage": "mm/dd/yyyy"
+                        "editable": "true",
+                        "readonly": false
                     },
                     {
                         "key": "currency",
@@ -96,9 +97,10 @@ angular.module("wealthManagerApp")
                         "type":"datepicker",
                         "minDate": "01-01-1900",
                         "maxDate": new Date(),
-                        "selectYears": "true",
+                        "selectYears": 100,
                         "selectMonths": "true",
-                        "validationMessage": "mm/dd/yyyy"
+                        "editable": "true",
+                        "readonly": false
                     },
                     {
                         "key": "currency",
@@ -136,9 +138,9 @@ angular.module("wealthManagerApp")
                         "type":"datepicker",
                         "minDate": "01-01-1900",
                         "maxDate": new Date(),
-                        "selectYears": "true",
+                        "selectYears": 100,
                         "selectMonths": "true",
-                        "validationMessage": "mm/dd/yyyy",
+                        "editable": "true",
                         "readonly": false
                     },
                     {

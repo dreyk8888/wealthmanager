@@ -146,13 +146,17 @@ angular.module("wealthManagerApp")
                             },
                             {
                                 "type": "section",
-                                "htmlClass": "col-xs-2",
+                                "htmlClass": "col-xs-3",
                                 "items": [
                                     {
                                         "key": "date_purchased",
-                                        "title": "Date purchased",
-                                        "description": "",
-                                        "validationMessage": "mm/dd/yyyy"
+                                        "format": "yyyy-mm-dd",
+                                        "type":"datepicker",
+                                        "minDate": "01-01-1970",
+                                        "maxDate": new Date(),
+                                        "selectYears": 100,
+                                        "selectMonths": "true",
+                                        "editable": "true"
                                     }
                                 ]
                             }
@@ -243,20 +247,6 @@ angular.module("wealthManagerApp")
                                     }
                                 ]
                             },
-                            /*
-                            {
-                                "type": "section",
-                                "htmlClass": "col-xs-2",
-                                "items": [
-                                    {
-                                        "key": "date_purchased",
-                                        "title": "Date purchased",
-                                        "description": "Date purchased",
-                                        "validationMessage": "mm/dd/yyyy"
-                                    }
-                                ]
-                            }
-                            */
                             {
                                 "type": "section",
                                 "htmlClass": "col-xs-3",
@@ -269,13 +259,11 @@ angular.module("wealthManagerApp")
                                         "maxDate": new Date(),
                                         "selectYears": 100,
                                         "selectMonths": "true",
-                                        "editable": "true",
-                                        "validationMessage": "mm/dd/yyyy"
+                                        "editable": "true"
                                     }
                                 ]
                             }
-
-                            ]
+                        ]
                     }];
             }
         return form;

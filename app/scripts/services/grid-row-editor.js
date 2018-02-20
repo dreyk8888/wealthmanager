@@ -32,7 +32,7 @@ angular.module('wealthManagerApp')
 
 
                         if (DEBUG){
-                            console.log("Data to save: " + updateData._id);
+                            console.log("Data to save: " + updateData._id + " name=" + updateData.name + " units=" + updateData.units + " unitCost=" + updateData.unitCost);
                             console.log ("ID to write to grid" + grid.appScope.assetData.findIndex(x => x._id === updateData._id));
                         }
 

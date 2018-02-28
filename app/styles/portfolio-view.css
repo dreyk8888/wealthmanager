@@ -47,10 +47,12 @@
 #add-asset-toggle {font-variant:small-caps;}
 
 #asset-input-form uib-tabset hr{width:70%;}
-#asset-input-form a {color: #FFF; background-color: #4d565b;}
-#asset-input-form a:active{color: #FFF; background-color: #363D41;}
+#asset-input-form a {color: #FFF; background-color: #74828b;}
 #asset-input-form .schema-form-section { margin-top:10px; padding-left: 3px; padding-right: 3px;}
-
+#asset-input-form .active a{
+  color: #FFF;
+  background-color: #363D41 !important;
+}
 #asset-form  {background-color:#d1d1d1; border-width: 2px; border-color: #363D41; padding: 15px; width: 70%; margin-left:0; }
 #asset-form input {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}
 #asset-form select {margin:10px 20px 2px 20px; padding: 6px 12px 6px 12px; text-align: left;}

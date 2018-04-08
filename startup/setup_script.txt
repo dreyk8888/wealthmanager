@@ -1,0 +1,11 @@
+sudo git clone https://github.com/dreyk8888/wealthmanager.git
+sudo git clone https://github.com/dreyk8888/wealth-manager-api.git
+cd wealth-manager-api
+sudo npm install
+sudo npm start
+cd wealthmanager
+sudo npm install
+sudo bower install
+sudo npm install grunt
+**need to change the line hostname: 'localhost' to hostname: '0.0.0.0' if on a public server
+sudo grunt serve

@@ -1,16 +1,15 @@
 "use strict";
 
 //Test Asset API calls for existance
-describe("Service: AssetDataAPI, Service: APIResponseHandlersCommon", function () {
+describe("Service: AssetDataAPI", function() {
 
   // load the service"s module
   beforeEach(module("wealthManagerApp"));
 
   // instantiate service
   var AssetDataAPI, ResponseHandlers;
-  beforeEach(inject(function (_AssetDataAPI_, _APIResponseHandlersCommon_) {
+  beforeEach(inject(function (_AssetDataAPI_) {
     AssetDataAPI = _AssetDataAPI_;
-    ResponseHandlers = _APIResponseHandlersCommon_;
   }));
 
 

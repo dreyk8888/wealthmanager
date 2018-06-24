@@ -137,7 +137,7 @@ describe("Service: Asset constructor", function () {
       totalCost: -1,
       marketPrice: -1,
       marketValue: 50000,
-      location: "---",
+      location: "Domestic",
       date_purchased: "01/01/1111",
       currency: "USD"
   };

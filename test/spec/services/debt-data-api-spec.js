@@ -1,16 +1,15 @@
 "use strict";
 
 //Test Debt API calls for existance
-describe("Service: DebtDataAPI, Service: APIResponseHandlersCommon", function () {
+describe("Service: DebtDataAPI", function () {
 
   // load the service"s module
   beforeEach(module("wealthManagerApp"));
 
   // instantiate service
   var DebtDataAPI, ResponseHandlers;
-  beforeEach(inject(function (_DebtDataAPI_, _APIResponseHandlersCommon_) {
+  beforeEach(inject(function (_DebtDataAPI_) {
     DebtDataAPI = _DebtDataAPI_;
-    ResponseHandlers = _APIResponseHandlersCommon_;
   }));
 
 

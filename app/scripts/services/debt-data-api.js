@@ -15,6 +15,10 @@ angular.module('wealthManagerApp')
             return APIHelper.get(apiURL);
         };
 
+        this.getDataByUserId = function(userId){
+            return APIHelper.getByUserId(userId, apiURL);
+        };
+
         this.deleteData = function(id){
             return APIHelper.delete(id, apiURL);
         }

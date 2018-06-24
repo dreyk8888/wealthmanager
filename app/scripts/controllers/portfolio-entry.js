@@ -38,10 +38,11 @@ angular.module("wealthManagerApp")
         function ($scope, $http, uiGridConstants, GlobalConstants, Asset, Debt, AssetDataAPI, DebtDataAPI, NetWorthDataAPI, Helpers,
             PortfolioGridColumnDefs, PortfolioCalcs, PortfolioChartConfig, RowEditor, AssetSchema, DebtSchema, PortfolioForms) {
 
-    var DEBUG = false;
+    var DEBUG = true;
 
     var vm = this;
 
+    var userId = "ABC123";
     vm.assetEntry = Asset.init();
     vm.totalAssets = 0;   //container for asset total amount
     vm.assetTotals = [];
@@ -202,9 +203,9 @@ angular.module("wealthManagerApp")
 //Data retrieval and updating
 
     //load asset data for the view
-    vm.getData = function() {
+    vm.getData = function(userId) {
 
-        AssetDataAPI.getData()
+        AssetDataAPI.getData(userId)
           .then(data => {
               vm.assetData = [];
               for (var i = 0; i < data.data.length; i++){
@@ -215,12 +216,13 @@ angular.module("wealthManagerApp")
               vm.assetGridOptions.data = vm.assetData;
         });
 
-        DebtDataAPI.getData()
+        //DebtDataAPI.getData()
+        DebtDataAPI.getDataByUserId (userId)
           .then(data => {
               vm.debtData = [];
               for (var i = 0; i < data.data.length; i++){
                   vm.debtData.push(data.data[i]);
-                  if (DEBUG) {console.log ("Debt added from API data: " + vm.debtData[i].name);}
+                  if (DEBUG) {console.log ("Debt added from API data: " + vm.debtData[i].user);}
               }
               vm.recalculate();
               vm.debtGridOptions.data = vm.debtData;

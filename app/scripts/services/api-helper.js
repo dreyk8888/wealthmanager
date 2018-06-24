@@ -18,6 +18,16 @@ angular.module('wealthManagerApp')
                 });
             });
         };
+        this.getByUserId = function(userId, apiURL){
+            console.log (userId);
+            return new Promise((resolve, reject)=>{
+                $http.get(apiURL, {params: { userId: userId }}).then(function(response){
+                    resolve(response);
+                }, function(error) {
+                    reject(error);
+                });
+            });
+        };
 
         this.delete = function(id, apiURL){
             return new Promise((resolve, reject)=>{

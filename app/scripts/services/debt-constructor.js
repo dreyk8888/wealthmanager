@@ -13,8 +13,9 @@ angular.module('wealthManagerApp')
         //set of debt classes
         this.DEBTTERMS = [GlobalConstants.SHORT_TERM, GlobalConstants.LONG_TERM];
         //return a clean debt object
-        this.init = function(){
+        this.init = function(sessionUserId){
             var debt = {
+                userId: sessionUserId,
                 term: "",
                 name: "",
                 amount: ""
@@ -39,8 +40,9 @@ angular.module('wealthManagerApp')
 
         //return the debt object parameter populated with parameterized values and calculated amount
         //keep track of _id for API posting purposes
-        this.populate = function (debt, _id, term, name, amount){
+        this.populate = function (debt, _id, userId, term, name, amount){
             debt._id = _id;
+            debt.userId = userId;
             debt.name = name;
             debt.amount = amount;
             debt.term = term;

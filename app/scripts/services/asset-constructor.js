@@ -30,8 +30,9 @@ angular.module('wealthManagerApp')
         ];
 
         //return a clean Asset object
-        this.init = function(){
+        this.init = function(sessionUserId){
             var asset = {
+                userId: sessionUserId,
                 class: "",
                 name: "",
                 units: "",
@@ -45,7 +46,7 @@ angular.module('wealthManagerApp')
             };
             return asset;
         };
-
+        //don't reset userId, as this should be constant until user logs out
         this.reset = function (asset){
             asset.class = "";
             asset.name = "";
@@ -60,7 +61,7 @@ angular.module('wealthManagerApp')
 
             return asset;
         };
-
+        //don't reset userId, as this should be constant until user logs out
         this.resetKeepClass = function (asset){
             asset.name = "";
             asset.units = "";
@@ -78,12 +79,13 @@ angular.module('wealthManagerApp')
         //this will be used if we ever allow changing of asset classes in row edit
         //return the Asset object parameter populated with parameterized values and calculated amount
         //keep track of _id for API posting purposes
-        this.populate = function (asset, _id, assetClass, name, units, unitCost, totalCost, location, date_purchased, currency, marketPrice, marketValue){
+        this.populate = function (asset, _id, userId, assetClass, name, units, unitCost, totalCost, location, date_purchased, currency, marketPrice, marketValue){
             asset._id = _id;
-
+            asset.userId = userId;
+            asset.class = assetClass;
+            asset.name = name;
+            asset.currency = currency;
             if (assetClass === GlobalConstants.CASH){
-                asset.class = assetClass;
-                asset.name = name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
                 asset.totalCost = GlobalConstants.UNDEFNUM;
@@ -91,10 +93,7 @@ angular.module('wealthManagerApp')
                 asset.marketValue = marketValue;
                 asset.location = GlobalConstants.DOMESTIC;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
-                asset.currency = currency;
             } else if (assetClass === GlobalConstants.FIXEDASSETS || assetClass === GlobalConstants.FOREIGNCURR){
-                asset.class = assetClass;
-                asset.name = name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
                 asset.totalCost = totalCost;
@@ -104,8 +103,6 @@ angular.module('wealthManagerApp')
                 asset.date_purchased = date_purchased;
                 asset.currency = currency;
             } else {
-                asset.class = assetClass;
-                asset.name = name;
                 asset.units = Number(units);
                 asset.unitCost = Number(unitCost);
                 asset.totalCost = asset.units*asset.unitCost;
@@ -113,7 +110,6 @@ angular.module('wealthManagerApp')
                 asset.marketValue = asset.units*asset.marketPrice;
                 asset.location = location;
                 asset.date_purchased = date_purchased;
-                asset.currency = currency;
             }
             return asset;
         };
@@ -123,9 +119,13 @@ angular.module('wealthManagerApp')
         this.copyAndCalculateAmount = function (obj){
             var asset = this.init();
             asset._id = obj._id;
+            asset.userId = obj.userId;
             asset.class = obj.class;
+            asset.name = obj.name;
+            asset.currency = obj.currency;
+
             if (asset.class === GlobalConstants.CASH){
-                asset.name = obj.name;
+
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
                 asset.totalCost = GlobalConstants.UNDEFNUM;
@@ -133,9 +133,7 @@ angular.module('wealthManagerApp')
                 asset.marketValue = obj.marketValue;
                 asset.location = GlobalConstants.DOMESTIC;
                 asset.date_purchased = GlobalConstants.UNDEFDATE;
-                asset.currency = obj.currency;
             } else if (asset.class === GlobalConstants.FIXEDASSETS || asset.class === GlobalConstants.FOREIGNCURR){
-                asset.name = obj.name;
                 asset.units = GlobalConstants.UNDEFNUM;
                 asset.unitCost = GlobalConstants.UNDEFNUM;
                 asset.totalCost = obj.totalCost;
@@ -143,9 +141,7 @@ angular.module('wealthManagerApp')
                 asset.marketValue = obj.marketValue;
                 asset.location = obj.location;
                 asset.date_purchased = obj.date_purchased;
-                asset.currency = obj.currency;
             } else {
-                asset.name = obj.name;
                 asset.units = Number(obj.units);
                 asset.unitCost = Number(obj.unitCost);
                 asset.totalCost = asset.units*asset.unitCost;
@@ -153,7 +149,6 @@ angular.module('wealthManagerApp')
                 asset.marketValue = asset.units*asset.marketPrice;
                 asset.location = obj.location;
                 asset.date_purchased = obj.date_purchased;
-                asset.currency = obj.currency;
             }
             return asset;
         };

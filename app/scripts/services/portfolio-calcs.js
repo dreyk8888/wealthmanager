@@ -9,7 +9,7 @@
  */
 angular.module("wealthManagerApp")
     .service("PortfolioCalcs", ["Helpers", function(Helpers) {
-        var DEBUG = false;
+        var DEBUG = true;
         //take an array of asset data and calculate the total
         this.totalCalc = function (data, objValueName){
             var total = 0;
@@ -56,10 +56,11 @@ angular.module("wealthManagerApp")
         this.perTypeTotalPercentCalc = function(data, objTypeName, objValueName){
             var typeTotals = [];
             var total = this.totalCalc (data, objValueName);
+            if (DEBUG){console.log ("Total=" + total);console.log("Data length=" + data.length);}
             for (var i = 0; i < data.length; i++){
                 //search the existing array of types and totals to see if we should create a new type or add to an existing value
-                var index = Helpers.searchObjectArray(data[i][objTypeName], typeTotals, "type");}
-                    if (DEBUG){console.log (data[i][objTypeName] + " index: " + index);
+                var index = Helpers.searchObjectArray(data[i][objTypeName], typeTotals, "type");
+                if (DEBUG){console.log (data[i][objTypeName] + " index: " + index);}
                 //first of this class encountered, just use amount as total
                 if (index === -1){
                     var percentOfTotal = 0;

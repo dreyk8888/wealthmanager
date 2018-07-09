@@ -42,13 +42,13 @@ angular.module("wealthManagerApp")
 
     var vm = this;
 
-    var userId = "ABC123";
-    vm.assetEntry = Asset.init();
+    vm.userId = "ABC123";
+    vm.assetEntry = Asset.init(vm.userId);
     vm.totalAssets = 0;   //container for asset total amount
     vm.assetTotals = [];
     vm.assetInputForm = {}; //container for passing form into submit function
 
-    vm.debtEntry = Debt.init();
+    vm.debtEntry = Debt.init(vm.userId);
     vm.totalDebt = 0;
     vm.debtTotals = [];
     vm.debtInputForm = {}; //container for passing form into submit function
@@ -159,11 +159,12 @@ angular.module("wealthManagerApp")
          vm.locationChartConfig.series[0].data = vm.locationChartData;
     };
 
-    vm.updateNetWorth = function(assetTotal, debtTotal, myCurrency){
+    vm.updateNetWorth = function(sessionUserId, assetTotal, debtTotal, myCurrency){
         var currentDate = moment().format();
         var currentYear = moment(currentDate).year();
         var net = assetTotal - debtTotal;
         var netWorth = {
+            userId: sessionUserId,
             net_worth: net,
             date: currentDate, //today's date,
             currency: myCurrency
@@ -205,12 +206,12 @@ angular.module("wealthManagerApp")
     //load asset data for the view
     vm.getData = function(userId) {
 
-        AssetDataAPI.getData(userId)
+        AssetDataAPI.getDataByUserId (userId)
           .then(data => {
               vm.assetData = [];
               for (var i = 0; i < data.data.length; i++){
                   vm.assetData.push(data.data[i]);
-                  if (DEBUG) {console.log ("Asset added from API data: " + vm.assetData[i].name);}
+                  if (DEBUG) {console.log ("Asset added from API data: " + vm.assetData[i].userId);}
               }
               vm.recalculate();
               vm.assetGridOptions.data = vm.assetData;
@@ -222,7 +223,7 @@ angular.module("wealthManagerApp")
               vm.debtData = [];
               for (var i = 0; i < data.data.length; i++){
                   vm.debtData.push(data.data[i]);
-                  if (DEBUG) {console.log ("Debt added from API data: " + vm.debtData[i].user);}
+                  if (DEBUG) {console.log ("Debt added from API data: " + vm.debtData[i].userId);}
               }
               vm.recalculate();
               vm.debtGridOptions.data = vm.debtData;
@@ -246,12 +247,12 @@ console.log ("Date purchased: " + vm.assetEntry.date_purchased);
             AssetDataAPI.postData(temp)
               .then(data => {
                 postResponse = data.data;
-                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
+                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + "userId= " + postResponse.userId + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
                   postResponse.unitCost + " location=" + postResponse.location + " currency=" + postResponse.currency);}
 
                 vm.assetData.push(postResponse);  //update the table with what was actually posted, since ID and defaults are in the response only
                 vm.recalculate();
-                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+                vm.updateNetWorth(vm.userId, vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
               });
         }
         return true;
@@ -270,12 +271,12 @@ console.log ("Date purchased: " + vm.assetEntry.date_purchased);
             DebtDataAPI.postData(vm.debtEntry)
              .then(data => {
                 postResponse = data.data;
-                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
+                if (DEBUG) {console.log ("Object posted to API: ID=" + postResponse._id + "userId= " + postResponse.userId + " name=" + postResponse.name + " units=" + postResponse.units + " unitCost=" +
                   postResponse.unitCost + " location=" + postResponse.location + " currency=" + postResponse.currency);}
 
                 vm.debtData.push(postResponse);  //update the table with what was actually posted, since ID and defaults are in the response only
                 vm.recalculate();
-                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+                vm.updateNetWorth(vm.userId, vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
               });
         }
         return true;
@@ -293,7 +294,7 @@ console.log ("Date purchased: " + vm.assetEntry.date_purchased);
                 vm.assetData.splice(vm.assetData.findIndex(obj => obj._id === id), 1); //remove item from local list of assets
                 vm.assetGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
                 vm.recalculate();
-                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+                vm.updateNetWorth(vm.userId, vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
               });
 
     };
@@ -304,7 +305,7 @@ console.log ("Date purchased: " + vm.assetEntry.date_purchased);
                 vm.debtData.splice(vm.debtData.findIndex(x=> x._id === id), 1);
                 vm.debtGridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
                 vm.recalculate();
-                vm.updateNetWorth(vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
+                vm.updateNetWorth(vm.userId, vm.totalAssets, vm.totalDebt, vm.localCurrency);    //save latest net worth value to networthhistory database table
               });
 
     };

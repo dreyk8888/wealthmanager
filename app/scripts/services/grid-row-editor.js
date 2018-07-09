@@ -12,6 +12,9 @@ angular.module('wealthManagerApp')
 
     var DEBUG = true;
 
+    //how to add userId to row entity?
+    //No need! Because userId was added when the entry was posted, hence it should not change on an update!
+
     this.editAssetRow = function (grid, row) {
 
         var modalInstance = $uibModal.open({
@@ -44,7 +47,7 @@ angular.module('wealthManagerApp')
                         AssetDataAPI.updateData(updateData, updateData._id)
                             .then (data => {
                                 updateResponse = data.data;
-                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + " name=" + updateResponse.name + " units=" + updateResponse.units + " unitCost=" +
+                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + "userId=" + updateResponse.userId + " name=" + updateResponse.name + " units=" + updateResponse.units + " unitCost=" +
                                 updateResponse.unitCost + "date_purchased=" + updateResponse.date_purchased + " location=" + updateResponse.location + " currency=" + updateResponse.currency);}
 
                                 //update grid
@@ -96,7 +99,7 @@ angular.module('wealthManagerApp')
 
                         //clean up the data before write to DB
                         var updateData = Debt.init();
-                        updateData = Debt.populate (updateData, row.entity._id, row.entity.term, row.entity.name, row.entity.amount);
+                        updateData = Debt.populate (updateData, row.entity._id, row.entity.userId, row.entity.term, row.entity.name, row.entity.amount);
                         if (DEBUG){ console.log("Data to save: " + row.entity._id + " " + row.entity.name + " " + row.entity.term);
                                     console.log("Data to save: " + updateData._id + " " + updateData.name + " " + updateData.term);
                          }
@@ -106,7 +109,7 @@ angular.module('wealthManagerApp')
                         DebtDataAPI.updateData(updateData, updateData._id)
                             .then (data => {
                                 updateResponse = data.data;
-                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + " name=" + updateResponse.name + " amount=" + updateResponse.amount + "term=" +
+                                if (DEBUG) {console.log ("Object posted to API: ID=" + updateResponse._id + "userId=" + updateResponse.userId + " name=" + updateResponse.name + " amount=" + updateResponse.amount + "term=" +
                                 updateResponse.term);}
 
                                 //update grid

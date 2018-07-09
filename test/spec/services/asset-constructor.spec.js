@@ -17,8 +17,8 @@ describe("Service: Asset constructor", function () {
     expect(Asset).toBeDefined();
   });
 
-  it("init() should exist", function (){
-    expect(Asset.init()).toBeDefined();
+  it("init(userId) should exist", function (){
+    expect(Asset.init({})).toBeDefined();
   });
 
   it("reset() should exist", function () {
@@ -30,7 +30,7 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() should exist", function () {
-    expect(Asset.populate({}, "","","","","","","","","","")).toBeDefined();
+    expect(Asset.populate({}, "","","","","","","","","","","")).toBeDefined();
   });
 
   it("copyAndCalculateAmount() should exist", function () {
@@ -38,6 +38,7 @@ describe("Service: Asset constructor", function () {
   });
 
   var testAsset = {
+      userId: "ABC",
       class: "Equities",
       name: "TEST",
       units: "100",
@@ -50,6 +51,7 @@ describe("Service: Asset constructor", function () {
       currency: "INR"
   };
   var expectedEmptyAsset = {
+      userId: "ABC",
       class: "",
       name: "",
       units: "",
@@ -64,7 +66,7 @@ describe("Service: Asset constructor", function () {
 
 
   it("init() to create Asset with empty strings", function () {
-    expect(Asset.init()).toEqual(expectedEmptyAsset);
+    expect(Asset.init("ABC")).toEqual(expectedEmptyAsset);
   });
 
   it("reset() will return an Asset with empty strings given an Asset that was not empty", function () {
@@ -72,6 +74,7 @@ describe("Service: Asset constructor", function () {
   });
 
   var testAsset2 = {
+      userId: "ABC",
       class: "Hello Kitty",
       name: "TEST",
       units: "100",
@@ -85,6 +88,7 @@ describe("Service: Asset constructor", function () {
   };
 
   var expectedAssetWithClass = {
+      userId: "ABC",
       class: "Hello Kitty",
       name: "",
       units: "",
@@ -102,6 +106,7 @@ describe("Service: Asset constructor", function () {
   });
 
   var testAsset3 = {
+      userId: "ABC",
       class: "Whatever",
       name: "TEST",
       units: "100",
@@ -116,6 +121,7 @@ describe("Service: Asset constructor", function () {
 
   var testCash = {
       _id: "1234567",
+      userId: "ABC",
       class: "Cash",
       name: "My mom's money",
       units: "",
@@ -130,6 +136,7 @@ describe("Service: Asset constructor", function () {
 
   var expectedPopulatedCashAsset = {
       _id: "1234567",
+      userId: "ABC",
       class: "Cash",
       name: "My mom's money",
       units: -1,
@@ -148,11 +155,12 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, currency if asset class is cash", function () {
-    expect(Asset.populate(testAsset3, "1234567", "Cash", "My mom's money", "", "", 40000, "", "", "USD","",50000 )).toEqual(expectedPopulatedCashAsset);
+    expect(Asset.populate(testAsset3, "1234567", "ABC", "Cash", "My mom's money", "", "", 40000, "", "", "USD","",50000 )).toEqual(expectedPopulatedCashAsset);
   });
 
   var testFixed = {
       _id: "1234",
+      userId: "TGIF",
       class: "Fixed Assets",
       name: "My mom's house",
       units: "",
@@ -167,6 +175,7 @@ describe("Service: Asset constructor", function () {
 
   var expectedPopulatedFixedAsset = {
       _id: "1234",
+      userId: "TGIF",
       class: "Fixed Assets",
       name: "My mom's house",
       units: -1,
@@ -184,11 +193,12 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, location, date purchased, currency if asset class is fixed asset", function () {
-    expect(Asset.populate(testAsset3, "1234", "Fixed Assets", "My mom's house","","",50000,"Japan","01/15/1973", "YEN","123",90876.8756)).toEqual(expectedPopulatedFixedAsset);
+    expect(Asset.populate(testAsset3, "1234", "TGIF","Fixed Assets", "My mom's house","","",50000,"Japan","01/15/1973", "YEN","123",90876.8756)).toEqual(expectedPopulatedFixedAsset);
   });
 
   var testCurr = {
       _id: "1234",
+      userId: "ABC123",
       class: "Foreign Currency",
       name: "US Dollars in eTrade",
       units: "",
@@ -202,6 +212,7 @@ describe("Service: Asset constructor", function () {
   };
   var expectedPopulatedForeignCurr = {
       _id: "1234",
+      userId: "ABC123",
       class: "Foreign Currency",
       name: "US Dollars in eTrade",
       units: -1,
@@ -219,11 +230,12 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, location, date purchased, currency if asset class is foreign currency", function () {
-    expect(Asset.populate(testAsset3, "1234", "Foreign Currency", "US Dollars in eTrade","","",50000,"Japan","01/15/1973", "YEN", 19.546, 5640)).toEqual(expectedPopulatedForeignCurr);
+    expect(Asset.populate(testAsset3, "1234", "ABC123","Foreign Currency", "US Dollars in eTrade","","",50000,"Japan","01/15/1973", "YEN", 19.546, 5640)).toEqual(expectedPopulatedForeignCurr);
   });
 
   var testEquity = {
       _id: "9876",
+      userId: "ABC",
       class: "Equities",
       name: "TEST",
       units: "100",
@@ -238,6 +250,7 @@ describe("Service: Asset constructor", function () {
 
   var expectedEquity = {
       _id: "9876",
+      userId: "ABC",
       class: "Equities",
       name: "TEST",
       units: 100,
@@ -252,6 +265,7 @@ describe("Service: Asset constructor", function () {
 
   var expectedEquity2 = {
       _id: "1000",
+      userId: "DEF",
       class: "Equities",
       name: "TESTDATA",
       units: 1000,
@@ -269,7 +283,7 @@ describe("Service: Asset constructor", function () {
   });
 
   it("populate() will return an Asset object populated with class, name, amount, location, date purchased, currency if asset class is equities", function () {
-    expect(Asset.populate(testEquity, "1000", "Equities", "TESTDATA", "1000","10.40",50000,"CAN","6/10/2080", "USD", "9.23",60540)).toEqual(expectedEquity2);
+    expect(Asset.populate(testEquity, "1000", "DEF","Equities", "TESTDATA", "1000","10.40",50000,"CAN","6/10/2080", "USD", "9.23",60540)).toEqual(expectedEquity2);
   });
 
 

@@ -46,7 +46,16 @@
       <div id="logo" class="fl_left">
         <h1>Wealth Manager<small id="title-subtext" style="margin-left: 10px;">Your tool to financial independence</small></h1>
       </div>
-      <div id="login" class="fl_right">
+      <div id="login" >
+        <form action="#" class="form">           
+            <div class="form__group">
+                <input type="text" class="form__input" placeholder="Username" id="user" required>
+                <label for="user" class="form__label">Username</label>
+            </div>
+            <div class="form__group">
+                <input type="password" class="form__input" placeholder="Password" id="password" required>
+                <label for="password" class="form__label">Password</label>
+            </div>
         <ul class="nospace inline pushright">
           <li><a ui-sref="#">Login</a></li>
           <li><a ui-sref="#">Register</a></li>
@@ -156,7 +165,7 @@
     <script src="scripts/services/asset-data-api.js"></script>
   	<script src="scripts/services/debt-data-api.js"></script>
     <script src="scripts/services/net-worth-data-api.js"></script>
-	<script src="scripts/services/api-helper.js"></script>
+	  <script src="scripts/services/api-helper.js"></script>
     <script src="scripts/controllers/fire-calc.js"></script>
     <script src="scripts/services/fire-calc-helper.js"></script>
     <script src="scripts/services/fire-chart-config.js"></script>

@@ -1,3 +1,7 @@
-Instance iD: i-0952d92d6e847bfab
+EC2 Instance iD: i-0952d92d6e847bfab
+
+Default user name to ssh to instance: bitnami
+
+MongoDB User and Password
 User: root
 Password: d6vM7MlFcXXn

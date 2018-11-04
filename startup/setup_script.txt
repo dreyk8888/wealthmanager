@@ -2,10 +2,24 @@ sudo git clone https://github.com/dreyk8888/wealthmanager.git
 sudo git clone https://github.com/dreyk8888/wealth-manager-api.git
 cd wealth-manager-api
 sudo npm install
-sudo npm start
+sudo npm install forever -g (allows scripts to run forever, without keeping ssh window open)
+forever start -c "npm start" ./ (./ is the directory where the script resides)
 cd wealthmanager
 sudo npm install
 sudo bower install
+
 sudo npm install grunt
+sudo npm install sass -g
 **need to change the line hostname: 'localhost' to hostname: '0.0.0.0' if on a public server
 sudo grunt serve
+
+
+**********AWS start**********
+ssh to http://ec2-18-219-54-105.us-east-2.compute.amazonaws.com with Putty
+user name: bitnami
+cd apps/wealth-manager-api
+sudo git pull
+forever start -c "npm start" ./
+cd ..
+cd apps/wealthmanager
+sudo git pull

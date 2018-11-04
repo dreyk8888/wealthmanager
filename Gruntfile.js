@@ -56,6 +56,10 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      sass: {
+        files: ['<%= yeoman.app %>/sass/{,*/}*.scss'],
+        tasks: ['sass']
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -68,15 +72,35 @@ module.exports = function (grunt) {
       }
     },
 
+    sass: {
+      dist: {
+        options: {
+          style: 'compressed'
+        },
+        files: {
+          'app/styles/style.css' : 'app/sass/main.scss'
+        }
+      },
+      dev: {
+        options: {
+          style: 'expanded'
+        },
+        files: {
+          'app/styles/style.css' : 'app/sass/main.scss'
+        }
+      }
+    },
+
     // The actual grunt server settings
     connect: {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        //hostname: 'localhost',
-        hostname: '0.0.0.0',
+        hostname: 'localhost',
+        //hostname: '0.0.0.0',
         livereload: 35729
       },
+
       livereload: {
         options: {
           open: true,
@@ -96,6 +120,9 @@ module.exports = function (grunt) {
           }
         }
       },
+
+
+
       test: {
         options: {
           port: 9001,
@@ -440,7 +467,8 @@ module.exports = function (grunt) {
       }
     }
   });
-
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -449,6 +477,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'sass',
       'concurrent:server',
       'postcss:server',
       'connect:livereload',
@@ -472,6 +501,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'compile-sass',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',

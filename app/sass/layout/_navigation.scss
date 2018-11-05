@@ -1,0 +1,30 @@
+.nav {
+    background-color: $color-grey-dark-3 !important;    
+}
+
+.navigation {
+    position: relative;
+    &__header {
+        position: absolute;
+        width:10%;
+    }
+    &__logo-img {
+        color: $color-white;
+        margin-left: 3rem;
+        max-height: 5rem; 
+        max-width: 5rem;
+    }
+
+    &__navbar-left {
+        display: block;
+        margin-left: 10rem;
+    }
+
+    &__navbar-right {
+        display: block;
+        margin-right: 3rem;
+    }
+}
+.navbar-left{
+    position: relative;
+}

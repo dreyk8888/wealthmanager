@@ -1,0 +1,47 @@
+.header {
+    height: 17vh;
+    background-color: $color-grey-dark-3;
+    background-size: cover;
+    background-position: top;
+    position: relative;
+    &__logo-box {
+        position: absolute;
+        top: 2rem;
+        left: 4rem;
+       
+    }
+
+    &__logo {
+        height: 10rem;        
+    }
+    
+    &__text-box {      
+        position: absolute;
+        top: 3rem;
+        left: 18rem;
+        margin-left: 3rem;
+    }
+
+    &__login {
+        position: absolute;
+        top: 4rem;
+        right: 3rem;
+        display: table;
+        width: 10%;
+
+        &--leftbutton {         
+            margin: 0 1rem 0 0;
+            display: table-cell;
+            vertical-align: middle;   
+            width: 40%;
+        }
+
+        &--rightbutton {
+            margin: 0 0 0 1rem;
+            display: table-cell;
+            vertical-align: middle;    
+            width: 40%;
+        }
+
+    }
+}
